@@ -40,6 +40,9 @@ import processing
 
 from mhcvam_infrastructures_dialog_form import Ui_MHCVAMInfrastructuresDialog
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class MHCVAMInfrastructuresDialog(QDialog, Ui_MHCVAMInfrastructuresDialog):
 
