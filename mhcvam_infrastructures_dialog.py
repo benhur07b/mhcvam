@@ -40,6 +40,7 @@ import processing
 
 from mhcvam_infrastructures_dialog_form import Ui_MHCVAMInfrastructuresDialog
 
+# try to solve UnicodeEncodeError in WIN
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
