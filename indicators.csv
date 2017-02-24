@@ -1,0 +1,9 @@
+INDICATOR_CODE,INDICATOR_NAME,AGENCY,CATEGORY,LOW_LOWER,LOW_UPPER,MEDIUM_LOWER,MEDIUM_UPPER,HIGH_LOWER,HIGH_UPPER
+IND_01,Indicator #1,Agency #1,Risk,1,10,11,30,31,100
+IND_02,Indicator #2,Agency #1,Capacity,1,20,21,50,51,100
+IND_03,Indicator #3,Agency #2,Vulnerability,1,10,11,40,41,100
+IND_04,Indicator #4,Agency #2,Capacity,1,50,51,80,81,100
+IND_05,Indicator #5,Agency #2,Capacity,1,5,6,20,21,100
+IND_06,Indicator #6,Agency #3,Risk,1,20,21,40,41,100
+IND_07,Indicator #7,Agency #3,Risk,1,35,36,70,71,100
+IND_08,Indicator #8,Agency #3,Vulnerability,1,25,26,50,51,100

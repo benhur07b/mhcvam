@@ -1,0 +1,40 @@
+# This file contains metadata for your plugin. Since
+# version 2.0 of QGIS this is the proper way to supply
+# information about a plugin. The old method of
+# embedding metadata in __init__.py
+# is no longer supported since version 2.0.
+
+# This file should be included when you package your plugin.
+
+# Mandatory items:
+
+[general]
+name=Multi-Hazard Child Vulnerability Analysis and Mapping Plugin
+qgisMinimumVersion=2.0
+description=A QGIS plugin that performs Multi-Hazard Child Vulnerability Analysis and Mapping for LGUs in the Philippines
+version=0.1
+author=Ben Hur S. Pintor
+email=bhs.pintor@gmail.com
+
+about=This plugin performs Multi-Hazard Child Vulnerability Analysis and Mapping using different indicators and inputs. These include: 1. UNICEF Indicators 2. Household-level surveys 3. Barangay-level surveys 4. Infrastructures
+
+tracker=https://github.com/bnhr07b/mhcvam/issues
+repository=https://github.com/bnhr07b/mhcvam
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=
+
+homepage=
+category=Plugins
+icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
