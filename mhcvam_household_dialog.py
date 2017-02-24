@@ -55,10 +55,15 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         self.iface = iface
 
         QObject.connect(self.selectHHButtonBox, SIGNAL("accepted()"), self.run_select)
+        QObject.connect(self.queryHHButtonBox, SIGNAL("accepted()"), self.run_query)
         QObject.connect(self.summHHButtonBox, SIGNAL("accepted()"), self.run_summary)
+        QObject.connect(self.queryFieldAdd, SIGNAL("clicked()"), self.add_field_to_query)
+        QObject.connect(self.queryFunctionAdd, SIGNAL("clicked()"), self.add_function_to_query)
 
         self.agencyComboBox.addItems(indicators.agencies_list)
         self.categoryComboBox.addItems(indicators.categories_list)
+        self.queryAgencyComboBox.addItems(indicators.agencies_list)
+        self.queryCategoryComboBox.addItems(indicators.categories_list)
 
         QObject.connect(self.selectHazardComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
@@ -76,8 +81,26 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_category)
 
+        QObject.connect(self.queryAgencyComboBox,
+                        SIGNAL("currentIndexChanged(QString)"),
+                        self.set_fields_from_agency_query)
+
+        QObject.connect(self.queryCategoryComboBox,
+                        SIGNAL("currentIndexChanged(QString)"),
+                        self.set_fields_from_category_query)
+
         self.set_hazard()
         self.set_brgy()
+
+
+    def add_field_to_query(self):
+
+        self.queryTextEdit.insertPlainText(' "{}" '.format(self.queryFieldComboBox.currentText()))
+
+
+    def add_function_to_query(self):
+
+        self.queryTextEdit.insertPlainText(' {} '.format(self.queryFunctionComboBox.currentText()))
 
 
     def set_hazard(self):
@@ -85,9 +108,11 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.selectHazardComboBox.currentText())[0]
         self.selectHazardTypeComboBox.setLayer(selectedLayer)
 
+
     def set_brgy(self):
-        lyr = QgsMapLayerRegistry.instance().mapLayersByName(self.summHHBrgyComboBox.currentText())[0]
-        self.brgyFieldComboBox.setLayer(lyr)
+
+        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summHHBrgyComboBox.currentText())[0]
+        self.brgyFieldComboBox.setLayer(selectedLayer)
 
 
     def set_fields_from_agency(self):
@@ -114,6 +139,32 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         fields = list(set(layerFields).intersection(categoryFields))
         self.fieldComboBox.addItems(fields)
         self.agencyComboBox.setCurrentIndex(0)
+
+
+    def set_fields_from_agency_query(self):
+
+        self.queryFieldComboBox.clear()
+
+        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
+        layerFields = [field.name() for field in selectedLayer.fields().toList()]
+        agencyFields = indicators.agencies_with_indicators_list[self.queryAgencyComboBox.currentIndex()][1]
+
+        fields = list(set(layerFields).intersection(agencyFields))
+        self.queryFieldComboBox.addItems(fields)
+        self.queryCategoryComboBox.setCurrentIndex(0)
+
+
+    def set_fields_from_category_query(self):
+
+        self.queryFieldComboBox.clear()
+
+        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
+        layerFields = [field.name() for field in selectedLayer.fields().toList()]
+        categoryFields = indicators.categories_with_indicators_list[self.queryCategoryComboBox.currentIndex()][1]
+
+        fields = list(set(layerFields).intersection(categoryFields))
+        self.queryFieldComboBox.addItems(fields)
+        self.queryAgencyComboBox.setCurrentIndex(0)
 
 
     def run_select(self):
@@ -174,6 +225,35 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
             hh_per_hazard = "Households in Hazard Level\nLow: {}\nMedium: {}\nHigh: {}".format(numlows, nummeds, numhigh)
             msg = hh_per_hazard
             QMessageBox.information(self.iface.mainWindow(), "SUMMARY REPORT", msg)
+
+
+    def run_query(self):
+
+        hh = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
+        text = self.queryTextEdit.toPlainText()
+        q = convert_to_query(text)
+        query = unicode(q)
+        r = QgsFeatureRequest().setFilterExpression(query)
+        sel = hh.getFeatures(r)
+        hh.setSelectedFeatures([f.id() for f in sel])
+
+
+    # def convert_to_query(self, text):
+    #
+    #     text.replace("greater than or equal to", ">=")
+    #     text.replace("less than or equal to", "<=")
+    #     text.replace("not equal to", "!=")
+    #     text.replace("equal to", "=")
+    #     text.replace("greater than", ">")
+    #     text.replace("less than", "<")
+    #
+    #     text = text.replace("equal to", "=")
+    #     text = text.replace(" or ", "")
+    #     text = text.replace("not ", "!")
+    #     text = text.replace("greater than", ">")
+    #     text = text.replace("less than", "<")
+    #
+    #     return text
 
 
     def run_summary(self):

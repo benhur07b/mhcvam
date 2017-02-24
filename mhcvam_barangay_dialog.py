@@ -53,10 +53,16 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         self.setWindowTitle(self.tr('Barangay-level Analysis'))
         self.iface = iface
 
+        QObject.connect(self.queryBrgyButtonBox, SIGNAL("accepted()"), self.run_query)
+        QObject.connect(self.queryFieldAdd, SIGNAL("clicked()"), self.add_field_to_query)
+        QObject.connect(self.queryFunctionAdd, SIGNAL("clicked()"), self.add_function_to_query)
         QObject.connect(self.summBrgyButtonBox, SIGNAL("accepted()"), self.run_summary)
+
 
         self.agencyComboBox.addItems(indicators.agencies_list)
         self.categoryComboBox.addItems(indicators.categories_list)
+        self.queryAgencyComboBox.addItems(indicators.agencies_list)
+        self.queryCategoryComboBox.addItems(indicators.categories_list)
 
         QObject.connect(self.summBrgyComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
@@ -69,6 +75,14 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         QObject.connect(self.categoryComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_category)
+
+        QObject.connect(self.queryAgencyComboBox,
+                        SIGNAL("currentIndexChanged(QString)"),
+                        self.set_fields_from_agency_query)
+
+        QObject.connect(self.queryCategoryComboBox,
+                        SIGNAL("currentIndexChanged(QString)"),
+                        self.set_fields_from_category_query)
 
         self.set_muni()
 
@@ -102,6 +116,71 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         fields = list(set(layerFields).intersection(categoryFields))
         self.fieldComboBox.addItems(fields)
         self.agencyComboBox.setCurrentIndex(0)
+
+
+    def set_fields_from_agency_query(self):
+
+        self.queryFieldComboBox.clear()
+
+        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
+        layerFields = [field.name() for field in selectedLayer.fields().toList()]
+        agencyFields = indicators.agencies_with_indicators_list[self.queryAgencyComboBox.currentIndex()][1]
+
+        fields = list(set(layerFields).intersection(agencyFields))
+        self.queryFieldComboBox.addItems(fields)
+        self.queryCategoryComboBox.setCurrentIndex(0)
+
+
+    def set_fields_from_category_query(self):
+
+        self.queryFieldComboBox.clear()
+
+        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
+        layerFields = [field.name() for field in selectedLayer.fields().toList()]
+        categoryFields = indicators.categories_with_indicators_list[self.queryCategoryComboBox.currentIndex()][1]
+
+        fields = list(set(layerFields).intersection(categoryFields))
+        self.queryFieldComboBox.addItems(fields)
+        self.queryAgencyComboBox.setCurrentIndex(0)
+
+
+    def add_field_to_query(self):
+
+        self.queryTextEdit.insertPlainText(' "{}" '.format(self.queryFieldComboBox.currentText()))
+
+
+    def add_function_to_query(self):
+
+        self.queryTextEdit.insertPlainText(' {} '.format(self.queryFunctionComboBox.currentText()))
+
+
+    def run_query(self):
+
+        brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
+        text = self.queryTextEdit.toPlainText()
+        q = convert_to_query(text)
+        query = unicode(q)
+        r = QgsFeatureRequest().setFilterExpression(query)
+        sel = brgy.getFeatures(r)
+        brgy.setSelectedFeatures([f.id() for f in sel])
+
+
+    # def convert_to_query(self, text):
+    #
+    #     text.replace("greater than or equal to", ">=")
+    #     text.replace("less than or equal to", "<=")
+    #     text.replace("not equal to", "!=")
+    #     text.replace("equal to", "=")
+    #     text.replace("greater than", ">")
+    #     text.replace("less than", "<")
+    #
+    #     text = text.replace("equal to", "=")
+    #     text = text.replace(" or ", "")
+    #     text = text.replace("not ", "!")
+    #     text = text.replace("greater than", ">")
+    #     text = text.replace("less than", "<")
+    #
+    #     return text
 
 
     def run_summary(self):

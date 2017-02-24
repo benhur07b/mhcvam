@@ -223,3 +223,21 @@ def add_labels(layer, stat):
     palayer.textFont.setPointSize(10)
     palayer.textColor = QColor(0,0,0)
     palayer.writeToLayer(layer)
+
+
+def convert_to_query(text):
+
+    # text.replace("greater than or equal to", ">=")
+    # text.replace("less than or equal to", "<=")
+    # text.replace("not equal to", "!=")
+    # text.replace("equal to", "=")
+    # text.replace("greater than", ">")
+    # text.replace("less than", "<")
+
+    text = text.replace("equal to", "=")
+    text = text.replace(" or ", "")
+    text = text.replace("not ", "!")
+    text = text.replace("greater than", ">")
+    text = text.replace("less than", "<")
+
+    return text
