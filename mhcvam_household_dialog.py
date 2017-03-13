@@ -183,13 +183,13 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         hazardLevels = []
 
-        if hazardLevel == "Low":
+        if hazardLevel.capitalize() == "Low":
             hazardLevels = [("Low", "Low", "cyan")]
 
-        elif hazardLevel == "Medium":
+        elif hazardLevel.capitalize() == "Medium":
             hazardLevels = [("Medium", "Medium", "orange")]
 
-        elif hazardLevel == "High":
+        elif hazardLevel.capitalize() == "High":
             hazardLevels = [("High", "High", "red")]
 
         else:
@@ -217,7 +217,7 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
             features = outlayer.getFeatures()
             for f in features:
                 attr = f.attributes()
-                hazardLevelCount.append(attr[outlayer.fieldNameIndex(hazardType)])
+                hazardLevelCount.append(attr[outlayer.fieldNameIndex(hazardType)].capitalize()) #set to Low, Medium, and High only
 
             numlows = hazardLevelCount.count("Low")
             nummeds = hazardLevelCount.count("Medium")

@@ -111,13 +111,13 @@ class MHCVAMInfrastructuresDialog(QDialog, Ui_MHCVAMInfrastructuresDialog):
 
         hazardLevels = []
 
-        if hazardLevel == "Low":
+        if hazardlevel.capitalize() == "Low":
             hazardLevels = [("Low", "Low", "cyan")]
 
-        elif hazardLevel == "Medium":
+        elif hazardlevel.capitalize() == "Medium":
             hazardLevels = [("Medium", "Medium", "orange")]
 
-        elif hazardLevel == "High":
+        elif hazardlevel.capitalize() == "High":
             hazardLevels = [("High", "High", "red")]
 
         else:
@@ -238,13 +238,13 @@ class MHCVAMInfrastructuresDialog(QDialog, Ui_MHCVAMInfrastructuresDialog):
                 brgyName = str(attr[brgyNameIndex])
                 hazardLevel = str(attr[hazardTypeIndex])
 
-                if hazardLevel == "Low":
+                if hazardlevel.capitalize() == "Low":
                     brgyDict[brgyName][0] += 1
 
-                elif hazardLevel == "Medium":
+                elif hazardlevel.capitalize() == "Medium":
                     brgyDict[brgyName][1] += 1
 
-                elif hazardLevel == "High":
+                elif hazardlevel.capitalize() == "High":
                     brgyDict[brgyName][2] += 1
 
             except IndexError:

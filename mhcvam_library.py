@@ -242,3 +242,8 @@ def convert_to_query(text):
     text = text.replace("less than", "<")
 
     return text
+
+
+def read_hazard_level(text):
+
+    return text.capitalize()
