@@ -42,8 +42,9 @@ from mhcvam_library import *
 
 from mhcvam_household_dialog_form import Ui_MHCVAMHouseholdDialog
 
-indicators = Indicators()
+indicators_path_hh = os.path.dirname(__file__) + '/indicators_household.csv'
 
+indicators = Indicators(indicators_path_hh)
 
 class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
@@ -61,9 +62,9 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         QObject.connect(self.queryFunctionAdd, SIGNAL("clicked()"), self.add_function_to_query)
 
         self.agencyComboBox.addItems(indicators.agencies_list)
-        self.categoryComboBox.addItems(indicators.categories_list)
+        # self.categoryComboBox.addItems(indicators.categories_list)
         self.queryAgencyComboBox.addItems(indicators.agencies_list)
-        self.queryCategoryComboBox.addItems(indicators.categories_list)
+        # self.queryCategoryComboBox.addItems(indicators.categories_list)
 
         QObject.connect(self.selectHazardComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
@@ -77,17 +78,17 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_agency)
 
-        QObject.connect(self.categoryComboBox,
-                        SIGNAL("currentIndexChanged(QString)"),
-                        self.set_fields_from_category)
+        # QObject.connect(self.categoryComboBox,
+        #                 SIGNAL("currentIndexChanged(QString)"),
+        #                 self.set_fields_from_category)
 
         QObject.connect(self.queryAgencyComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_agency_query)
 
-        QObject.connect(self.queryCategoryComboBox,
-                        SIGNAL("currentIndexChanged(QString)"),
-                        self.set_fields_from_category_query)
+        # QObject.connect(self.queryCategoryComboBox,
+        #                 SIGNAL("currentIndexChanged(QString)"),
+        #                 self.set_fields_from_category_query)
 
         self.set_hazard()
         self.set_brgy()
@@ -125,20 +126,20 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         fields = list(set(layerFields).intersection(agencyFields))
         self.fieldComboBox.addItems(fields)
-        self.categoryComboBox.setCurrentIndex(0)
+        # self.categoryComboBox.setCurrentIndex(0)
 
 
-    def set_fields_from_category(self):
-
-        self.fieldComboBox.clear()
-
-        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summHHComboBox.currentText())[0]
-        layerFields = [field.name() for field in selectedLayer.fields().toList()]
-        categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
-
-        fields = list(set(layerFields).intersection(categoryFields))
-        self.fieldComboBox.addItems(fields)
-        self.agencyComboBox.setCurrentIndex(0)
+    # def set_fields_from_category(self):
+    #
+    #     self.fieldComboBox.clear()
+    #
+    #     selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summHHComboBox.currentText())[0]
+    #     layerFields = [field.name() for field in selectedLayer.fields().toList()]
+    #     categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
+    #
+    #     fields = list(set(layerFields).intersection(categoryFields))
+    #     self.fieldComboBox.addItems(fields)
+    #     self.agencyComboBox.setCurrentIndex(0)
 
 
     def set_fields_from_agency_query(self):
@@ -151,20 +152,20 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         fields = list(set(layerFields).intersection(agencyFields))
         self.queryFieldComboBox.addItems(fields)
-        self.queryCategoryComboBox.setCurrentIndex(0)
+        # self.queryCategoryComboBox.setCurrentIndex(0)
 
 
-    def set_fields_from_category_query(self):
-
-        self.queryFieldComboBox.clear()
-
-        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
-        layerFields = [field.name() for field in selectedLayer.fields().toList()]
-        categoryFields = indicators.categories_with_indicators_list[self.queryCategoryComboBox.currentIndex()][1]
-
-        fields = list(set(layerFields).intersection(categoryFields))
-        self.queryFieldComboBox.addItems(fields)
-        self.queryAgencyComboBox.setCurrentIndex(0)
+    # def set_fields_from_category_query(self):
+    #
+    #     self.queryFieldComboBox.clear()
+    #
+    #     selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
+    #     layerFields = [field.name() for field in selectedLayer.fields().toList()]
+    #     categoryFields = indicators.categories_with_indicators_list[self.queryCategoryComboBox.currentIndex()][1]
+    #
+    #     fields = list(set(layerFields).intersection(categoryFields))
+    #     self.queryFieldComboBox.addItems(fields)
+    #     self.queryAgencyComboBox.setCurrentIndex(0)
 
 
     def run_select(self):

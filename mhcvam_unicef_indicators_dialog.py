@@ -41,7 +41,9 @@ from mhcvam_library import *
 
 from mhcvam_unicef_indicators_dialog_form import Ui_MHCVAMUnicefIndicatorsDialog
 
-indicators = Indicators()
+indicators_path_unicef = os.path.dirname(__file__) + '/indicators_unicef.csv'
+
+indicators = Indicators(indicators_path_unicef)
 
 class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
 

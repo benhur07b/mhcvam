@@ -42,7 +42,9 @@ from mhcvam_library import *
 
 from mhcvam_barangay_dialog_form import Ui_MHCVAMBarangayDialog
 
-indicators = Indicators()
+indicators_path_brgy = os.path.dirname(__file__) + '/indicators_barangay.csv'
+
+indicators = Indicators(indicators_path_brgy)
 
 class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
@@ -60,9 +62,9 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
 
         self.agencyComboBox.addItems(indicators.agencies_list)
-        self.categoryComboBox.addItems(indicators.categories_list)
+        # self.categoryComboBox.addItems(indicators.categories_list)
         self.queryAgencyComboBox.addItems(indicators.agencies_list)
-        self.queryCategoryComboBox.addItems(indicators.categories_list)
+        # self.queryCategoryComboBox.addItems(indicators.categories_list)
 
         QObject.connect(self.summBrgyComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
@@ -72,17 +74,17 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_agency)
 
-        QObject.connect(self.categoryComboBox,
-                        SIGNAL("currentIndexChanged(QString)"),
-                        self.set_fields_from_category)
+        # QObject.connect(self.categoryComboBox,
+        #                 SIGNAL("currentIndexChanged(QString)"),
+        #                 self.set_fields_from_category)
 
         QObject.connect(self.queryAgencyComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_agency_query)
 
-        QObject.connect(self.queryCategoryComboBox,
-                        SIGNAL("currentIndexChanged(QString)"),
-                        self.set_fields_from_category_query)
+        # QObject.connect(self.queryCategoryComboBox,
+        #                 SIGNAL("currentIndexChanged(QString)"),
+        #                 self.set_fields_from_category_query)
 
         self.set_muni()
 
@@ -102,20 +104,20 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
         fields = list(set(layerFields).intersection(agencyFields))
         self.fieldComboBox.addItems(fields)
-        self.categoryComboBox.setCurrentIndex(0)
+        # self.categoryComboBox.setCurrentIndex(0)
 
 
-    def set_fields_from_category(self):
-
-        self.fieldComboBox.clear()
-
-        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summBrgyComboBox.currentText())[0]
-        layerFields = [field.name() for field in selectedLayer.fields().toList()]
-        categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
-
-        fields = list(set(layerFields).intersection(categoryFields))
-        self.fieldComboBox.addItems(fields)
-        self.agencyComboBox.setCurrentIndex(0)
+    # def set_fields_from_category(self):
+    #
+    #     self.fieldComboBox.clear()
+    #
+    #     selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summBrgyComboBox.currentText())[0]
+    #     layerFields = [field.name() for field in selectedLayer.fields().toList()]
+    #     categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
+    #
+    #     fields = list(set(layerFields).intersection(categoryFields))
+    #     self.fieldComboBox.addItems(fields)
+    #     self.agencyComboBox.setCurrentIndex(0)
 
 
     def set_fields_from_agency_query(self):
@@ -128,20 +130,20 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
         fields = list(set(layerFields).intersection(agencyFields))
         self.queryFieldComboBox.addItems(fields)
-        self.queryCategoryComboBox.setCurrentIndex(0)
+        # self.queryCategoryComboBox.setCurrentIndex(0)
 
 
-    def set_fields_from_category_query(self):
-
-        self.queryFieldComboBox.clear()
-
-        selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
-        layerFields = [field.name() for field in selectedLayer.fields().toList()]
-        categoryFields = indicators.categories_with_indicators_list[self.queryCategoryComboBox.currentIndex()][1]
-
-        fields = list(set(layerFields).intersection(categoryFields))
-        self.queryFieldComboBox.addItems(fields)
-        self.queryAgencyComboBox.setCurrentIndex(0)
+    # def set_fields_from_category_query(self):
+    #
+    #     self.queryFieldComboBox.clear()
+    #
+    #     selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
+    #     layerFields = [field.name() for field in selectedLayer.fields().toList()]
+    #     categoryFields = indicators.categories_with_indicators_list[self.queryCategoryComboBox.currentIndex()][1]
+    #
+    #     fields = list(set(layerFields).intersection(categoryFields))
+    #     self.queryFieldComboBox.addItems(fields)
+    #     self.queryAgencyComboBox.setCurrentIndex(0)
 
 
     def add_field_to_query(self):

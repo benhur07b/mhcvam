@@ -51,11 +51,12 @@ import csv
 9  HIGH_UPPER
 """
 
-indicators_path = os.path.dirname(__file__) + '/indicators.csv'
+# indicators_path = os.path.dirname(__file__) + '/indicators.csv'
 
 class Indicators():
 
-    def __init__(self):
+    def __init__(self, indicators_path):
+        self.indicators_path = indicators_path
         self.unicef_indicators_list = self.get_unicef_indicators_list()
         self.unique_agencies = self.get_unique_agencies()
         self.agencies_with_indicators_list = self.get_agencies_with_indicators_list()
@@ -66,7 +67,7 @@ class Indicators():
         self.color_dict = self.get_indicators_color_dict()
 
     def get_unicef_indicators_list(self):
-        with open(indicators_path, 'rb') as f:
+        with open(self.indicators_path, 'rb') as f:
             reader = csv.reader(f)
             return list(reader)[1:]
 
