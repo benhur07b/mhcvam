@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_barangay_dialog.ui'
 #
-# Created: Mon Mar 13 10:18:21 2017
+# Created: Mon Mar 20 01:29:03 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -35,7 +35,7 @@ class Ui_MHCVAMBarangayDialog(object):
         self.queryBrgyButtonBox = QtGui.QDialogButtonBox(self.brgyQueryTab)
         self.queryBrgyButtonBox.setGeometry(QtCore.QRect(10, 310, 411, 32))
         self.queryBrgyButtonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.queryBrgyButtonBox.setStandardButtons(QtGui.QDialogButtonBox.Ok)
+        self.queryBrgyButtonBox.setStandardButtons(QtGui.QDialogButtonBox.Ok|QtGui.QDialogButtonBox.Reset)
         self.queryBrgyButtonBox.setCenterButtons(False)
         self.queryBrgyButtonBox.setObjectName(_fromUtf8("queryBrgyButtonBox"))
         self.queryBrgyLabel = QtGui.QLabel(self.brgyQueryTab)

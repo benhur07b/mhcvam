@@ -63,6 +63,7 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         self.iface = iface
 
         QObject.connect(self.queryBrgyButtonBox, SIGNAL("accepted()"), self.run_query)
+        QObject.connect(self.queryBrgyButtonBox.button(QDialogButtonBox.Reset), SIGNAL("clicked()"), self.reset_selection)
         QObject.connect(self.queryFieldAdd, SIGNAL("clicked()"), self.add_field_to_query)
         QObject.connect(self.queryFunctionAdd, SIGNAL("clicked()"), self.add_function_to_query)
         QObject.connect(self.summBrgyButtonBox, SIGNAL("accepted()"), self.run_summary)
@@ -170,6 +171,13 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
     def add_function_to_query(self):
 
         self.queryTextEdit.insertPlainText(' {} '.format(self.queryFunctionComboBox.currentText()))
+
+
+    def reset_selection(self):
+
+        hh = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
+        hh.removeSelection()
+        self.queryTextEdit.clear()
 
 
     def run_query(self):

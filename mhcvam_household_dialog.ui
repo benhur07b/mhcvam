@@ -295,9 +295,9 @@
     <widget class="QDialogButtonBox" name="queryHHButtonBox">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>10</x>
        <y>310</y>
-       <width>91</width>
+       <width>411</width>
        <height>32</height>
       </rect>
      </property>
@@ -305,7 +305,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Ok|QDialogButtonBox::Reset</set>
      </property>
      <property name="centerButtons">
       <bool>false</bool>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_household_dialog.ui'
 #
-# Created: Mon Mar 13 10:18:15 2017
+# Created: Sun Mar 19 23:44:01 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -116,9 +116,9 @@ class Ui_MHCVAMHouseholdDialog(object):
         self.hhQueryTab = QtGui.QWidget()
         self.hhQueryTab.setObjectName(_fromUtf8("hhQueryTab"))
         self.queryHHButtonBox = QtGui.QDialogButtonBox(self.hhQueryTab)
-        self.queryHHButtonBox.setGeometry(QtCore.QRect(330, 310, 91, 32))
+        self.queryHHButtonBox.setGeometry(QtCore.QRect(10, 310, 411, 32))
         self.queryHHButtonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.queryHHButtonBox.setStandardButtons(QtGui.QDialogButtonBox.Ok)
+        self.queryHHButtonBox.setStandardButtons(QtGui.QDialogButtonBox.Ok|QtGui.QDialogButtonBox.Reset)
         self.queryHHButtonBox.setCenterButtons(False)
         self.queryHHButtonBox.setObjectName(_fromUtf8("queryHHButtonBox"))
         self.queryHHLabel = QtGui.QLabel(self.hhQueryTab)
