@@ -1,10 +1,56 @@
 INDICATOR_CODE,INDICATOR_NAME,AGENCY,CATEGORY,LOW_LOWER,LOW_UPPER,MEDIUM_LOWER,MEDIUM_UPPER,HIGH_LOWER,HIGH_UPPER
-IND_01,Indicator #1,Agency #1,Risk,1,10,11,30,31,100
-IND_02,Indicator #2,Agency #1,Capacity,1,20,21,50,51,100
-IND_03,Indicator #3,Agency #2,Vulnerability,1,10,11,40,41,100
-IND_04,Indicator #4,Agency #2,Capacity,1,50,51,80,81,100
-IND_05,Indicator #5,Agency #2,Capacity,1,5,6,20,21,100
-IND_06,Indicator #6,Agency #3,Risk,1,20,21,40,41,100
-IND_07,Indicator #7,Agency #3,Risk,1,35,36,70,71,100
-IND_08,Indicator #8,Agency #3,Vulnerability,1,25,26,50,51,100
-IND_09,Indicator #9,Others,Others,1,30,31,50,51,100
+BARANGAY,Barangay Name/Number,UNICEF,Others,,,,,,
+BRGY_E_1_1,Total Male Population per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_1_2,Total Female Population per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_2_1,Total population (under 18-years-old) per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_2_2,Total population (0-6 months old) per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_2_3,Total population (0-12 months old) per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_2_4,Total population (under 5-years-old) per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_2_5,Total population (3-4 years old) per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_2_6,Total population (5-years-old) per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_2_7,Total population (6-11 years old) per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_2_8,Total population (12-17 years old) per barangay,UNICEF,Exposure,,,,,,
+BRGY_E_3,Percentage of barangay population that are indigenous people,UNICEF,Exposure,,,,,,
+BRGY_E_4_1,Structured Neighborhood Play (SNP),UNICEF,Exposure,,,,,,
+BRGY_E_4_2,Day Care Center,UNICEF,Exposure,,,,,,
+BRGY_E_4_3,Elementary School,UNICEF,Exposure,,,,,,
+BRGY_E_4_4,High School,UNICEF,Exposure,,,,,,
+BRGY_E_4_5,Tertiary/College/University,UNICEF,Exposure,,,,,,
+BRGY_E_5,All infrastructure designated as an evacuation center,UNICEF,Exposure,,,,,,
+BRGY_E_6_1,Rural Health Units,UNICEF,Exposure,,,,,,
+BRGY_E_6_2,Barangay Health Station,UNICEF,Exposure,,,,,,
+BRGY_E_6_3,Birthing Clinic,UNICEF,Exposure,,,,,,
+BRGY_E_6_4,Public Hospital,UNICEF,Exposure,,,,,,
+BRGY_E_6_5,Private Hospital,UNICEF,Exposure,,,,,,
+BRGY_E_6_6,Private Clinic,UNICEF,Exposure,,,,,,
+BRGY_E_7,Police Station or Precinct,UNICEF,Exposure,,,,,,
+BRGY_E_8,"Airports, seaports, bus terminals",UNICEF,Exposure,,,,,,
+BRGY_V_1,Measles immunisation coverage rate per barangay,UNICEF,Vulnerability,0.95,1,0.81,0.9499,0,0.8099
+BRGY_V_2,Fully immunised child coverage rate,UNICEF,Vulnerability,0.95,1,0.81,0.9499,0,0.8099
+BRGY_V_3,Combined prevalence of moderate and severe wasting in children 0-59 years old,UNICEF,Vulnerability,0,0.0999,0.1,0.15,0.1501,1
+BRGY_V_4,"Percentage of households in the barangay with unimproved main source of water supple (dug well, unprotected spring, lakes, rivers, rain)",UNICEF,Vulnerability,0,0.18,0.1801,0.4999,0.5,1
+BRGY_V_5,"Percentage of households in the barangay using unsanitary toilet facilities and practices (closed/open pit, open defacation)",UNICEF,Vulnerability,0,0.15,0.1501,0.5999,0.6,1
+BRGY_V_6,Percentage of 3-4 years old who are not in school per barangay,UNICEF,Vulnerability,0,0.1999,0.2,0.58,0.5801,1
+BRGY_V_7,Percentage of 5 years old not enrolled in kinder per barangay,UNICEF,Vulnerability,0,0.207,,,0.2071,1
+BRGY_V_8,Percentage of 6-11 years old not enrolled in school per barangay,UNICEF,Vulnerability,0,0.055,,,0.05501,1
+BRGY_V_9,Percentage of 12-17 years old not enrolled in school per barangay,UNICEF,Vulnerability,0,0.138,,,0.13801,1
+BRGY_V_10,Dropout rate by secondary schools per barangay,UNICEF,Vulnerability,0,0.0782,,,0.078201,1
+BRGY_V_11,Dropout rate by elementary schools per barangay,UNICEF,Vulnerability,0,0.0638,,,0.063801,1
+BRGY_V_12,Number of child labour cases per barangay,UNICEF,Vulnerability,0,15,16,25,26,9999999
+BRGY_V_13_1,Percentage of children under 18 years old with disabilities per barangay,UNICEF,Vulnerability,0,0.1,0.1001,0.15,0.1501,1
+BRGY_V_13_2,Percentage of adults aged 18-59 years old with disabilities per barangay,UNICEF,Vulnerability,0,0.1,0.1001,0.15,0.1501,1
+BRGY_V_14_3,Percentage of senior citizens aged 60 years old and above with disabilities per barangay,UNICEF,Vulnerability,0,0.1,0.1001,0.15,0.1501,1
+BRGY_V_15,Percentage of households in barangay with incomes below poverty threshold,UNICEF,Vulnerability,0,0.15,0.1501,0.25,0.2501,1
+BRGY_C_1,Barangays with organized and trained DRRM teams,UNICEF,Capacity,0,0,1,1,2,2
+BRGY_C_2,Barangays with a community-managed Early Warning System in place,UNICEF,Capacity,,,,,,
+BRGY_C_3,Barangays that have done risk assessment and drafter their DRRM Plans,UNICEF,Capacity,,,,,,
+BRGY_C_4,Barangays that have evacuation plans and done emergency drills as part of preparedness,UNICEF,Capacity,,,,,,
+BRGY_C_5,"Barangays that have Civil Society Organizations (CSO), Non-Government Organizations (NGO), People's Organization and Community-Based Organizations (CBO) involved in DRR Work",UNICEF,Capacity,,,,,,
+BRGY_C_6,Schools with updated preparedness plans as part of School Improvement Plan (SIP),UNICEF,Capacity,,,,,,
+BRGY_C_7,Schools that have evacuation plans and done emergency drills during the year,UNICEF,Capacity,,,,,,
+BRGY_C_8,Barangays with organised and trained Infant and Young Feeding (IYCF) counsellors,UNICEF,Capacity,,,,,,
+BRGY_C_9,Barangays with functional out-patient therapeutic centers for MAM (wasted) and SAM (severely wasted),UNICEF,Capacity,,,,,,
+BRGY_C_10,Barangays with functional Community Health Teams (CHT),UNICEF,Capacity,,,,,,
+BRGY_C_11,Barangays with organised WASH committees and contingency plans,UNICEF,Capacity,,,,,,
+BRGY_C_12,Barangays with functional Barangay Council for the Protection of Children (BCPC),UNICEF,Capacity,,,,,,
+BRGY_C_13,Barangays with operational referral system for incidence of child abuse,UNICEF,Capacity,,,,,,

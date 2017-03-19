@@ -46,6 +46,13 @@ indicators_path_brgy = os.path.dirname(__file__) + '/indicators_barangay.csv'
 
 indicators = Indicators(indicators_path_brgy)
 
+
+# try to solve UnicodeEncodeError in WIN
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
+
+
 class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
     def __init__(self, parent=None, iface=None):
@@ -62,8 +69,10 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
 
         self.agencyComboBox.addItems(indicators.agencies_list)
-        # self.categoryComboBox.addItems(indicators.categories_list)
         self.queryAgencyComboBox.addItems(indicators.agencies_list)
+
+        # Uncomment below if you need Limit by Category (Must Edit GUI)
+        # self.categoryComboBox.addItems(indicators.categories_list)
         # self.queryCategoryComboBox.addItems(indicators.categories_list)
 
         QObject.connect(self.summBrgyComboBox,
@@ -74,13 +83,15 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_agency)
 
-        # QObject.connect(self.categoryComboBox,
-        #                 SIGNAL("currentIndexChanged(QString)"),
-        #                 self.set_fields_from_category)
-
         QObject.connect(self.queryAgencyComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_agency_query)
+
+
+        # Uncomment below if you need Limit by Category (Must Edit GUI)
+        # QObject.connect(self.categoryComboBox,
+        #                 SIGNAL("currentIndexChanged(QString)"),
+        #                 self.set_fields_from_category)
 
         # QObject.connect(self.queryCategoryComboBox,
         #                 SIGNAL("currentIndexChanged(QString)"),
@@ -103,21 +114,9 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         agencyFields = indicators.agencies_with_indicators_list[self.agencyComboBox.currentIndex()][1]
 
         fields = list(set(layerFields).intersection(agencyFields))
-        self.fieldComboBox.addItems(fields)
+        fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+        self.fieldComboBox.addItems(fieldnames)
         # self.categoryComboBox.setCurrentIndex(0)
-
-
-    # def set_fields_from_category(self):
-    #
-    #     self.fieldComboBox.clear()
-    #
-    #     selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summBrgyComboBox.currentText())[0]
-    #     layerFields = [field.name() for field in selectedLayer.fields().toList()]
-    #     categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
-    #
-    #     fields = list(set(layerFields).intersection(categoryFields))
-    #     self.fieldComboBox.addItems(fields)
-    #     self.agencyComboBox.setCurrentIndex(0)
 
 
     def set_fields_from_agency_query(self):
@@ -129,8 +128,24 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         agencyFields = indicators.agencies_with_indicators_list[self.queryAgencyComboBox.currentIndex()][1]
 
         fields = list(set(layerFields).intersection(agencyFields))
-        self.queryFieldComboBox.addItems(fields)
+        fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+        self.queryFieldComboBox.addItems(fieldnames)
         # self.queryCategoryComboBox.setCurrentIndex(0)
+
+
+    # Uncomment below if you need Limit by Category (Must Edit GUI)
+    # def set_fields_from_category(self):
+    #
+    #     self.fieldComboBox.clear()
+    #
+    #     selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summBrgyComboBox.currentText())[0]
+    #     layerFields = [field.name() for field in selectedLayer.fields().toList()]
+    #     categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
+    #
+    #     fields = list(set(layerFields).intersection(categoryFields))
+    #     fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+    #     self.fieldComboBox.addItems(fieldnames)
+    #     self.agencyComboBox.setCurrentIndex(0)
 
 
     # def set_fields_from_category_query(self):
@@ -142,13 +157,14 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
     #     categoryFields = indicators.categories_with_indicators_list[self.queryCategoryComboBox.currentIndex()][1]
     #
     #     fields = list(set(layerFields).intersection(categoryFields))
-    #     self.queryFieldComboBox.addItems(fields)
+    #     fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+    #     self.queryFieldComboBox.addItems(fieldnames)
     #     self.queryAgencyComboBox.setCurrentIndex(0)
 
 
     def add_field_to_query(self):
 
-        self.queryTextEdit.insertPlainText(' "{}" '.format(self.queryFieldComboBox.currentText()))
+        self.queryTextEdit.insertPlainText(' "{}" '.format(indicators.get_indicator_name_from_code(self.queryFieldComboBox.currentText())))
 
 
     def add_function_to_query(self):
@@ -160,7 +176,7 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
         brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
         text = self.queryTextEdit.toPlainText()
-        q = convert_to_query(text)
+        q = indicators.convert_to_query(text)
         query = unicode(q)
         r = QgsFeatureRequest().setFilterExpression(query)
         sel = brgy.getFeatures(r)
@@ -189,7 +205,8 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
         brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.summBrgyComboBox.currentText())[0]
         muniField = self.muniFieldComboBox.currentText()
-        statField = self.fieldComboBox.currentText()
+        statFieldName = self.fieldComboBox.currentText()
+        statField = indicators.get_indicator_code_from_name(statFieldName)
         statField0 = get_field(brgy, statField)
         dissolveField = get_field(brgy, muniField)
         stat = self.statComboBox.currentText()
@@ -266,7 +283,7 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
         processing.runandload("qgis:deleteholes", out1, "memory:")
         out2 = QgsMapLayerRegistry.instance().mapLayersByName("Cleaned")[0]
-        out2.setLayerName("{} ({})".format(stat, statField))
+        out2.setLayerName("{} ({})".format(stat, statFieldName))
         QgsMapLayerRegistry.instance().removeMapLayers([out1.id()])
 
         if self.labelCheckBox.isChecked():

@@ -43,7 +43,14 @@ from mhcvam_unicef_indicators_dialog_form import Ui_MHCVAMUnicefIndicatorsDialog
 
 indicators_path_unicef = os.path.dirname(__file__) + '/indicators_unicef.csv'
 
-indicators = Indicators(indicators_path_unicef)
+indicators = UNICEFBrgyIndicators(indicators_path_unicef)
+
+
+# try to solve UnicodeEncodeError in WIN
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
+
 
 class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
 
@@ -98,8 +105,8 @@ class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
             indicator = self.fieldComboBox.currentText()
 
             # If the current field is an indicator, show cutoffs. Else, don't.
-            if indicator in indicators.get_indicator_codes():
-                i = [x for x in indicators.unicef_indicators_list if x[0] == indicator]
+            if indicator in indicators.get_indicator_names():
+                i = [x for x in indicators.indicators_list if x[1] == indicator]
                 self.lowLower.setText(i[0][4])
                 self.lowUpper.setText(i[0][5])
                 self.mediumLower.setText(i[0][6])
@@ -120,7 +127,8 @@ class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
         agencyFields = indicators.agencies_with_indicators_list[self.agencyComboBox.currentIndex()][1]
 
         fields = list(set(layerFields).intersection(agencyFields))
-        self.fieldComboBox.addItems(fields)
+        fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+        self.fieldComboBox.addItems(fieldnames)
         self.categoryComboBox.setCurrentIndex(0)
         self.show_limits()
 
@@ -134,7 +142,8 @@ class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
         categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
 
         fields = list(set(layerFields).intersection(categoryFields))
-        self.fieldComboBox.addItems(fields)
+        fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+        self.fieldComboBox.addItems(fieldnames)
         self.agencyComboBox.setCurrentIndex(0)
         self.show_limits()
 
@@ -145,51 +154,103 @@ class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
         """
 
         self.fieldComboBox.clear()
+        self.categoryComboBox.setCurrentIndex(0)
+        self.agencyComboBox.setCurrentIndex(0)
         selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.layerComboBox.currentText())[0]
-        for field in selectedLayer.fields().toList():
-            self.fieldComboBox.addItem(field.name())
+        layerFields = [field.name() for field in selectedLayer.fields().toList()]
+        indicatorFields = indicators.get_indicator_codes()
+
+        fields = list(set(layerFields).intersection(indicatorFields))
+        fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+        self.fieldComboBox.addItems(fieldnames)
 
 
-    def missing_cutoffs(self):
+    def check_cutoffs(self):
+        """Checks if the cutoffs are valid"""
 
         cutoffs = [self.lowLower, self.lowUpper, self.mediumLower, self.mediumUpper, self.highLower, self.highUpper]
-        for c in cutoffs:
-            if len(str(c.text())) == 0:
-                return True
 
-        return False
+        tvs = [(len(str(c.text())) == 0) for c in cutoffs]
+
+        # Returns True if there is a lower and upper value, or no values at all
+        with_low = tvs[0] == tvs[1]
+        with_med = tvs[2] == tvs[3]
+        with_high = tvs[4] == tvs[5]
+
+        # Returns True if the lower cutoff is <= the upper cutoff, if there are values
+        # Returns False otherwise or if there is only 1 value
+        try:
+            nums_low = float(cutoffs[0].text()) <= float(cutoffs[1].text())
+        except ValueError:
+            if with_low:
+                nums_low = True
+            else:
+                nums_low = False
+
+        try:
+            nums_med = float(cutoffs[2].text()) <= float(cutoffs[3].text())
+        except ValueError:
+            if with_med:
+                nums_med = True
+            else:
+                nums_med = False
+
+        try:
+            nums_high = float(cutoffs[4].text()) <= float(cutoffs[5].text())
+        except ValueError:
+            if with_high:
+                nums_high = True
+            else:
+                nums_high = False
+
+        # Return True if ALL tests are are True
+        low = with_low and nums_low
+        med = with_med and nums_med
+        high = with_high and nums_high
+
+        return low and med and high
 
 
     def run(self):
 
-        if self.missing_cutoffs():
-            QMessageBox.critical(self.iface.mainWindow(), "WARNING", "CUT-OFF of {} NOT FOUND.".format(self.fieldComboBox.currentText()))
+        if self.check_cutoffs():
+
+            layer = QgsMapLayerRegistry.instance().mapLayersByName(self.layerComboBox.currentText())[0]
+            indicator_name = self.fieldComboBox.currentText()
+            field = indicators.get_indicator_code_from_name(indicator_name)
+
+            indicator = []
+
+            # Add style values there are cutoffs for Low, Medium, or High. Otherwise, pass.
+            try:
+                indicator.append(("Low", float(self.lowLower.text()), float(self.lowUpper.text()), "cyan"))
+            except ValueError:
+                pass
+
+            try:
+                indicator.append(("Medium", float(self.mediumLower.text()), float(self.mediumUpper.text()), "orange"))
+            except ValueError:
+                pass
+
+            try:
+                indicator.append(("High", float(self.highLower.text()), float(self.highUpper.text()), "red"))
+            except ValueError:
+                pass
+
+            ranges = []
+
+            for label, lower, upper, color in indicator:
+
+                sym = QgsSymbolV2.defaultSymbol(layer.geometryType())
+                sym.setColor(QColor(color))
+                rng = QgsRendererRangeV2(lower, upper, sym, "{} ({})".format(label, indicator_name))
+                ranges.append(rng)
+
+            renderer = QgsGraduatedSymbolRendererV2(field, ranges)
+
+            layer.setRendererV2(renderer)
+
+            layer.triggerRepaint()
 
         else:
-            try:
-                assert float(self.lowLower.text()) < float(self.lowUpper.text()) < float(self.mediumLower.text()) < float(self.mediumUpper.text()) < float(self.highLower.text()) < float(self.highUpper.text())
-
-                layer = QgsMapLayerRegistry.instance().mapLayersByName(self.layerComboBox.currentText())[0]
-                field = self.fieldComboBox.currentText()
-                indicator_name = [x[1] for x in indicators.unicef_indicators_list if x[0] ==  self.fieldComboBox.currentText()][0]
-                indicator = [("Low", float(self.lowLower.text()), float(self.lowUpper.text()), "cyan"),
-                             ("Medium", float(self.mediumLower.text()), float(self.mediumUpper.text()), "orange"),
-                             ("High", float(self.highLower.text()), float(self.highUpper.text()), "red")]
-
-                ranges = []
-
-                for label, lower, upper, color in indicator:
-
-                    sym = QgsSymbolV2.defaultSymbol(layer.geometryType())
-                    sym.setColor(QColor(color))
-                    rng = QgsRendererRangeV2(lower, upper, sym, "{} ({})".format(label, indicator_name))
-                    ranges.append(rng)
-
-                renderer = QgsGraduatedSymbolRendererV2(field, ranges)
-
-                layer.setRendererV2(renderer)
-
-                layer.triggerRepaint()
-
-            except AssertionError as e:
-                QMessageBox.critical(self.iface.mainWindow(), "WARNING", "CUT-OFF of {} INVALID.".format(self.fieldComboBox.currentText()))
+            QMessageBox.critical(self.iface.mainWindow(), "WARNING", "INCORRECT CUTOFFS")

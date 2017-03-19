@@ -1,10 +1,42 @@
-INDICATOR_CODE,INDICATOR_NAME,AGENCY,CATEGORY,LOW_LOWER,LOW_UPPER,MEDIUM_LOWER,MEDIUM_UPPER,HIGH_LOWER,HIGH_UPPER
-IND_01,Indicator #1,Agency #1,Risk,1,10,11,30,31,100
-IND_02,Indicator #2,Agency #1,Capacity,1,20,21,50,51,100
-IND_03,Indicator #3,Agency #2,Vulnerability,1,10,11,40,41,100
-IND_04,Indicator #4,Agency #2,Capacity,1,50,51,80,81,100
-IND_05,Indicator #5,Agency #2,Capacity,1,5,6,20,21,100
-IND_06,Indicator #6,Agency #3,Risk,1,20,21,40,41,100
-IND_07,Indicator #7,Agency #3,Risk,1,35,36,70,71,100
-IND_08,Indicator #8,Agency #3,Vulnerability,1,25,26,50,51,100
-IND_09,Indicator #9,Others,Others,1,30,31,50,51,100
+INDICATOR_CODE,INDICATOR_NAME,AGENCY,CATEGORY
+BRGY_HH_ID,Barangay and Household ID,UNICEF,Others
+BARANGAY,Barangay Number,UNICEF,Others
+HOUSEHOLD,Household Control Number,UNICEF,Others
+STREET,Street Name,UNICEF,Others
+RESPONDENT,Name of Respondent,UNICEF,Others
+LONGITUDE,Longitude of household,UNICEF,Others
+LATITUDE,Latitude of househol,UNICEF,Others
+HH_E_1_1,Household with 0 to 6 months old ,UNICEF,Others
+HH_E_1_2,Household with 0 to 12 months old,UNICEF,Others
+HH_E_1_3,Household with under 5 years old,UNICEF,Others
+HH_E_1_4,Household with 3 to 4 years old,UNICEF,Others
+HH_E_1_5,Household with 5 years old,UNICEF,Others
+HH_E_1_6,Household with 6 to 11 years old,UNICEF,Others
+HH_E_1_7,Household with 12 to 17 years old,UNICEF,Others
+HH_E_2,Household type of construction materials used on the outer walls of the house,UNICEF,Others
+HH_E_3,Household who are 4Ps (Conditional Cash Transfer) recipients,UNICEF,Others
+HH_E_4,Household who are Indigenous Peoples (ethnicity),UNICEF,Others
+HH_V_1,Household with 12 month old not fully immunized,UNICEF,Others
+HH_V_2,Household with under 2 years old who have not received at least one dose of measles immunisation,UNICEF,Others
+HH_V_3,Household with 0 to 59 months old,UNICEF,Others
+HH_V_4,Household with pregnant women,UNICEF,Others
+HH_V_5,Household with lactating women,UNICEF,Others
+HH_V_6,Household by access to source of safe water supply,UNICEF,Others
+HH_V_7,Household by type of toilet facility,UNICEF,Others
+HH_V_8,Household with 3 to 4 years old not enrolled in pre-school education,UNICEF,Others
+HH_V_9,Household with 5 years old not enrolled in kinder education,UNICEF,Others
+HH_V_10,Household with 6 to 11 years old not in school,UNICEF,Others
+HH_V_11,Household with 12 to 17 years old not in school,UNICEF,Others
+HH_V_12,Household with no member who reached high school level,UNICEF,Others
+HH_V_13,Household with child/children whose birth has not been registered with the civil registry office,UNICEF,Others
+HH_V_14_1,Household with PWD (children - under 18 years old),UNICEF,Others
+HH_V_14_2,Household with PWD (adult - 18 to 59 years old),UNICEF,Others
+HH_V_14_3,Household with PWD (senior - 60 years old and above),UNICEF,Others
+HH_V_15,Single-headed (solo parent) household by sex of head of the family,UNICEF,Others
+HH_V_16,Household who have experienced hunger or had nothing to eat during reporting period,UNICEF,Others
+HH_V_17,Household whose family income fall below the poverty threshold,UNICEF,Others
+HH_V_18,Household with no access to electricity,UNICEF,Others
+HH_C_1,At least 1 household member with PhilHealth Insurance,UNICEF,Others
+HH_C_2,Household with at least 1 member who has participated in a learning session on emergency preparedness,UNICEF,Others
+HH_C_3,Household with at least 1 adult who has participated in a community DRR activity,UNICEF,Others
+HH_C_4,Household with disaster preparedness kit,UNICEF,Others

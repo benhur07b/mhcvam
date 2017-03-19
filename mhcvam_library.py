@@ -37,6 +37,7 @@ from PyQt4 import uic
 from qgis.core import *
 import os
 import csv
+import re
 
 """
 0  INDICATOR_CODE
@@ -57,34 +58,57 @@ class Indicators():
 
     def __init__(self, indicators_path):
         self.indicators_path = indicators_path
-        self.unicef_indicators_list = self.get_unicef_indicators_list()
+        self.indicators_list = self.get_indicators_list()
         self.unique_agencies = self.get_unique_agencies()
         self.agencies_with_indicators_list = self.get_agencies_with_indicators_list()
         self.agencies_list = [a[0] for a in self.agencies_with_indicators_list]
         self.unique_categories = self.get_unique_categories()
         self.categories_with_indicators_list = self.get_categories_with_indicators_list()
         self.categories_list = [c[0] for c in self.categories_with_indicators_list]
-        self.color_dict = self.get_indicators_color_dict()
 
-    def get_unicef_indicators_list(self):
+
+    def get_indicators_list(self):
         with open(self.indicators_path, 'rb') as f:
             reader = csv.reader(f)
             return list(reader)[1:]
 
     def get_indicator_codes(self):
 
-        return [i[0] for i in self.unicef_indicators_list]
+        return [i[0] for i in self.indicators_list]
+
+    def get_indicator_names(self):
+
+        return [i[1] for i in self.indicators_list]
+
+    def get_indicator_name_from_code(self, indicator_code):
+
+        if indicator_code in self.get_indicator_codes():
+            for i in self.indicators_list:
+                if i[0] == indicator_code:
+                    return i[1]
+        else:
+            return indicator_code
+
+    def get_indicator_code_from_name(self, indicator_name):
+
+        if indicator_name in self.get_indicator_names():
+            for i in self.indicators_list:
+                if i[1] == indicator_name:
+                    return i[0]
+        else:
+            return indicator_name
+
 
     def get_unique_agencies(self):
-        agencies = [a[2] for a in self.unicef_indicators_list]
+        agencies = [a[2] for a in self.indicators_list]
         return sorted(list(set(agencies)))
 
     def get_agencies_with_indicators(self):
         agencies = self.unique_agencies
         agencies_with_indicators = []
         for a in agencies:
-            for i in self.unicef_indicators_list:
-                n = [i[0] for i in self.unicef_indicators_list if i[2] == a]
+            for i in self.indicators_list:
+                n = [i[0] for i in self.indicators_list if i[2] == a]
             agencies_with_indicators.append([a, n])
 
         return agencies_with_indicators
@@ -96,15 +120,15 @@ class Indicators():
         return a
 
     def get_unique_categories(self):
-        categories = [a[3] for a in self.unicef_indicators_list]
+        categories = [a[3] for a in self.indicators_list]
         return sorted(list(set(categories)))
 
     def get_categories_with_indicators(self):
         categories = self.unique_categories
         categories_with_indicators = []
         for c in categories:
-            for i in self.unicef_indicators_list:
-                n = [i[0] for i in self.unicef_indicators_list if i[3] == c]
+            for i in self.indicators_list:
+                n = [i[0] for i in self.indicators_list if i[3] == c]
             categories_with_indicators.append([c, n])
 
         return categories_with_indicators
@@ -115,20 +139,44 @@ class Indicators():
 
         return c
 
+    def convert_to_query(self, text):
+
+        split = splitter(text)
+        split_codes = [self.get_indicator_code_from_name(s.replace('"', '')) for s in split]
+
+        text = " ".join(split_codes)
+        text = text.replace("equal to", "=")
+        text = text.replace(" or ", "")
+        text = text.replace("not ", "!")
+        text = text.replace("greater than", ">")
+        text = text.replace("less than", "<")
+
+        return text
+
+
+class UNICEFBrgyIndicators(Indicators):
+
+    def __init__(self, indicators_path):
+        Indicators.__init__(self, indicators_path)
+        self.color_dict = self.get_indicators_color_dict()
+
+
     def get_indicators_color_dict(self):
-        indicators = self.unicef_indicators_list
+        indicators = self.indicators_list
         color_dict = {}
         for i in indicators:
-            color_dict[i[0]] = (("Low", float(i[4]), float(i[5]),"cyan"),
-                                ("Medium", float(i[6]), float(i[7]),"orange"),
-                                ("High", float(i[8]), float(i[9]),"red"))
+            color_dict[i[0]] = (("Low", get_value(i[4]), get_value(i[5]),"cyan"),
+                                ("Medium", get_value(i[6]), get_value(i[7]),"orange"),
+                                ("High", get_value(i[8]), get_value(i[9]),"red"))
 
         return color_dict
 
-    def get_indicator_name(self, indicator_code):
-        for i in self.unicef_indicators_list:
-            if i[0] == indicator_code:
-                return i[1]
+
+def get_value(num):
+    try:
+        return float(num)
+    except ValueError:
+        return num
 
 
 def get_field(layer, fieldName):
@@ -165,48 +213,6 @@ def copy_vector_layer(layer, outputname):
     QgsMapLayerRegistry.instance().addMapLayer(copylayer)
 
 
-# def add_stat_to_layer(layer, stat, statIndex, summIndex, statDict):
-#
-#     if stat == "PERCENTAGE":
-#         sumDict = {}
-#         total = 0
-#         features = layer.getFeatures()
-#         for f in features:
-#             attr = f.attributes()
-#             sumDict[attr[summIndex]] = sum(statDict[attr[summIndex]])
-#             total += sum(statDict[attr[summIndex]])
-#
-#         features2 = layer.getFeatures()
-#         for f in features2:
-#             layer.startEditing()
-#             attr = f.attributes()
-#             f[statIndex] = round(100.0*sumDict[attr[summIndex]]/total, 2)
-#             layer.updateFeature(f)
-#
-#     else:
-#         features = layer.getFeatures()
-#         for f in features:
-#             try:
-#                 layer.startEditing()
-#                 attr = f.attributes()
-#
-#                 if stat == "SUM":
-#                     f[statIndex] = sum(statDict[attr[summIndex]])
-#                 if stat == "MEAN":
-#                     f[statIndex] = 1.0*sum(statDict[attr[summIndex]])/len(statDict[attr[summIndex]])
-#                 if stat == "MIN":
-#                     f[statIndex] = min(statDict[attr[summIndex]])
-#                 if stat == "MAX":
-#                     f[statIndex] = max(statDict[attr[summIndex]])
-#
-#                 layer.updateFeature()
-#
-#             except:
-#                 pass
-#
-#             layer.commitChanges()
-
-
 def add_labels(layer, stat):
 
     symbol = layer.rendererV2().symbols()[0]
@@ -226,22 +232,25 @@ def add_labels(layer, stat):
     palayer.writeToLayer(layer)
 
 
-def convert_to_query(text):
+# def convert_to_query(text):
+#
+#     text = text.replace("equal to", "=")
+#     text = text.replace(" or ", "")
+#     text = text.replace("not ", "!")
+#     text = text.replace("greater than", ">")
+#     text = text.replace("less than", "<")
+#
+#     return text
 
-    # text.replace("greater than or equal to", ">=")
-    # text.replace("less than or equal to", "<=")
-    # text.replace("not equal to", "!=")
-    # text.replace("equal to", "=")
-    # text.replace("greater than", ">")
-    # text.replace("less than", "<")
 
-    text = text.replace("equal to", "=")
-    text = text.replace(" or ", "")
-    text = text.replace("not ", "!")
-    text = text.replace("greater than", ">")
-    text = text.replace("less than", "<")
+def splitter(s):
 
-    return text
+    def replacer(m):
+        return m.group(0).replace(" ", "\x00")
+
+    parts = re.sub('".+?"', replacer, s).split()
+    parts = [p.replace("\x00", " ") for p in parts]
+    return parts
 
 
 def read_hazard_level(text):

@@ -46,6 +46,13 @@ indicators_path_hh = os.path.dirname(__file__) + '/indicators_household.csv'
 
 indicators = Indicators(indicators_path_hh)
 
+
+# try to solve UnicodeEncodeError in WIN
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
+
+
 class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
     def __init__(self, parent=None, iface=None):
@@ -62,8 +69,10 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         QObject.connect(self.queryFunctionAdd, SIGNAL("clicked()"), self.add_function_to_query)
 
         self.agencyComboBox.addItems(indicators.agencies_list)
-        # self.categoryComboBox.addItems(indicators.categories_list)
         self.queryAgencyComboBox.addItems(indicators.agencies_list)
+
+        # Uncomment below if you need Limit by Category (Must Edit GUI)
+        # self.categoryComboBox.addItems(indicators.categories_list)
         # self.queryCategoryComboBox.addItems(indicators.categories_list)
 
         QObject.connect(self.selectHazardComboBox,
@@ -78,13 +87,14 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_agency)
 
-        # QObject.connect(self.categoryComboBox,
-        #                 SIGNAL("currentIndexChanged(QString)"),
-        #                 self.set_fields_from_category)
-
         QObject.connect(self.queryAgencyComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_fields_from_agency_query)
+
+        # Uncomment below if you need Limit by Category (Must Edit GUI)
+        # QObject.connect(self.categoryComboBox,
+        #                 SIGNAL("currentIndexChanged(QString)"),
+        #                 self.set_fields_from_category)
 
         # QObject.connect(self.queryCategoryComboBox,
         #                 SIGNAL("currentIndexChanged(QString)"),
@@ -92,16 +102,6 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         self.set_hazard()
         self.set_brgy()
-
-
-    def add_field_to_query(self):
-
-        self.queryTextEdit.insertPlainText(' "{}" '.format(self.queryFieldComboBox.currentText()))
-
-
-    def add_function_to_query(self):
-
-        self.queryTextEdit.insertPlainText(' {} '.format(self.queryFunctionComboBox.currentText()))
 
 
     def set_hazard(self):
@@ -125,21 +125,9 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         agencyFields = indicators.agencies_with_indicators_list[self.agencyComboBox.currentIndex()][1]
 
         fields = list(set(layerFields).intersection(agencyFields))
-        self.fieldComboBox.addItems(fields)
+        fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+        self.fieldComboBox.addItems(fieldnames)
         # self.categoryComboBox.setCurrentIndex(0)
-
-
-    # def set_fields_from_category(self):
-    #
-    #     self.fieldComboBox.clear()
-    #
-    #     selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summHHComboBox.currentText())[0]
-    #     layerFields = [field.name() for field in selectedLayer.fields().toList()]
-    #     categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
-    #
-    #     fields = list(set(layerFields).intersection(categoryFields))
-    #     self.fieldComboBox.addItems(fields)
-    #     self.agencyComboBox.setCurrentIndex(0)
 
 
     def set_fields_from_agency_query(self):
@@ -151,10 +139,26 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         agencyFields = indicators.agencies_with_indicators_list[self.queryAgencyComboBox.currentIndex()][1]
 
         fields = list(set(layerFields).intersection(agencyFields))
-        self.queryFieldComboBox.addItems(fields)
+        fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+        self.queryFieldComboBox.addItems(fieldnames)
         # self.queryCategoryComboBox.setCurrentIndex(0)
 
 
+    # Uncomment below if you need Limit by Category (Must Edit GUI)
+    # def set_fields_from_category(self):
+    #
+    #     self.fieldComboBox.clear()
+    #
+    #     selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summHHComboBox.currentText())[0]
+    #     layerFields = [field.name() for field in selectedLayer.fields().toList()]
+    #     categoryFields = indicators.categories_with_indicators_list[self.categoryComboBox.currentIndex()][1]
+    #
+    #     fields = list(set(layerFields).intersection(categoryFields))
+    #     fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+    #     self.fieldComboBox.addItems(fieldnames)
+    #     self.agencyComboBox.setCurrentIndex(0)
+
+    # # Uncomment below if you need Limit by Category (Must Edit GUI)
     # def set_fields_from_category_query(self):
     #
     #     self.queryFieldComboBox.clear()
@@ -164,7 +168,8 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
     #     categoryFields = indicators.categories_with_indicators_list[self.queryCategoryComboBox.currentIndex()][1]
     #
     #     fields = list(set(layerFields).intersection(categoryFields))
-    #     self.queryFieldComboBox.addItems(fields)
+    #     fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
+    #     self.queryFieldComboBox.addItems(fieldnames)
     #     self.queryAgencyComboBox.setCurrentIndex(0)
 
 
@@ -228,33 +233,25 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
             QMessageBox.information(self.iface.mainWindow(), "SUMMARY REPORT", msg)
 
 
+    def add_field_to_query(self):
+
+        self.queryTextEdit.insertPlainText(' "{}" '.format(indicators.get_indicator_name_from_code(self.queryFieldComboBox.currentText())))
+
+
+    def add_function_to_query(self):
+
+        self.queryTextEdit.insertPlainText(' {} '.format(self.queryFunctionComboBox.currentText()))
+
+
     def run_query(self):
 
         hh = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
         text = self.queryTextEdit.toPlainText()
-        q = convert_to_query(text)
+        q = indicators.convert_to_query(text)
         query = unicode(q)
         r = QgsFeatureRequest().setFilterExpression(query)
         sel = hh.getFeatures(r)
         hh.setSelectedFeatures([f.id() for f in sel])
-
-
-    # def convert_to_query(self, text):
-    #
-    #     text.replace("greater than or equal to", ">=")
-    #     text.replace("less than or equal to", "<=")
-    #     text.replace("not equal to", "!=")
-    #     text.replace("equal to", "=")
-    #     text.replace("greater than", ">")
-    #     text.replace("less than", "<")
-    #
-    #     text = text.replace("equal to", "=")
-    #     text = text.replace(" or ", "")
-    #     text = text.replace("not ", "!")
-    #     text = text.replace("greater than", ">")
-    #     text = text.replace("less than", "<")
-    #
-    #     return text
 
 
     def run_summary(self):
@@ -262,7 +259,8 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         hh = QgsMapLayerRegistry.instance().mapLayersByName(self.summHHComboBox.currentText())[0]
         brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.summHHBrgyComboBox.currentText())[0]
         brgyField = self.brgyFieldComboBox.currentText()
-        statField = self.fieldComboBox.currentText()
+        statFieldName = self.fieldComboBox.currentText()
+        statField = indicators.get_indicator_code_from_name(statFieldName)
         statField0 = get_field(hh, statField)
         stat = self.statComboBox.currentText()
 
@@ -283,8 +281,8 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         QgsMapLayerRegistry.instance().removeMapLayers([hhbrgy.id()])
 
-        copy_vector_layer(brgy, "{} ({})".format(stat, statField))
-        out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statField))[0]
+        copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName))
+        out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statFieldName))[0]
 
         res = out1.dataProvider().addAttributes([QgsField(stat, statField0.type())])
         out1.updateFields()
