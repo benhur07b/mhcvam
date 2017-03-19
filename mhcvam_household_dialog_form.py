@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_household_dialog.ui'
 #
-# Created: Sun Mar 19 23:44:01 2017
+# Created: Mon Mar 20 02:08:35 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,13 @@ class Ui_MHCVAMHouseholdDialog(object):
     def setupUi(self, MHCVAMHouseholdDialog):
         MHCVAMHouseholdDialog.setObjectName(_fromUtf8("MHCVAMHouseholdDialog"))
         MHCVAMHouseholdDialog.resize(432, 384)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MHCVAMHouseholdDialog.sizePolicy().hasHeightForWidth())
+        MHCVAMHouseholdDialog.setSizePolicy(sizePolicy)
+        MHCVAMHouseholdDialog.setMinimumSize(QtCore.QSize(432, 384))
+        MHCVAMHouseholdDialog.setMaximumSize(QtCore.QSize(432, 384))
         self.tabWidget = QtGui.QTabWidget(MHCVAMHouseholdDialog)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 431, 381))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))

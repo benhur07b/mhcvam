@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_infrastructures_dialog.ui'
 #
-# Created: Fri Feb 24 07:33:12 2017
+# Created: Mon Mar 20 02:10:23 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,8 @@ class Ui_MHCVAMInfrastructuresDialog(object):
     def setupUi(self, MHCVAMInfrastructuresDialog):
         MHCVAMInfrastructuresDialog.setObjectName(_fromUtf8("MHCVAMInfrastructuresDialog"))
         MHCVAMInfrastructuresDialog.resize(433, 364)
+        MHCVAMInfrastructuresDialog.setMinimumSize(QtCore.QSize(433, 364))
+        MHCVAMInfrastructuresDialog.setMaximumSize(QtCore.QSize(433, 364))
         self.tabWidget = QtGui.QTabWidget(MHCVAMInfrastructuresDialog)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 431, 361))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))

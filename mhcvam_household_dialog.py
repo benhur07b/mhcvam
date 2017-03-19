@@ -80,6 +80,10 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_hazard)
 
+        QObject.connect(self.queryHHComboBox,
+                        SIGNAL("currentIndexChanged(QString)"),
+                        self.change_hh_layer_query)
+
         QObject.connect(self.summHHComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
                         self.set_brgy)
@@ -233,6 +237,14 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
             msg = hh_per_hazard
             QMessageBox.information(self.iface.mainWindow(), "SUMMARY REPORT", msg)
 
+    def change_hh_layer_query(self):
+
+        # self.reset_selection()
+        self.queryFieldComboBox.clear()
+        self.queryAgencyComboBox.setCurrentIndex(0)
+        self.queryFunctionComboBox.setCurrentIndex(0)
+        self.queryTextEdit.clear()
+
 
     def add_field_to_query(self):
 
@@ -246,8 +258,12 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
     def reset_selection(self):
 
+        # Only resets the selection of the current layer in the Household ComboBox
         hh = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
         hh.removeSelection()
+        self.queryFieldComboBox.clear()
+        self.queryAgencyComboBox.setCurrentIndex(0)
+        self.queryFunctionComboBox.setCurrentIndex(0)
         self.queryTextEdit.clear()
 
 

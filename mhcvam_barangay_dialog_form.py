@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_barangay_dialog.ui'
 #
-# Created: Mon Mar 20 01:29:03 2017
+# Created: Mon Mar 20 02:09:24 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,8 @@ class Ui_MHCVAMBarangayDialog(object):
     def setupUi(self, MHCVAMBarangayDialog):
         MHCVAMBarangayDialog.setObjectName(_fromUtf8("MHCVAMBarangayDialog"))
         MHCVAMBarangayDialog.resize(432, 385)
+        MHCVAMBarangayDialog.setMinimumSize(QtCore.QSize(432, 385))
+        MHCVAMBarangayDialog.setMaximumSize(QtCore.QSize(432, 385))
         self.tabWidget = QtGui.QTabWidget(MHCVAMBarangayDialog)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 431, 381))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))

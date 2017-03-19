@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_unicef_indicators_dialog.ui'
 #
-# Created: Thu Feb 23 23:25:39 2017
+# Created: Mon Mar 20 02:11:21 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,8 @@ class Ui_MHCVAMUnicefIndicatorsDialog(object):
     def setupUi(self, MHCVAMUnicefIndicatorsDialog):
         MHCVAMUnicefIndicatorsDialog.setObjectName(_fromUtf8("MHCVAMUnicefIndicatorsDialog"))
         MHCVAMUnicefIndicatorsDialog.resize(425, 359)
+        MHCVAMUnicefIndicatorsDialog.setMinimumSize(QtCore.QSize(425, 359))
+        MHCVAMUnicefIndicatorsDialog.setMaximumSize(QtCore.QSize(425, 359))
         self.buttonBox = QtGui.QDialogButtonBox(MHCVAMUnicefIndicatorsDialog)
         self.buttonBox.setGeometry(QtCore.QRect(10, 320, 411, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)

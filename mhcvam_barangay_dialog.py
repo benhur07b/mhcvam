@@ -76,9 +76,13 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         # self.categoryComboBox.addItems(indicators.categories_list)
         # self.queryCategoryComboBox.addItems(indicators.categories_list)
 
+        QObject.connect(self.queryBrgyComboBox,
+                        SIGNAL("currentIndexChanged(QString)"),
+                        self.change_brgy_layer_query)
+
         QObject.connect(self.summBrgyComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
-                        self.set_muni)
+                        self.set_muni_summary)
 
         QObject.connect(self.agencyComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
@@ -98,10 +102,10 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         #                 SIGNAL("currentIndexChanged(QString)"),
         #                 self.set_fields_from_category_query)
 
-        self.set_muni()
+        self.set_muni_summary()
 
 
-    def set_muni(self):
+    def set_muni_summary(self):
         lyr = QgsMapLayerRegistry.instance().mapLayersByName(self.summBrgyComboBox.currentText())[0]
         self.muniFieldComboBox.setLayer(lyr)
 
@@ -163,6 +167,15 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
     #     self.queryAgencyComboBox.setCurrentIndex(0)
 
 
+    def change_brgy_layer_query(self):
+
+        # self.reset_selection()
+        self.queryFieldComboBox.clear()
+        self.queryAgencyComboBox.setCurrentIndex(0)
+        self.queryFunctionComboBox.setCurrentIndex(0)
+        self.queryTextEdit.clear()
+
+
     def add_field_to_query(self):
 
         self.queryTextEdit.insertPlainText(' "{}" '.format(indicators.get_indicator_name_from_code(self.queryFieldComboBox.currentText())))
@@ -175,8 +188,12 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
     def reset_selection(self):
 
-        hh = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
-        hh.removeSelection()
+        # Only resets the selection of the current layer in the Barangay ComboBox
+        brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
+        brgy.removeSelection()
+        self.queryFieldComboBox.clear()
+        self.queryAgencyComboBox.setCurrentIndex(0)
+        self.queryFunctionComboBox.setCurrentIndex(0)
         self.queryTextEdit.clear()
 
 

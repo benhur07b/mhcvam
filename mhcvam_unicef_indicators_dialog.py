@@ -163,6 +163,7 @@ class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
         fields = list(set(layerFields).intersection(indicatorFields))
         fieldnames = [indicators.get_indicator_name_from_code(f) for f in fields]
         self.fieldComboBox.addItems(fieldnames)
+        self.show_limits()
 
 
     def check_cutoffs(self):
