@@ -61,43 +61,24 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         self.setWindowTitle(self.tr('MHCVAM using UNICEF Indicators (HOUSEHOLD)'))
         self.iface = iface
 
-        self.listWidget_cats = [self.listWidget_exp, self.listWidget_vul, self.listWidget_cap, self.listWidget_oth]
-
         # Set the response of the buttons
         QObject.connect(self.buttonBox, SIGNAL("accepted()"), self.run)
+        QObject.connect(self.selectAllBtn, SIGNAL("clicked()"), self.listWidget.selectAll)
+        QObject.connect(self.deselectAllBtn, SIGNAL("clicked()"), self.listWidget.clearSelection)
 
-        QObject.connect(self.selectAllBtn_exp, SIGNAL("clicked()"), self.listWidget_exp.selectAll)
-        QObject.connect(self.deselectAllBtn_exp, SIGNAL("clicked()"), self.listWidget_exp.clearSelection)
-        QObject.connect(self.selectAllBtn_vul, SIGNAL("clicked()"), self.listWidget_vul.selectAll)
-        QObject.connect(self.deselectAllBtn_vul, SIGNAL("clicked()"), self.listWidget_vul.clearSelection)
-        QObject.connect(self.selectAllBtn_cap, SIGNAL("clicked()"), self.listWidget_cap.selectAll)
-        QObject.connect(self.deselectAllBtn_cap, SIGNAL("clicked()"), self.listWidget_cap.clearSelection)
-        QObject.connect(self.selectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.selectAll)
-        QObject.connect(self.deselectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.clearSelection)
-
-        self.indicators_per_cats = indicators.get_indicators_per_catergory_dict()
-        self.listWidget_exp.addItems(self.indicators_per_cats['Exposure'])
-        self.listWidget_vul.addItems(self.indicators_per_cats['Vulnerability'])
-        self.listWidget_cap.addItems(self.indicators_per_cats['Capacity'])
-        self.listWidget_oth.addItems(self.indicators_per_cats['Others'])
+        self.listWidget.addItems(indicators.get_indicator_names()[7:])
 
 
     def get_indicators_to_add(self):
 
-        # to_add = self.listWidget.selectedIndexes()
-        # to_add_names = [str(x.data()) for x in to_add]
-        # to_add_codes = [indicators.get_indicator_code_from_name(x) for x in to_add_names]
-        # return to_add_codes
-
-        to_add = [x.selectedIndexes() for x in self.listWidget_cats]
-        to_add_names = [str(x.data()) for sublist in to_add for x in sublist]
+        to_add = self.listWidget.selectedIndexes()
+        # return [x.data() for x in to_add]
+        to_add_names = [str(x.data()) for x in to_add]
         to_add_codes = [indicators.get_indicator_code_from_name(x) for x in to_add_names]
         return to_add_codes
 
 
-
     def run(self):
-
 
         hh = QgsMapLayerRegistry.instance().mapLayersByName(self.selectHHComboBox.currentText())[0]
         result_name = self.resultFieldNameLineEdit.text()
@@ -113,44 +94,17 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         for f in features:
             hh.startEditing()
             attr = f.attributes()
-            s = 0
-            for i in indices:
-                try:
-                    s += float(attr[i])
-                except ValueError:
-                    s += 0
+            # s = 0
+            # for i in indices:
+            #     try:
+            #         s += float(attr[i])
+            #     except ValueError:
+            #         s += 0
 
-            f[result_index] = s
-            # f[result_index] = sum(float(attr[i]) for i in indices)
+            f[result_index] = sum(float(attr[i]) for i in indices)
             hh.updateFeature(f)
 
         hh.commitChanges()
-
-
-        # Add Symbology
-
-        high = len(to_add_codes)
-        low = 0
-        medium = high/2
-
-        indicator = [("Low ({} - {})".format(low, medium - 1), low, medium - 1, "cyan"),
-                     ("Medium ({} - {})".format(medium, high - 1), medium, high - 1, "orange"),
-                     ("High (>={})".format(high), high, 9999999, "red")]
-
-        ranges = []
-
-        for label, lower, upper, color in indicator:
-
-            sym = QgsSymbolV2.defaultSymbol(hh.geometryType())
-            sym.setColor(QColor(color))
-            rng = QgsRendererRangeV2(lower, upper, sym, "{}".format(label))
-            ranges.append(rng)
-
-        renderer = QgsGraduatedSymbolRendererV2(result_name, ranges)
-
-        hh.setRendererV2(renderer)
-
-        hh.triggerRepaint()
 
         msg = "{} added to  {}".format(result_name, self.selectHHComboBox.currentText())
         QMessageBox.information(self.iface.mainWindow(), "SUCCESS", msg)

@@ -119,6 +119,13 @@ class Indicators():
 
         return a
 
+    def get_indicators_per_agency_dict(self):
+        agency_dict = {}
+        for a, n in self.get_agencies_with_indicators():
+            agency_dict[c] = n
+
+        return agency_dict
+
     def get_unique_categories(self):
         categories = [a[3] for a in self.indicators_list]
         return sorted(list(set(categories)))
@@ -138,6 +145,19 @@ class Indicators():
         c.insert(0, ["Select Category", ["",""]])
 
         return c
+
+    def get_indicators_per_catergory_dict(self):
+        """Separates categories into Exposure, Vulnerability, Capacity, and Others"""
+        cats_dict = {}
+        cats_dict["Others"] = []
+        for c, n in self.get_categories_with_indicators():
+            if c.capitalize() in ["Exposure", "Vulnerability", "Capacity"]:
+                cats_dict[c] = [self.get_indicator_name_from_code(code) for code in n]
+
+            else:
+                cats_dict["Others"] += [self.get_indicator_name_from_code(code) for code in n]
+
+        return cats_dict
 
     def convert_to_query(self, text):
 

@@ -210,6 +210,7 @@ class MHCVAM:
     def mhcvam_unicef_indicators_household(self):
         """Show dialog for MHCVAM using UNICEF Indicators (Household)"""
 
+        # from mhcvam_unicef_indicators_household_dialog import MHCVAMUnicefIndicatorsHouseholdDialog
         from mhcvam_unicef_indicators_household_dialog import MHCVAMUnicefIndicatorsHouseholdDialog
 
         # Run only if there are layers already loaded into QGIS
