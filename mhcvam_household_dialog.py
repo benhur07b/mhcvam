@@ -261,18 +261,30 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         # Only resets the selection of the current layer in the Household ComboBox
         hh = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
         hh.removeSelection()
+        hh.setSubsetString('')      # remove feature filter
         self.queryFieldComboBox.clear()
         self.queryAgencyComboBox.setCurrentIndex(0)
         self.queryFunctionComboBox.setCurrentIndex(0)
         self.queryTextEdit.clear()
 
+    # def run_query(self):
+    #
+    #     hh = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
+    #     text = self.queryTextEdit.toPlainText()
+    #     q = indicators.convert_to_query(text)
+    #     query = unicode(q)
+    #     r = QgsFeatureRequest().setFilterExpression(query)
+    #     sel = hh.getFeatures(r)
+    #     hh.setSelectedFeatures([f.id() for f in sel])
+
 
     def run_query(self):
-
+        """This version applies a feature filter before selection"""
         hh = QgsMapLayerRegistry.instance().mapLayersByName(self.queryHHComboBox.currentText())[0]
         text = self.queryTextEdit.toPlainText()
         q = indicators.convert_to_query(text)
         query = unicode(q)
+        hh.setSubsetString(query)   # apply feature filter
         r = QgsFeatureRequest().setFilterExpression(query)
         sel = hh.getFeatures(r)
         hh.setSelectedFeatures([f.id() for f in sel])

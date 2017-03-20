@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MHCVAMS for LGU</string>
+   <string>MHCVAM using UNICEF Indicators (BARANGAY)</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">

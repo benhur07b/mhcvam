@@ -256,3 +256,17 @@ def splitter(s):
 def read_hazard_level(text):
 
     return text.capitalize()
+
+
+def clear_all_layer_selection(self):
+
+    lyrs = QgsMapLayerRegistry.instance().mapLayers()
+    for lyr in lyrs:
+        lyrs[lyr].clearSelection()
+
+
+def clear_all_feature_filters(self):
+
+    lyrs = QgsMapLayerRegistry.instance().mapLayers()
+    for lyr in lyrs:
+        lyrs[lyr].setSubsetString('')

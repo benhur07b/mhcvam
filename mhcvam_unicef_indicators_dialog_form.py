@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_unicef_indicators_dialog.ui'
 #
-# Created: Mon Mar 20 02:11:21 2017
+# Created: Mon Mar 20 11:25:20 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -151,7 +151,7 @@ class Ui_MHCVAMUnicefIndicatorsDialog(object):
         QtCore.QMetaObject.connectSlotsByName(MHCVAMUnicefIndicatorsDialog)
 
     def retranslateUi(self, MHCVAMUnicefIndicatorsDialog):
-        MHCVAMUnicefIndicatorsDialog.setWindowTitle(_translate("MHCVAMUnicefIndicatorsDialog", "MHCVAMS for LGU", None))
+        MHCVAMUnicefIndicatorsDialog.setWindowTitle(_translate("MHCVAMUnicefIndicatorsDialog", "MHCVAM using UNICEF Indicators (BARANGAY)", None))
         self.layerLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "Barangay Layer with UNICEF Indicators", None))
         self.fieldLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "UNICEF Indicator", None))
         self.agencyLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "Limit By Agency", None))

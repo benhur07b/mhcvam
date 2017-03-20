@@ -71,6 +71,7 @@ class MHCVAM:
 
         # Declare instance attributes
         self.action_mhcvam_unicef_indicators = None
+        self.action_mhcvam_unicef_indicators_household = None
         self.action_mhcvam_household = None
         self.action_mhcvam_barangay = None
         self.action_mhcvam_infrastructures = None
@@ -132,6 +133,7 @@ class MHCVAM:
 
         # Create the Menu in "Plugins"
         self._create_mhcvam_unicef_indicators_action()
+        self._create_mhcvam_unicef_indicators_household_action()
         self._create_mhcvam_household_action()
         self._create_mhcvam_barangay_action()
         self._create_mhcvam_infrastructures_action()
@@ -158,16 +160,34 @@ class MHCVAM:
         icon = os.path.dirname(__file__) + '/img/icons/icon-unicef-indicators.png'
         self.action_mhcvam_unicef_indicators = QAction(
             QIcon(icon),
-            self.tr('MHCVAM using UNICEF Indicators'),
+            self.tr('MHCVAM using UNICEF Indicators (BARANGAY)'),
             self.iface.mainWindow())
         self.action_mhcvam_unicef_indicators.setStatusTip(
-            self.tr('MHCVAM using UNICEF Indicators'))
+            self.tr('MHCVAM using UNICEF Indicators (BARANGAY)'))
         self.action_mhcvam_unicef_indicators.setWhatsThis(
-            self.tr('Perform MHCVAM using UNICEF Indicators'))
+            self.tr('Perform MHCVAM using UNICEF Indicators (BARANGAY)'))
         self.action_mhcvam_unicef_indicators.triggered.connect(
             self.mhcvam_unicef_indicators)
         self.add_action(
             self.action_mhcvam_unicef_indicators)
+
+
+    def _create_mhcvam_unicef_indicators_household_action(self):
+        """Create action for MHCVAM using UNICEF Indicators (Household)"""
+
+        icon = os.path.dirname(__file__) + '/img/icons/icon-unicef-indicators-household.png'
+        self.action_mhcvam_unicef_indicators_household = QAction(
+            QIcon(icon),
+            self.tr('MHCVAM using UNICEF Indicators (HOUSEHOLD)'),
+            self.iface.mainWindow())
+        self.action_mhcvam_unicef_indicators_household.setStatusTip(
+            self.tr('MHCVAM using UNICEF Indicators (HOUSEHOLD)'))
+        self.action_mhcvam_unicef_indicators_household.setWhatsThis(
+            self.tr('Perform MHCVAM using UNICEF Indicators (HOUSEHOLD)'))
+        self.action_mhcvam_unicef_indicators_household.triggered.connect(
+            self.mhcvam_unicef_indicators_household)
+        self.add_action(
+            self.action_mhcvam_unicef_indicators_household)
 
 
     def mhcvam_unicef_indicators(self):
@@ -178,6 +198,23 @@ class MHCVAM:
         # Run only if there are layers already loaded into QGIS
         if len(QgsMapLayerRegistry.instance().mapLayers()) > 0:
             dialog = MHCVAMUnicefIndicatorsDialog(
+                self.iface.mainWindow(),
+                self.iface)
+            dialog.exec_()
+
+        else:
+            msg = "NO LAYERS FOUND.\n\nAdd layers first before running the plugin."
+            QMessageBox.critical(self.iface.mainWindow(), "WARNING", msg)
+
+
+    def mhcvam_unicef_indicators_household(self):
+        """Show dialog for MHCVAM using UNICEF Indicators (Household)"""
+
+        from mhcvam_unicef_indicators_household_dialog import MHCVAMUnicefIndicatorsHouseholdDialog
+
+        # Run only if there are layers already loaded into QGIS
+        if len(QgsMapLayerRegistry.instance().mapLayers()) > 0:
+            dialog = MHCVAMUnicefIndicatorsHouseholdDialog(
                 self.iface.mainWindow(),
                 self.iface)
             dialog.exec_()

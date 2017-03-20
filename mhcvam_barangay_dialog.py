@@ -191,6 +191,7 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         # Only resets the selection of the current layer in the Barangay ComboBox
         brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
         brgy.removeSelection()
+        brgy.setSubsetString('')    # remove feature filter
         self.queryFieldComboBox.clear()
         self.queryAgencyComboBox.setCurrentIndex(0)
         self.queryFunctionComboBox.setCurrentIndex(0)
@@ -198,14 +199,27 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
 
     def run_query(self):
+        """This version performs a feature filter before selection"""
 
         brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
         text = self.queryTextEdit.toPlainText()
         q = indicators.convert_to_query(text)
         query = unicode(q)
+        brgy.setSubsetString(query)     # apply feature filter
         r = QgsFeatureRequest().setFilterExpression(query)
         sel = brgy.getFeatures(r)
         brgy.setSelectedFeatures([f.id() for f in sel])
+
+
+    # def run_query(self):
+    #
+    #     brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
+    #     text = self.queryTextEdit.toPlainText()
+    #     q = indicators.convert_to_query(text)
+    #     query = unicode(q)
+    #     r = QgsFeatureRequest().setFilterExpression(query)
+    #     sel = brgy.getFeatures(r)
+    #     brgy.setSelectedFeatures([f.id() for f in sel])
 
 
     # def convert_to_query(self, text):
