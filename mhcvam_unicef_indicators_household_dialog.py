@@ -95,39 +95,126 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         return to_add_codes
 
 
+    def get_selected_indicators(self):
+
+        sel_exp = self.listWidget_exp.selectedIndices()
+        sel_exp_names = [str(x.data()) for x in sel_exp]
+        sel_exp_codes = [indicators.get_indicator_code_from_name(x) for x in sel_exp_names]
+
+        sel_vul = self.listWidget_vul.selectedIndices()
+        sel_vul_names = [str(x.data()) for x in sel_vul]
+        sel_vul_codes = [indicators.get_indicator_code_from_name(x) for x in sel_vul_names]
+
+        sel_cap = self.listWidget_cap.selectedIndices()
+        sel_cap_names = [str(x.data()) for x in sel_cap]
+        sel_cap_codes = [indicators.get_indicator_code_from_name(x) for x in sel_cap_names]
+
+        sel_oth = self.listWidget_oth.selectedIndices()
+        sel_oth_names = [str(x.data()) for x in sel_oth]
+        sel_oth_codes = [indicators.get_indicator_code_from_name(x) for x in sel_oth_names]
+
+        return {'Exposure': sel_exp_codes,
+                'Vulnerability': sel_vul_codes,
+                'Capacity': sel_cap_codes,
+                'Others': sel_oth_codes}
+
+
 
     def run(self):
 
         hh = QgsMapLayerRegistry.instance().mapLayersByName(self.selectHHComboBox.currentText())[0]
+        to_add_codes = self.get_indicators_to_add()
+        selected_indicators = self.get_selected_indicators()
+        exp_codes = selected_indicators['Exposure']
+        vul_codes = selected_indicators['Vulnerability']
+        cap_codes = selected_indicators['Capacity']
+        oth_codes = selected_indicators['Others']
+
         result_name = self.resultFieldNameLineEdit.text()
+
+        exp_name = "{}_EXP".format(result_name)
+        res = hh.dataProvider().addAttributes([QgsField(exp_name, QVariant.Double, 'double', 4, 2)])
+        hh.updateFields()
+        exp_index = hh.fieldNameIndex(exp_name)
+
+        vul_name = "{}_VUL".format(result_name)
+        res = hh.dataProvider().addAttributes([QgsField(vul_name, QVariant.Double, 'double', 4, 2)])
+        hh.updateFields()
+        vul_index = hh.fieldNameIndex(vul_name)
+
+        cap_name = "{}_CAP".format(result_name)
+        res = hh.dataProvider().addAttributes([QgsField(cap_name, QVariant.Double, 'double', 4, 2)])
+        hh.updateFields()
+        cap_index = hh.fieldNameIndex(cap_name)
+
+        oth_name = "{}_OTH".format(result_name)
+        res = hh.dataProvider().addAttributes([QgsField(oth_name, QVariant.Double, 'double', 4, 2)])
+        hh.updateFields()
+        oth_index = hh.fieldNameIndex(oth_name)
+
         res = hh.dataProvider().addAttributes([QgsField(result_name, QVariant.Double, 'double', 4, 2)])
         hh.updateFields()
         result_index = hh.fieldNameIndex(result_name)
 
-        to_add_codes = self.get_indicators_to_add()
-
         features = hh.getFeatures()
         indices = [hh.fieldNameIndex(code) for code in to_add_codes]
+        indices_exp = [hh.fieldNameIndex(code) for code in exp_codes]
+        indices_vul = [hh.fieldNameIndex(code) for code in vul_codes]
+        indices_cap = [hh.fieldNameIndex(code) for code in cap_codes]
+        indices_oth = [hh.fieldNameIndex(code) for code in oth_codes]
 
         for f in features:
             hh.startEditing()
             attr = f.attributes()
+
             s = 0
+            s_exp = 0
+            s_vul = 0
+            s_cap = 0
+            s_oth = 0
+
             for i in indices:
+
                 try:
                     s += float(attr[i])
                 except ValueError:
                     s += 0
 
+                if i in indices_exp:
+                    try:
+                        s_exp += float(attr[i])
+                    except ValueError:
+                        s_exp += 0
+
+                if i in indices_vul:
+                    try:
+                        s_vul += float(attr[i])
+                    except ValueError:
+                        s_vul += 0
+
+                if i in indices_cap:
+                    try:
+                        s_cap += float(attr[i])
+                    except ValueError:
+                        s_cap += 0
+
+                if i in indices_oth:
+                    try:
+                        s_oth += float(attr[i])
+                    except ValueError:
+                        s_oth += 0
+
             f[result_index] = s
+            f[exp_index] = s_exp
+            f[vul_index] = s_vul
+            f[cap_index] = s_cap
+            f[oth_index] = s_oth
             # f[result_index] = sum(float(attr[i]) for i in indices)
             hh.updateFeature(f)
 
         hh.commitChanges()
 
-
         # Add Symbology
-
         high = len(to_add_codes)
         low = 0
         medium = high/2
