@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
-    <height>359</height>
+    <width>804</width>
+    <height>318</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>425</width>
-    <height>359</height>
+    <width>804</width>
+    <height>318</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>425</width>
-    <height>359</height>
+    <width>804</width>
+    <height>318</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -28,9 +28,9 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>320</y>
-     <width>411</width>
+     <x>520</x>
+     <y>270</y>
+     <width>271</width>
      <height>32</height>
     </rect>
    </property>
@@ -40,16 +40,13 @@
    <property name="standardButtons">
     <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
-   <property name="centerButtons">
-    <bool>false</bool>
-   </property>
   </widget>
   <widget class="QgsMapLayerComboBox" name="layerComboBox">
    <property name="geometry">
     <rect>
      <x>180</x>
      <y>20</y>
-     <width>241</width>
+     <width>621</width>
      <height>27</height>
     </rect>
    </property>
@@ -122,7 +119,7 @@
     <rect>
      <x>180</x>
      <y>140</y>
-     <width>241</width>
+     <width>621</width>
      <height>27</height>
     </rect>
    </property>
@@ -222,7 +219,7 @@
     <rect>
      <x>180</x>
      <y>60</y>
-     <width>241</width>
+     <width>621</width>
      <height>27</height>
     </rect>
    </property>
@@ -232,7 +229,7 @@
     <rect>
      <x>180</x>
      <y>100</y>
-     <width>241</width>
+     <width>621</width>
      <height>27</height>
     </rect>
    </property>
@@ -240,9 +237,9 @@
   <widget class="QLineEdit" name="lowLower">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>250</x>
      <y>220</y>
-     <width>71</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
@@ -250,7 +247,7 @@
   <widget class="QLabel" name="lowLabel">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>180</x>
      <y>220</y>
      <width>58</width>
      <height>21</height>
@@ -259,14 +256,11 @@
    <property name="text">
     <string>Low</string>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
   </widget>
   <widget class="QLabel" name="lowTo">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>340</x>
      <y>220</y>
      <width>31</width>
      <height>21</height>
@@ -282,9 +276,9 @@
   <widget class="QLineEdit" name="lowUpper">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>370</x>
      <y>220</y>
-     <width>71</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
@@ -292,9 +286,9 @@
   <widget class="QLabel" name="cutoffLabel">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>190</x>
      <y>190</y>
-     <width>241</width>
+     <width>271</width>
      <height>17</height>
     </rect>
    </property>
@@ -308,9 +302,9 @@
   <widget class="QLineEdit" name="mediumLower">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>250</x>
      <y>250</y>
-     <width>71</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
@@ -318,7 +312,7 @@
   <widget class="QLabel" name="mediumLabel">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>180</x>
      <y>250</y>
      <width>58</width>
      <height>21</height>
@@ -327,16 +321,13 @@
    <property name="text">
     <string>Medium</string>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
   </widget>
   <widget class="QLineEdit" name="mediumUpper">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>370</x>
      <y>250</y>
-     <width>71</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
@@ -344,7 +335,7 @@
   <widget class="QLabel" name="mediumTo">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>340</x>
      <y>250</y>
      <width>31</width>
      <height>21</height>
@@ -360,9 +351,9 @@
   <widget class="QLineEdit" name="highLower">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>250</x>
      <y>280</y>
-     <width>71</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
@@ -370,7 +361,7 @@
   <widget class="QLabel" name="highLabel">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>180</x>
      <y>280</y>
      <width>58</width>
      <height>21</height>
@@ -379,16 +370,13 @@
    <property name="text">
     <string>High</string>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
   </widget>
   <widget class="QLineEdit" name="highUpper">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>370</x>
      <y>280</y>
-     <width>71</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
@@ -396,7 +384,7 @@
   <widget class="QLabel" name="highTo">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>340</x>
      <y>280</y>
      <width>31</width>
      <height>21</height>

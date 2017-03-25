@@ -65,6 +65,8 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         QObject.connect(self.queryBrgyButtonBox, SIGNAL("accepted()"), self.run_query)
         QObject.connect(self.queryBrgyButtonBox.button(QDialogButtonBox.Reset), SIGNAL("clicked()"), self.reset_selection)
         QObject.connect(self.queryFieldAdd, SIGNAL("clicked()"), self.add_field_to_query)
+        QObject.connect(self.uniqueValuesButton, SIGNAL("clicked()"), self.get_unique_field_values)
+        QObject.connect(self.queryValueAdd, SIGNAL("clicked()"), self.add_value_to_query)
         QObject.connect(self.queryFunctionAdd, SIGNAL("clicked()"), self.add_function_to_query)
         QObject.connect(self.summBrgyButtonBox, SIGNAL("accepted()"), self.run_summary)
 
@@ -113,6 +115,7 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
     def set_fields_from_agency(self):
 
         self.fieldComboBox.clear()
+        self.uniqueValuesListWidget.clear()
 
         selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.summBrgyComboBox.currentText())[0]
         layerFields = [field.name() for field in selectedLayer.fields().toList()]
@@ -127,6 +130,7 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
     def set_fields_from_agency_query(self):
 
         self.queryFieldComboBox.clear()
+        self.uniqueValuesListWidget.clear()
 
         selectedLayer = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
         layerFields = [field.name() for field in selectedLayer.fields().toList()]
@@ -174,11 +178,38 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         self.queryAgencyComboBox.setCurrentIndex(0)
         self.queryFunctionComboBox.setCurrentIndex(0)
         self.queryTextEdit.clear()
+        self.uniqueValuesListWidget.clear()
 
 
     def add_field_to_query(self):
 
-        self.queryTextEdit.insertPlainText(' "{}" '.format(indicators.get_indicator_name_from_code(self.queryFieldComboBox.currentText())))
+        # self.queryTextEdit.insertPlainText(' "{}" '.format(indicators.get_indicator_name_from_code(self.queryFieldComboBox.currentText())))
+        self.queryTextEdit.insertPlainText(' "{}" '.format(self.queryFieldComboBox.currentText()))
+
+
+    def get_unique_field_values(self):
+
+        self.uniqueValuesListWidget.clear()
+
+        brgy = QgsMapLayerRegistry.instance().mapLayersByName(self.queryBrgyComboBox.currentText())[0]
+        fieldName = self.queryFieldComboBox.currentText()
+        fieldCode = indicators.get_indicator_code_from_name(fieldName)
+        fieldIndex = brgy.fieldNameIndex(fieldCode)
+        fields = []
+
+        features = brgy.getFeatures()
+        for f in features:
+            attr = f.attributes()
+            fields.append(attr[fieldIndex])
+
+        ufields = list(set([str(f) for f in fields]))
+        ufields.sort()
+        self.uniqueValuesListWidget.addItems(ufields)
+
+
+    def add_value_to_query(self):
+
+        self.queryTextEdit.insertPlainText(' {} '.format(self.uniqueValuesListWidget.currentItem().text()))
 
 
     def add_function_to_query(self):
@@ -196,6 +227,7 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         self.queryAgencyComboBox.setCurrentIndex(0)
         self.queryFunctionComboBox.setCurrentIndex(0)
         self.queryTextEdit.clear()
+        self.uniqueValuesListWidget.clear()
 
 
     def run_query(self):

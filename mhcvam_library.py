@@ -172,7 +172,7 @@ class Indicators():
         text = text.replace("less than", "<")
 
         return text
-
+        
 
 class UNICEFBrgyIndicators(Indicators):
 
