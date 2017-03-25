@@ -97,19 +97,19 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
 
     def get_selected_indicators(self):
 
-        sel_exp = self.listWidget_exp.selectedIndices()
+        sel_exp = self.listWidget_exp.selectedIndexes()
         sel_exp_names = [str(x.data()) for x in sel_exp]
         sel_exp_codes = [indicators.get_indicator_code_from_name(x) for x in sel_exp_names]
 
-        sel_vul = self.listWidget_vul.selectedIndices()
+        sel_vul = self.listWidget_vul.selectedIndexes()
         sel_vul_names = [str(x.data()) for x in sel_vul]
         sel_vul_codes = [indicators.get_indicator_code_from_name(x) for x in sel_vul_names]
 
-        sel_cap = self.listWidget_cap.selectedIndices()
+        sel_cap = self.listWidget_cap.selectedIndexes()
         sel_cap_names = [str(x.data()) for x in sel_cap]
         sel_cap_codes = [indicators.get_indicator_code_from_name(x) for x in sel_cap_names]
 
-        sel_oth = self.listWidget_oth.selectedIndices()
+        sel_oth = self.listWidget_oth.selectedIndexes()
         sel_oth_names = [str(x.data()) for x in sel_oth]
         sel_oth_codes = [indicators.get_indicator_code_from_name(x) for x in sel_oth_names]
 
@@ -117,7 +117,6 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
                 'Vulnerability': sel_vul_codes,
                 'Capacity': sel_cap_codes,
                 'Others': sel_oth_codes}
-
 
 
     def run(self):
