@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_barangay_dialog.ui'
 #
-# Created: Sat Mar 25 16:22:05 2017
-#      by: PyQt4 UI code generator 4.10.4
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,9 +25,9 @@ except AttributeError:
 class Ui_MHCVAMBarangayDialog(object):
     def setupUi(self, MHCVAMBarangayDialog):
         MHCVAMBarangayDialog.setObjectName(_fromUtf8("MHCVAMBarangayDialog"))
-        MHCVAMBarangayDialog.resize(823, 504)
+        MHCVAMBarangayDialog.resize(823, 567)
         MHCVAMBarangayDialog.setMinimumSize(QtCore.QSize(823, 504))
-        MHCVAMBarangayDialog.setMaximumSize(QtCore.QSize(823, 504))
+        MHCVAMBarangayDialog.setMaximumSize(QtCore.QSize(823, 567))
         self.tabWidget = QtGui.QTabWidget(MHCVAMBarangayDialog)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 821, 501))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
@@ -217,6 +216,29 @@ class Ui_MHCVAMBarangayDialog(object):
         self.symCheckBox.setGeometry(QtCore.QRect(10, 250, 151, 22))
         self.symCheckBox.setObjectName(_fromUtf8("symCheckBox"))
         self.tabWidget.addTab(self.brgySummarizeTab, _fromUtf8(""))
+        self.label = QtGui.QLabel(MHCVAMBarangayDialog)
+        self.label.setGeometry(QtCore.QRect(620, 510, 201, 51))
+        font = QtGui.QFont()
+        font.setPointSize(5)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label.setFont(font)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setScaledContents(False)
+        self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label.setWordWrap(True)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.logopgs = QtGui.QLabel(MHCVAMBarangayDialog)
+        self.logopgs.setGeometry(QtCore.QRect(220, 510, 51, 51))
+        self.logopgs.setText(_fromUtf8(""))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setObjectName(_fromUtf8("logopgs"))
+        self.logounicef = QtGui.QLabel(MHCVAMBarangayDialog)
+        self.logounicef.setGeometry(QtCore.QRect(10, 510, 201, 51))
+        self.logounicef.setText(_fromUtf8(""))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setObjectName(_fromUtf8("logounicef"))
 
         self.retranslateUi(MHCVAMBarangayDialog)
         self.tabWidget.setCurrentIndex(0)
@@ -256,5 +278,6 @@ class Ui_MHCVAMBarangayDialog(object):
         self.labelCheckBox.setText(_translate("MHCVAMBarangayDialog", "Add Labels", None))
         self.symCheckBox.setText(_translate("MHCVAMBarangayDialog", "Add Symbology", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.brgySummarizeTab), _translate("MHCVAMBarangayDialog", "Summarize", None))
+        self.label.setText(_translate("MHCVAMBarangayDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
 
 from qgis import gui

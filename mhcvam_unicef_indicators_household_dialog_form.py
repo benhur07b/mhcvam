@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_unicef_indicators_household_dialog.ui'
 #
-# Created: Sat Mar 25 16:26:09 2017
-#      by: PyQt4 UI code generator 4.10.4
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,9 +25,9 @@ except AttributeError:
 class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
     def setupUi(self, MHCVAMUnicefIndicatorsHouseholdDialog):
         MHCVAMUnicefIndicatorsHouseholdDialog.setObjectName(_fromUtf8("MHCVAMUnicefIndicatorsHouseholdDialog"))
-        MHCVAMUnicefIndicatorsHouseholdDialog.resize(1004, 531)
+        MHCVAMUnicefIndicatorsHouseholdDialog.resize(1004, 583)
         MHCVAMUnicefIndicatorsHouseholdDialog.setMinimumSize(QtCore.QSize(1004, 531))
-        MHCVAMUnicefIndicatorsHouseholdDialog.setMaximumSize(QtCore.QSize(1004, 531))
+        MHCVAMUnicefIndicatorsHouseholdDialog.setMaximumSize(QtCore.QSize(1004, 583))
         self.buttonBox = QtGui.QDialogButtonBox(MHCVAMUnicefIndicatorsHouseholdDialog)
         self.buttonBox.setGeometry(QtCore.QRect(10, 490, 981, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -66,7 +65,7 @@ class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
         self.selectAllBtn_exp.setGeometry(QtCore.QRect(10, 450, 101, 27))
         self.selectAllBtn_exp.setObjectName(_fromUtf8("selectAllBtn_exp"))
         self.deselectAllBtn_exp = QtGui.QPushButton(MHCVAMUnicefIndicatorsHouseholdDialog)
-        self.deselectAllBtn_exp.setGeometry(QtCore.QRect(120, 450, 101, 27))
+        self.deselectAllBtn_exp.setGeometry(QtCore.QRect(140, 450, 101, 27))
         self.deselectAllBtn_exp.setObjectName(_fromUtf8("deselectAllBtn_exp"))
         self.resultFieldNameLabel = QtGui.QLabel(MHCVAMUnicefIndicatorsHouseholdDialog)
         self.resultFieldNameLabel.setGeometry(QtCore.QRect(10, 60, 131, 31))
@@ -137,20 +136,43 @@ class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
         self.selectAllBtn_vul.setGeometry(QtCore.QRect(260, 450, 101, 27))
         self.selectAllBtn_vul.setObjectName(_fromUtf8("selectAllBtn_vul"))
         self.deselectAllBtn_vul = QtGui.QPushButton(MHCVAMUnicefIndicatorsHouseholdDialog)
-        self.deselectAllBtn_vul.setGeometry(QtCore.QRect(370, 450, 101, 27))
+        self.deselectAllBtn_vul.setGeometry(QtCore.QRect(390, 450, 101, 27))
         self.deselectAllBtn_vul.setObjectName(_fromUtf8("deselectAllBtn_vul"))
         self.selectAllBtn_cap = QtGui.QPushButton(MHCVAMUnicefIndicatorsHouseholdDialog)
         self.selectAllBtn_cap.setGeometry(QtCore.QRect(510, 450, 101, 27))
         self.selectAllBtn_cap.setObjectName(_fromUtf8("selectAllBtn_cap"))
         self.deselectAllBtn_cap = QtGui.QPushButton(MHCVAMUnicefIndicatorsHouseholdDialog)
-        self.deselectAllBtn_cap.setGeometry(QtCore.QRect(620, 450, 101, 27))
+        self.deselectAllBtn_cap.setGeometry(QtCore.QRect(640, 450, 101, 27))
         self.deselectAllBtn_cap.setObjectName(_fromUtf8("deselectAllBtn_cap"))
         self.selectAllBtn_oth = QtGui.QPushButton(MHCVAMUnicefIndicatorsHouseholdDialog)
         self.selectAllBtn_oth.setGeometry(QtCore.QRect(760, 450, 101, 27))
         self.selectAllBtn_oth.setObjectName(_fromUtf8("selectAllBtn_oth"))
         self.deselectAllBtn_oth = QtGui.QPushButton(MHCVAMUnicefIndicatorsHouseholdDialog)
-        self.deselectAllBtn_oth.setGeometry(QtCore.QRect(870, 450, 101, 27))
+        self.deselectAllBtn_oth.setGeometry(QtCore.QRect(890, 450, 101, 27))
         self.deselectAllBtn_oth.setObjectName(_fromUtf8("deselectAllBtn_oth"))
+        self.label = QtGui.QLabel(MHCVAMUnicefIndicatorsHouseholdDialog)
+        self.label.setGeometry(QtCore.QRect(790, 520, 201, 51))
+        font = QtGui.QFont()
+        font.setPointSize(5)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label.setFont(font)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setScaledContents(False)
+        self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label.setWordWrap(True)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.logopgs = QtGui.QLabel(MHCVAMUnicefIndicatorsHouseholdDialog)
+        self.logopgs.setGeometry(QtCore.QRect(220, 520, 51, 51))
+        self.logopgs.setText(_fromUtf8(""))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setObjectName(_fromUtf8("logopgs"))
+        self.logounicef = QtGui.QLabel(MHCVAMUnicefIndicatorsHouseholdDialog)
+        self.logounicef.setGeometry(QtCore.QRect(10, 520, 201, 51))
+        self.logounicef.setText(_fromUtf8(""))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setObjectName(_fromUtf8("logounicef"))
 
         self.retranslateUi(MHCVAMUnicefIndicatorsHouseholdDialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), MHCVAMUnicefIndicatorsHouseholdDialog.accept)
@@ -174,5 +196,6 @@ class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
         self.deselectAllBtn_cap.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Deselect All", None))
         self.selectAllBtn_oth.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Select All", None))
         self.deselectAllBtn_oth.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Deselect All", None))
+        self.label.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
 
 from qgis import gui

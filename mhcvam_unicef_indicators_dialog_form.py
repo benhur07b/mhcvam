@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_unicef_indicators_dialog.ui'
 #
-# Created: Sat Mar 25 16:25:21 2017
-#      by: PyQt4 UI code generator 4.10.4
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,9 +25,9 @@ except AttributeError:
 class Ui_MHCVAMUnicefIndicatorsDialog(object):
     def setupUi(self, MHCVAMUnicefIndicatorsDialog):
         MHCVAMUnicefIndicatorsDialog.setObjectName(_fromUtf8("MHCVAMUnicefIndicatorsDialog"))
-        MHCVAMUnicefIndicatorsDialog.resize(804, 318)
+        MHCVAMUnicefIndicatorsDialog.resize(804, 396)
         MHCVAMUnicefIndicatorsDialog.setMinimumSize(QtCore.QSize(804, 318))
-        MHCVAMUnicefIndicatorsDialog.setMaximumSize(QtCore.QSize(804, 318))
+        MHCVAMUnicefIndicatorsDialog.setMaximumSize(QtCore.QSize(804, 396))
         self.buttonBox = QtGui.QDialogButtonBox(MHCVAMUnicefIndicatorsDialog)
         self.buttonBox.setGeometry(QtCore.QRect(520, 270, 271, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -140,6 +139,29 @@ class Ui_MHCVAMUnicefIndicatorsDialog(object):
         self.highTo.setGeometry(QtCore.QRect(340, 280, 31, 21))
         self.highTo.setAlignment(QtCore.Qt.AlignCenter)
         self.highTo.setObjectName(_fromUtf8("highTo"))
+        self.label = QtGui.QLabel(MHCVAMUnicefIndicatorsDialog)
+        self.label.setGeometry(QtCore.QRect(600, 340, 201, 51))
+        font = QtGui.QFont()
+        font.setPointSize(5)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label.setFont(font)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setScaledContents(False)
+        self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label.setWordWrap(True)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.logopgs = QtGui.QLabel(MHCVAMUnicefIndicatorsDialog)
+        self.logopgs.setGeometry(QtCore.QRect(220, 340, 51, 51))
+        self.logopgs.setText(_fromUtf8(""))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setObjectName(_fromUtf8("logopgs"))
+        self.logounicef = QtGui.QLabel(MHCVAMUnicefIndicatorsDialog)
+        self.logounicef.setGeometry(QtCore.QRect(10, 340, 201, 51))
+        self.logounicef.setText(_fromUtf8(""))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setObjectName(_fromUtf8("logounicef"))
 
         self.retranslateUi(MHCVAMUnicefIndicatorsDialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), MHCVAMUnicefIndicatorsDialog.accept)
@@ -160,5 +182,6 @@ class Ui_MHCVAMUnicefIndicatorsDialog(object):
         self.mediumTo.setText(_translate("MHCVAMUnicefIndicatorsDialog", "to", None))
         self.highLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "High", None))
         self.highTo.setText(_translate("MHCVAMUnicefIndicatorsDialog", "to", None))
+        self.label.setText(_translate("MHCVAMUnicefIndicatorsDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
 
 from qgis import gui

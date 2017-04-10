@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_household_dialog.ui'
 #
-# Created: Sat Mar 25 16:22:03 2017
-#      by: PyQt4 UI code generator 4.10.4
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,14 +25,14 @@ except AttributeError:
 class Ui_MHCVAMHouseholdDialog(object):
     def setupUi(self, MHCVAMHouseholdDialog):
         MHCVAMHouseholdDialog.setObjectName(_fromUtf8("MHCVAMHouseholdDialog"))
-        MHCVAMHouseholdDialog.resize(823, 503)
+        MHCVAMHouseholdDialog.resize(823, 565)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MHCVAMHouseholdDialog.sizePolicy().hasHeightForWidth())
         MHCVAMHouseholdDialog.setSizePolicy(sizePolicy)
-        MHCVAMHouseholdDialog.setMinimumSize(QtCore.QSize(823, 503))
-        MHCVAMHouseholdDialog.setMaximumSize(QtCore.QSize(823, 503))
+        MHCVAMHouseholdDialog.setMinimumSize(QtCore.QSize(823, 565))
+        MHCVAMHouseholdDialog.setMaximumSize(QtCore.QSize(823, 565))
         self.tabWidget = QtGui.QTabWidget(MHCVAMHouseholdDialog)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 821, 501))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
@@ -80,7 +79,7 @@ class Ui_MHCVAMHouseholdDialog(object):
         self.selectOutputNameLabel.setWordWrap(True)
         self.selectOutputNameLabel.setObjectName(_fromUtf8("selectOutputNameLabel"))
         self.selectHHButtonBox = QtGui.QDialogButtonBox(self.hhSelectTab)
-        self.selectHHButtonBox.setGeometry(QtCore.QRect(10, 430, 801, 32))
+        self.selectHHButtonBox.setGeometry(QtCore.QRect(520, 430, 291, 32))
         self.selectHHButtonBox.setOrientation(QtCore.Qt.Horizontal)
         self.selectHHButtonBox.setStandardButtons(QtGui.QDialogButtonBox.Ok)
         self.selectHHButtonBox.setCenterButtons(False)
@@ -243,7 +242,7 @@ class Ui_MHCVAMHouseholdDialog(object):
         self.summHHComboBox.setFilters(gui.QgsMapLayerProxyModel.HasGeometry)
         self.summHHComboBox.setObjectName(_fromUtf8("summHHComboBox"))
         self.brgyFieldLabel = QtGui.QLabel(self.hhSummarizeTab)
-        self.brgyFieldLabel.setGeometry(QtCore.QRect(10, 90, 161, 31))
+        self.brgyFieldLabel.setGeometry(QtCore.QRect(10, 90, 121, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.brgyFieldLabel.setFont(font)
@@ -320,6 +319,29 @@ class Ui_MHCVAMHouseholdDialog(object):
         self.symCheckBox.setGeometry(QtCore.QRect(10, 280, 151, 22))
         self.symCheckBox.setObjectName(_fromUtf8("symCheckBox"))
         self.tabWidget.addTab(self.hhSummarizeTab, _fromUtf8(""))
+        self.logounicef = QtGui.QLabel(MHCVAMHouseholdDialog)
+        self.logounicef.setGeometry(QtCore.QRect(10, 510, 201, 51))
+        self.logounicef.setText(_fromUtf8(""))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setObjectName(_fromUtf8("logounicef"))
+        self.logopgs = QtGui.QLabel(MHCVAMHouseholdDialog)
+        self.logopgs.setGeometry(QtCore.QRect(220, 510, 51, 51))
+        self.logopgs.setText(_fromUtf8(""))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setObjectName(_fromUtf8("logopgs"))
+        self.label = QtGui.QLabel(MHCVAMHouseholdDialog)
+        self.label.setGeometry(QtCore.QRect(620, 510, 201, 51))
+        font = QtGui.QFont()
+        font.setPointSize(5)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label.setFont(font)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setScaledContents(False)
+        self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label.setWordWrap(True)
+        self.label.setObjectName(_fromUtf8("label"))
 
         self.retranslateUi(MHCVAMHouseholdDialog)
         self.tabWidget.setCurrentIndex(0)
@@ -358,7 +380,7 @@ class Ui_MHCVAMHouseholdDialog(object):
         self.queryValueAdd.setText(_translate("MHCVAMHouseholdDialog", "ADD", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.hhQueryTab), _translate("MHCVAMHouseholdDialog", "Query", None))
         self.summHHLabel.setText(_translate("MHCVAMHouseholdDialog", "Household Layer with Indicators", None))
-        self.brgyFieldLabel.setText(_translate("MHCVAMHouseholdDialog", "Barangay Name Field", None))
+        self.brgyFieldLabel.setText(_translate("MHCVAMHouseholdDialog", "Admin Boundaries Name Field", None))
         self.agencyLabel.setText(_translate("MHCVAMHouseholdDialog", "Limit By Agency", None))
         self.fieldLabel.setText(_translate("MHCVAMHouseholdDialog", "Field to Summarize", None))
         self.statLabel.setText(_translate("MHCVAMHouseholdDialog", "Summary Statistic", None))
@@ -367,9 +389,10 @@ class Ui_MHCVAMHouseholdDialog(object):
         self.statComboBox.setItemText(2, _translate("MHCVAMHouseholdDialog", "MIN", None))
         self.statComboBox.setItemText(3, _translate("MHCVAMHouseholdDialog", "MAX", None))
         self.statComboBox.setItemText(4, _translate("MHCVAMHouseholdDialog", "PERCENTAGE", None))
-        self.summHHBrgyLabel.setText(_translate("MHCVAMHouseholdDialog", "Barangay Boundaries", None))
+        self.summHHBrgyLabel.setText(_translate("MHCVAMHouseholdDialog", "Admin Boundaries", None))
         self.labelCheckBox.setText(_translate("MHCVAMHouseholdDialog", "Add Labels", None))
         self.symCheckBox.setText(_translate("MHCVAMHouseholdDialog", "Add Symbology", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.hhSummarizeTab), _translate("MHCVAMHouseholdDialog", "Summarize", None))
+        self.label.setText(_translate("MHCVAMHouseholdDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
 
 from qgis import gui

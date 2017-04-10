@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'mhcvam_infrastructures_dialog.ui'
 #
-# Created: Sat Mar 25 01:55:51 2017
-#      by: PyQt4 UI code generator 4.10.4
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,7 +25,9 @@ except AttributeError:
 class Ui_MHCVAMInfrastructuresDialog(object):
     def setupUi(self, MHCVAMInfrastructuresDialog):
         MHCVAMInfrastructuresDialog.setObjectName(_fromUtf8("MHCVAMInfrastructuresDialog"))
-        MHCVAMInfrastructuresDialog.resize(811, 363)
+        MHCVAMInfrastructuresDialog.resize(811, 426)
+        MHCVAMInfrastructuresDialog.setMinimumSize(QtCore.QSize(811, 426))
+        MHCVAMInfrastructuresDialog.setMaximumSize(QtCore.QSize(811, 426))
         self.tabWidget = QtGui.QTabWidget(MHCVAMInfrastructuresDialog)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 811, 361))
         self.tabWidget.setMinimumSize(QtCore.QSize(811, 361))
@@ -214,6 +215,29 @@ class Ui_MHCVAMInfrastructuresDialog(object):
         self.symCheckBox.setGeometry(QtCore.QRect(10, 270, 131, 22))
         self.symCheckBox.setObjectName(_fromUtf8("symCheckBox"))
         self.tabWidget.addTab(self.infraInBrgyTab, _fromUtf8(""))
+        self.label = QtGui.QLabel(MHCVAMInfrastructuresDialog)
+        self.label.setGeometry(QtCore.QRect(600, 370, 201, 51))
+        font = QtGui.QFont()
+        font.setPointSize(5)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.label.setFont(font)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setScaledContents(False)
+        self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label.setWordWrap(True)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.logopgs = QtGui.QLabel(MHCVAMInfrastructuresDialog)
+        self.logopgs.setGeometry(QtCore.QRect(220, 370, 51, 51))
+        self.logopgs.setText(_fromUtf8(""))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setObjectName(_fromUtf8("logopgs"))
+        self.logounicef = QtGui.QLabel(MHCVAMInfrastructuresDialog)
+        self.logounicef.setGeometry(QtCore.QRect(10, 370, 201, 51))
+        self.logounicef.setText(_fromUtf8(""))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setObjectName(_fromUtf8("logounicef"))
 
         self.retranslateUi(MHCVAMInfrastructuresDialog)
         self.tabWidget.setCurrentIndex(0)
@@ -245,5 +269,6 @@ class Ui_MHCVAMInfrastructuresDialog(object):
         self.labelCheckBox.setText(_translate("MHCVAMInfrastructuresDialog", "Add Labels", None))
         self.symCheckBox.setText(_translate("MHCVAMInfrastructuresDialog", "Add Symbology", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.infraInBrgyTab), _translate("MHCVAMInfrastructuresDialog", "Infrastructures in Barangay", None))
+        self.label.setText(_translate("MHCVAMInfrastructuresDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
 
 from qgis import gui
