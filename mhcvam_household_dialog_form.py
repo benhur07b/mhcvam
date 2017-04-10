@@ -25,14 +25,14 @@ except AttributeError:
 class Ui_MHCVAMHouseholdDialog(object):
     def setupUi(self, MHCVAMHouseholdDialog):
         MHCVAMHouseholdDialog.setObjectName(_fromUtf8("MHCVAMHouseholdDialog"))
-        MHCVAMHouseholdDialog.resize(823, 565)
+        MHCVAMHouseholdDialog.resize(823, 568)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MHCVAMHouseholdDialog.sizePolicy().hasHeightForWidth())
         MHCVAMHouseholdDialog.setSizePolicy(sizePolicy)
         MHCVAMHouseholdDialog.setMinimumSize(QtCore.QSize(823, 565))
-        MHCVAMHouseholdDialog.setMaximumSize(QtCore.QSize(823, 565))
+        MHCVAMHouseholdDialog.setMaximumSize(QtCore.QSize(823, 568))
         self.tabWidget = QtGui.QTabWidget(MHCVAMHouseholdDialog)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 821, 501))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
@@ -322,12 +322,12 @@ class Ui_MHCVAMHouseholdDialog(object):
         self.logounicef = QtGui.QLabel(MHCVAMHouseholdDialog)
         self.logounicef.setGeometry(QtCore.QRect(10, 510, 201, 51))
         self.logounicef.setText(_fromUtf8(""))
-        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/mhcvam/img/logos/unicef-logo.png")))
         self.logounicef.setObjectName(_fromUtf8("logounicef"))
         self.logopgs = QtGui.QLabel(MHCVAMHouseholdDialog)
         self.logopgs.setGeometry(QtCore.QRect(220, 510, 51, 51))
         self.logopgs.setText(_fromUtf8(""))
-        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/mhcvam/img/logos/pgs-logo.png")))
         self.logopgs.setObjectName(_fromUtf8("logopgs"))
         self.label = QtGui.QLabel(MHCVAMHouseholdDialog)
         self.label.setGeometry(QtCore.QRect(620, 510, 201, 51))
@@ -393,6 +393,7 @@ class Ui_MHCVAMHouseholdDialog(object):
         self.labelCheckBox.setText(_translate("MHCVAMHouseholdDialog", "Add Labels", None))
         self.symCheckBox.setText(_translate("MHCVAMHouseholdDialog", "Add Symbology", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.hhSummarizeTab), _translate("MHCVAMHouseholdDialog", "Summarize", None))
-        self.label.setText(_translate("MHCVAMHouseholdDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
+        self.label.setText(_translate("MHCVAMHouseholdDialog", "<html><head/><body><p><span style=\" font-size:6pt;\">This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).</span></p></body></html>", None))
 
 from qgis import gui
+import resources_rc

@@ -231,12 +231,12 @@ class Ui_MHCVAMInfrastructuresDialog(object):
         self.logopgs = QtGui.QLabel(MHCVAMInfrastructuresDialog)
         self.logopgs.setGeometry(QtCore.QRect(220, 370, 51, 51))
         self.logopgs.setText(_fromUtf8(""))
-        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/mhcvam/img/logos/pgs-logo.png")))
         self.logopgs.setObjectName(_fromUtf8("logopgs"))
         self.logounicef = QtGui.QLabel(MHCVAMInfrastructuresDialog)
         self.logounicef.setGeometry(QtCore.QRect(10, 370, 201, 51))
         self.logounicef.setText(_fromUtf8(""))
-        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/mhcvam/img/logos/unicef-logo.png")))
         self.logounicef.setObjectName(_fromUtf8("logounicef"))
 
         self.retranslateUi(MHCVAMInfrastructuresDialog)
@@ -269,6 +269,7 @@ class Ui_MHCVAMInfrastructuresDialog(object):
         self.labelCheckBox.setText(_translate("MHCVAMInfrastructuresDialog", "Add Labels", None))
         self.symCheckBox.setText(_translate("MHCVAMInfrastructuresDialog", "Add Symbology", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.infraInBrgyTab), _translate("MHCVAMInfrastructuresDialog", "Infrastructures in Barangay", None))
-        self.label.setText(_translate("MHCVAMInfrastructuresDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
+        self.label.setText(_translate("MHCVAMInfrastructuresDialog", "<html><head/><body><p><span style=\" font-size:6pt;\">This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).</span></p></body></html>", None))
 
 from qgis import gui
+import resources_rc

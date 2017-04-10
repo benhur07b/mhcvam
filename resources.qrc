@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="plugins/mhcvam" >
+        <file>img/logos/pgs-logo.png</file>
+        <file>img/logos/unicef-logo.png</file>
+    </qresource>
+</RCC>

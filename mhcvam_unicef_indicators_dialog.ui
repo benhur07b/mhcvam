@@ -400,7 +400,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>600</x>
+     <x>590</x>
      <y>340</y>
      <width>201</width>
      <height>51</height>
@@ -418,7 +418,7 @@
     <enum>Qt::LeftToRight</enum>
    </property>
    <property name="text">
-    <string>This plugin was made possible due to the efforts of the United Nations Children's Fund (UNICEF) and the Philippine Geographical Society (PGS).</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:6pt;&quot;&gt;This plugin was made possible due to the efforts of the United Nations Children's Fund (UNICEF) and the Philippine Geographical Society (PGS).&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="scaledContents">
     <bool>false</bool>
@@ -446,7 +446,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>img/logos/pgs-logo.png</pixmap>
+    <pixmap resource="resources.qrc">:/plugins/mhcvam/img/logos/pgs-logo.png</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="logounicef">
@@ -462,7 +462,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>img/logos/unicef-logo.png</pixmap>
+    <pixmap resource="resources.qrc">:/plugins/mhcvam/img/logos/unicef-logo.png</pixmap>
    </property>
   </widget>
  </widget>
@@ -473,7 +473,9 @@
    <header>qgsmaplayercombobox.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

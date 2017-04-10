@@ -25,9 +25,9 @@ except AttributeError:
 class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
     def setupUi(self, MHCVAMUnicefIndicatorsHouseholdDialog):
         MHCVAMUnicefIndicatorsHouseholdDialog.setObjectName(_fromUtf8("MHCVAMUnicefIndicatorsHouseholdDialog"))
-        MHCVAMUnicefIndicatorsHouseholdDialog.resize(1004, 583)
-        MHCVAMUnicefIndicatorsHouseholdDialog.setMinimumSize(QtCore.QSize(1004, 531))
-        MHCVAMUnicefIndicatorsHouseholdDialog.setMaximumSize(QtCore.QSize(1004, 583))
+        MHCVAMUnicefIndicatorsHouseholdDialog.resize(1004, 589)
+        MHCVAMUnicefIndicatorsHouseholdDialog.setMinimumSize(QtCore.QSize(1004, 589))
+        MHCVAMUnicefIndicatorsHouseholdDialog.setMaximumSize(QtCore.QSize(1004, 589))
         self.buttonBox = QtGui.QDialogButtonBox(MHCVAMUnicefIndicatorsHouseholdDialog)
         self.buttonBox.setGeometry(QtCore.QRect(10, 490, 981, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -151,7 +151,7 @@ class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
         self.deselectAllBtn_oth.setGeometry(QtCore.QRect(890, 450, 101, 27))
         self.deselectAllBtn_oth.setObjectName(_fromUtf8("deselectAllBtn_oth"))
         self.label = QtGui.QLabel(MHCVAMUnicefIndicatorsHouseholdDialog)
-        self.label.setGeometry(QtCore.QRect(790, 520, 201, 51))
+        self.label.setGeometry(QtCore.QRect(790, 530, 201, 51))
         font = QtGui.QFont()
         font.setPointSize(5)
         font.setBold(False)
@@ -164,14 +164,14 @@ class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
         self.label.setWordWrap(True)
         self.label.setObjectName(_fromUtf8("label"))
         self.logopgs = QtGui.QLabel(MHCVAMUnicefIndicatorsHouseholdDialog)
-        self.logopgs.setGeometry(QtCore.QRect(220, 520, 51, 51))
+        self.logopgs.setGeometry(QtCore.QRect(220, 530, 51, 51))
         self.logopgs.setText(_fromUtf8(""))
-        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/mhcvam/img/logos/pgs-logo.png")))
         self.logopgs.setObjectName(_fromUtf8("logopgs"))
         self.logounicef = QtGui.QLabel(MHCVAMUnicefIndicatorsHouseholdDialog)
-        self.logounicef.setGeometry(QtCore.QRect(10, 520, 201, 51))
+        self.logounicef.setGeometry(QtCore.QRect(10, 530, 201, 51))
         self.logounicef.setText(_fromUtf8(""))
-        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/mhcvam/img/logos/unicef-logo.png")))
         self.logounicef.setObjectName(_fromUtf8("logounicef"))
 
         self.retranslateUi(MHCVAMUnicefIndicatorsHouseholdDialog)
@@ -196,6 +196,7 @@ class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
         self.deselectAllBtn_cap.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Deselect All", None))
         self.selectAllBtn_oth.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Select All", None))
         self.deselectAllBtn_oth.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Deselect All", None))
-        self.label.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
+        self.label.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "<html><head/><body><p><span style=\" font-size:6pt;\">This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).</span></p></body></html>", None))
 
 from qgis import gui
+import resources_rc

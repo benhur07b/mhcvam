@@ -140,7 +140,7 @@ class Ui_MHCVAMUnicefIndicatorsDialog(object):
         self.highTo.setAlignment(QtCore.Qt.AlignCenter)
         self.highTo.setObjectName(_fromUtf8("highTo"))
         self.label = QtGui.QLabel(MHCVAMUnicefIndicatorsDialog)
-        self.label.setGeometry(QtCore.QRect(600, 340, 201, 51))
+        self.label.setGeometry(QtCore.QRect(590, 340, 201, 51))
         font = QtGui.QFont()
         font.setPointSize(5)
         font.setBold(False)
@@ -155,12 +155,12 @@ class Ui_MHCVAMUnicefIndicatorsDialog(object):
         self.logopgs = QtGui.QLabel(MHCVAMUnicefIndicatorsDialog)
         self.logopgs.setGeometry(QtCore.QRect(220, 340, 51, 51))
         self.logopgs.setText(_fromUtf8(""))
-        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/pgs-logo.png")))
+        self.logopgs.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/mhcvam/img/logos/pgs-logo.png")))
         self.logopgs.setObjectName(_fromUtf8("logopgs"))
         self.logounicef = QtGui.QLabel(MHCVAMUnicefIndicatorsDialog)
         self.logounicef.setGeometry(QtCore.QRect(10, 340, 201, 51))
         self.logounicef.setText(_fromUtf8(""))
-        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8("img/logos/unicef-logo.png")))
+        self.logounicef.setPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/mhcvam/img/logos/unicef-logo.png")))
         self.logounicef.setObjectName(_fromUtf8("logounicef"))
 
         self.retranslateUi(MHCVAMUnicefIndicatorsDialog)
@@ -182,6 +182,7 @@ class Ui_MHCVAMUnicefIndicatorsDialog(object):
         self.mediumTo.setText(_translate("MHCVAMUnicefIndicatorsDialog", "to", None))
         self.highLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "High", None))
         self.highTo.setText(_translate("MHCVAMUnicefIndicatorsDialog", "to", None))
-        self.label.setText(_translate("MHCVAMUnicefIndicatorsDialog", "This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).", None))
+        self.label.setText(_translate("MHCVAMUnicefIndicatorsDialog", "<html><head/><body><p><span style=\" font-size:6pt;\">This plugin was made possible due to the efforts of the United Nations Children\'s Fund (UNICEF) and the Philippine Geographical Society (PGS).</span></p></body></html>", None))
 
 from qgis import gui
+import resources_rc
