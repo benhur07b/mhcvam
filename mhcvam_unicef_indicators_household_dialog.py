@@ -41,7 +41,7 @@ from mhcvam_library import *
 
 from mhcvam_unicef_indicators_household_dialog_form import Ui_MHCVAMUnicefIndicatorsHouseholdDialog
 
-indicators_path_unicef = os.path.dirname(__file__) + '/indicators_household.csv'
+indicators_path_unicef = os.path.dirname(__file__) + '/indicators_unicef_household.csv'
 
 indicators = Indicators(indicators_path_unicef)
 

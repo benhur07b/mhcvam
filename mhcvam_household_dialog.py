@@ -15,7 +15,7 @@
 /***************************************************************************
  mhcvam_household_dialog.py
 
- Contains the logic for the household-level analysis
+ Contains the logic for the Household-level Hazard and Vulnerability Analysis
 ***************************************************************************/
 
 /***************************************************************************
@@ -59,7 +59,7 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         QDialog.__init__(self, parent)
         self.parent = parent
         self.setupUi(self)
-        self.setWindowTitle(self.tr('Household-level Analysis'))
+        self.setWindowTitle(self.tr('Household-level Hazard and Vulnerability Analysis'))
         self.iface = iface
 
         QObject.connect(self.selectHHButtonBox, SIGNAL("accepted()"), self.run_select)

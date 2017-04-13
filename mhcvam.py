@@ -227,17 +227,17 @@ class MHCVAM:
 
     '''Household Methods'''
     def _create_mhcvam_household_action(self):
-        """Create action for Household-level Analysis"""
+        """Create action for Household-level Hazard and Vulnerability Analysis"""
 
         icon = os.path.dirname(__file__) + '/img/icons/icon-household.png'
         self.action_mhcvam_household = QAction(
             QIcon(icon),
-            self.tr('Household-level Analysis'),
+            self.tr('Household-level Hazard and Vulnerability Analysis'),
             self.iface.mainWindow())
         self.action_mhcvam_household.setStatusTip(
-            self.tr('Household-level Analysis'))
+            self.tr('Household-level Hazard and Vulnerability Analysis'))
         self.action_mhcvam_household.setWhatsThis(
-            self.tr('Perform Household-level Analysis'))
+            self.tr('Perform Household-level Hazard and Vulnerability Analysis'))
         self.action_mhcvam_household.triggered.connect(
             self.mhcvam_household)
         self.add_action(
@@ -245,7 +245,7 @@ class MHCVAM:
 
 
     def mhcvam_household(self):
-        """Show dialog for Household-level Analysis"""
+        """Show dialog for Household-level Hazard and Vulnerability Analysis"""
 
         from mhcvam_household_dialog import MHCVAMHouseholdDialog
 
@@ -263,17 +263,17 @@ class MHCVAM:
 
     '''Barangay Methods'''
     def _create_mhcvam_barangay_action(self):
-        """Create action for Barangay-level Analysis"""
+        """Create action for Barangay-level Hazard and Vulnerability Analysis"""
 
         icon = os.path.dirname(__file__) + '/img/icons/icon-barangay.png'
         self.action_mhcvam_barangay = QAction(
             QIcon(icon),
-            self.tr('Barangay-level Analysis'),
+            self.tr('Barangay-level Hazard and Vulnerability Analysis'),
             self.iface.mainWindow())
         self.action_mhcvam_barangay.setStatusTip(
-            self.tr('Barangay-level Analysis'))
+            self.tr('Barangay-level Hazard and Vulnerability Analysis'))
         self.action_mhcvam_barangay.setWhatsThis(
-            self.tr('Perform Barangay-level Analysis'))
+            self.tr('Perform Barangay-level Hazard and Vulnerability Analysis'))
         self.action_mhcvam_barangay.triggered.connect(
             self.mhcvam_barangay)
         self.add_action(
@@ -281,7 +281,7 @@ class MHCVAM:
 
 
     def mhcvam_barangay(self):
-        """Show dialog for Barangay-level Analysis"""
+        """Show dialog for Barangay-level Hazard and Vulnerability Analysis"""
 
         from mhcvam_barangay_dialog import MHCVAMBarangayDialog
 
@@ -299,7 +299,7 @@ class MHCVAM:
 
     '''Infrastructures Methods'''
     def _create_mhcvam_infrastructures_action(self):
-        """Create action for Infrastructures Risk Analysis"""
+        """Create action for Infrastructures Hazard Analysis"""
 
         icon = os.path.dirname(__file__) + '/img/icons/icon-infrastructures.png'
         self.action_mhcvam_infrastructures = QAction(
@@ -307,7 +307,7 @@ class MHCVAM:
             self.tr('Infrastructures Hazard Analysis'),
             self.iface.mainWindow())
         self.action_mhcvam_infrastructures.setStatusTip(
-            self.tr('Infrastructures Hazar Analysis'))
+            self.tr('Infrastructures Hazard Analysis'))
         self.action_mhcvam_infrastructures.setWhatsThis(
             self.tr('Perform Infrastructures Hazard Analysis'))
         self.action_mhcvam_infrastructures.triggered.connect(
@@ -317,7 +317,7 @@ class MHCVAM:
 
 
     def mhcvam_infrastructures(self):
-        """Show dialog for Infratructures Risk Analysis"""
+        """Show dialog for Infratructures Hazard Analysis"""
 
         from mhcvam_infrastructures_dialog import MHCVAMInfrastructuresDialog
 

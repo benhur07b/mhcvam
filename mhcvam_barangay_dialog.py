@@ -15,7 +15,7 @@
 /***************************************************************************
  mhcvam_barangay_dialog.py
 
- Contains the logic for the barangay-level analysis
+ Contains the logic for the Barangay-level Hazard and Vulnerability Analysis
 ***************************************************************************/
 
 /***************************************************************************
@@ -59,7 +59,7 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
         QDialog.__init__(self, parent)
         self.parent = parent
         self.setupUi(self)
-        self.setWindowTitle(self.tr('Barangay-level Analysis'))
+        self.setWindowTitle(self.tr('Barangay-level Hazard and Vulnerability Analysis'))
         self.iface = iface
 
         QObject.connect(self.queryBrgyButtonBox, SIGNAL("accepted()"), self.run_query)

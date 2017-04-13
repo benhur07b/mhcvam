@@ -41,7 +41,7 @@ from mhcvam_library import *
 
 from mhcvam_unicef_indicators_dialog_form import Ui_MHCVAMUnicefIndicatorsDialog
 
-indicators_path_unicef = os.path.dirname(__file__) + '/indicators_unicef.csv'
+indicators_path_unicef = os.path.dirname(__file__) + '/indicators_unicef_barangay.csv'
 
 indicators = UNICEFBrgyIndicators(indicators_path_unicef)
 
