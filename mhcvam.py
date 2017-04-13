@@ -72,8 +72,8 @@ class MHCVAM:
         # Declare instance attributes
         self.action_mhcvam_unicef_indicators = None
         self.action_mhcvam_unicef_indicators_household = None
-        self.action_mhcvam_household = None
         self.action_mhcvam_barangay = None
+        self.action_mhcvam_household = None
         self.action_mhcvam_infrastructures = None
         self.actions = []
         self.menu = self.tr(u'&MHCVAM')
@@ -134,8 +134,8 @@ class MHCVAM:
         # Create the Menu in "Plugins"
         self._create_mhcvam_unicef_indicators_action()
         self._create_mhcvam_unicef_indicators_household_action()
-        self._create_mhcvam_household_action()
         self._create_mhcvam_barangay_action()
+        self._create_mhcvam_household_action()
         self._create_mhcvam_infrastructures_action()
 
 
