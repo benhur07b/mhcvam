@@ -172,7 +172,7 @@ class Indicators():
         text = text.replace("less than", "<")
 
         return text
-        
+
 
 class UNICEFBrgyIndicators(Indicators):
 
@@ -217,6 +217,21 @@ def get_list_of_fields(layer, fields):
         fieldsList.append(fList)
 
     return fieldsList
+
+
+def remove_other_fields_summary(layer, adminField):
+
+    f = layer.fields().toList()
+    fields = range(len(f))
+
+    adminIndex = layer.fieldNameIndex(adminField)
+
+    fields.remove(adminIndex)
+    fields.remove(len(f) - 1)
+
+    res = layer.dataProvider().deleteAttributes(fields)
+
+    layer.updateFields()
 
 
 def copy_vector_layer(layer, outputname):

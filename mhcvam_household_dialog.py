@@ -429,3 +429,6 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         if self.symCheckBox.isChecked():
             pass
+
+
+        remove_other_fields_summary(out1, brgyField)

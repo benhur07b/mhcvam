@@ -362,3 +362,6 @@ class MHCVAMBarangayDialog(QDialog, Ui_MHCVAMBarangayDialog):
 
         if self.symCheckBox.isChecked():
             pass
+
+        # Delete other fields
+        remove_other_fields_summary(out2, muniField)
