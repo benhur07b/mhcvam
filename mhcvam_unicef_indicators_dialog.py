@@ -64,6 +64,7 @@ class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
         # Set the response of the OK and Apply buttons
         QObject.connect(self.buttonBox, SIGNAL("accepted()"), self.run)
         QObject.connect(self.buttonBox.button(QDialogButtonBox.Apply), SIGNAL("clicked()"), self.run)
+        QObject.connect(self.buttonBox.button(QDialogButtonBox.Reset), SIGNAL("clicked()"), self.reset_map)
 
         self.agencyComboBox.addItems(indicators.agencies_list)
         self.categoryComboBox.addItems(indicators.categories_list)
@@ -210,6 +211,24 @@ class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
         high = with_high and nums_high
 
         return low and med and high
+
+
+    def reset_map(self):
+
+        layer = QgsMapLayerRegistry.instance().mapLayersByName(self.layerComboBox.currentText())[0]
+        sym = QgsSymbolV2.defaultSymbol(layer.geometryType())
+        renderer = QgsSingleSymbolRendererV2(sym)
+
+        # create a new simple marker symbol layer, a green circle with a black border
+        properties = {'color': 'green', 'color_border': 'black'}
+        sym_layer = QgsSimpleFillSymbolLayerV2.create(properties)
+
+        # assign the symbol layer to the symbol
+        renderer.symbols()[0].changeSymbolLayer(0, sym_layer)
+
+        # assign the renderer to the layer
+        layer.setRendererV2(renderer)
+        layer.triggerRepaint()
 
 
     def run(self):
