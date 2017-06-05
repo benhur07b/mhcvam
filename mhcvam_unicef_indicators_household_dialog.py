@@ -124,53 +124,52 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         hh = QgsMapLayerRegistry.instance().mapLayersByName(self.selectHHComboBox.currentText())[0]
         to_add_codes = self.get_indicators_to_add()
         selected_indicators = self.get_selected_indicators()
+
         exp_codes = selected_indicators['Exposure']
         vul_codes = selected_indicators['Vulnerability']
         cap_codes = selected_indicators['Capacity']
         oth_codes = selected_indicators['Others']
 
         result_name = self.resultFieldNameLineEdit.text()
-
         exp_name = "{}_EXP".format(result_name)
-        res = hh.dataProvider().addAttributes([QgsField(exp_name, QVariant.Double, 'double', 4, 2)])
-        hh.updateFields()
-        exp_index = hh.fieldNameIndex(exp_name)
-
         vul_name = "{}_VUL".format(result_name)
-        res = hh.dataProvider().addAttributes([QgsField(vul_name, QVariant.Double, 'double', 4, 2)])
-        hh.updateFields()
-        vul_index = hh.fieldNameIndex(vul_name)
-
         cap_name = "{}_CAP".format(result_name)
-        res = hh.dataProvider().addAttributes([QgsField(cap_name, QVariant.Double, 'double', 4, 2)])
-        hh.updateFields()
-        cap_index = hh.fieldNameIndex(cap_name)
-
         oth_name = "{}_OTH".format(result_name)
-        res = hh.dataProvider().addAttributes([QgsField(oth_name, QVariant.Double, 'double', 4, 2)])
-        hh.updateFields()
-        oth_index = hh.fieldNameIndex(oth_name)
 
-        res = hh.dataProvider().addAttributes([QgsField(result_name, QVariant.Double, 'double', 4, 2)])
-        hh.updateFields()
-        result_index = hh.fieldNameIndex(result_name)
-
-        features = hh.getFeatures()
-        indices = [hh.fieldNameIndex(code) for code in to_add_codes]
         indices_exp = [hh.fieldNameIndex(code) for code in exp_codes]
         indices_vul = [hh.fieldNameIndex(code) for code in vul_codes]
         indices_cap = [hh.fieldNameIndex(code) for code in cap_codes]
         indices_oth = [hh.fieldNameIndex(code) for code in oth_codes]
 
+        self.compute_risk(hh, exp_name, indices_exp)
+        self.compute_risk(hh, vul_name, indices_vul)
+        self.compute_risk(hh, cap_name, indices_cap)
+
+
+    def compute_risk(self, hh, name, indices):
+
+        # copy vector to new layer
+        copy_vector_layer(hh, name, "Point")
+        layer = QgsMapLayerRegistry.instance().mapLayersByName(name)[0]
+
+        # add other fields
+        res = layer.dataProvider().addAttributes([QgsField("TOTAL", QVariant.Double, 'double', 4, 2)])
+        layer.updateFields()
+
+        res = layer.dataProvider().addAttributes([QgsField("RISK", QVariant.String)])
+        layer.updateFields()
+
+        totfield = layer.fieldNameIndex("TOTAL")
+        riskfield = layer.fieldNameIndex("RISK")
+
+        # count values
+        features = layer.getFeatures()
         for f in features:
-            hh.startEditing()
+
+            layer.startEditing()
             attr = f.attributes()
 
             s = 0
-            s_exp = 0
-            s_vul = 0
-            s_cap = 0
-            s_oth = 0
 
             for i in indices:
 
@@ -179,63 +178,170 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
                 except ValueError:
                     s += 0
 
-                if i in indices_exp:
-                    try:
-                        s_exp += float(attr[i])
-                    except ValueError:
-                        s_exp += 0
+            f[totfield] = s
 
-                if i in indices_vul:
-                    try:
-                        s_vul += float(attr[i])
-                    except ValueError:
-                        s_vul += 0
+            s_perc = 100.0 * (s/len(indices))
+            if s_perc < 33.33:
+                f[riskfield] = "LOW"
 
-                if i in indices_cap:
-                    try:
-                        s_cap += float(attr[i])
-                    except ValueError:
-                        s_cap += 0
+            elif s_perc >= 33.33 and s_perc < 66.66:
+                f[riskfield] = "MEDIUM"
 
-                if i in indices_oth:
-                    try:
-                        s_oth += float(attr[i])
-                    except ValueError:
-                        s_oth += 0
+            else:
+                f[riskfield] = "HIGH"
 
-            f[result_index] = s
-            f[exp_index] = s_exp
-            f[vul_index] = s_vul
-            f[cap_index] = s_cap
-            f[oth_index] = s_oth
-            # f[result_index] = sum(float(attr[i]) for i in indices)
-            hh.updateFeature(f)
+            layer.updateFeature(f)
+        layer.commitChanges()
 
-        hh.commitChanges()
 
-        # Add Symbology
-        high = len(to_add_codes)
-        low = 0
-        medium = high/2
+        # remove unwanted fields
+        f = layer.fields().toList()
+        fields = range(len(f))
 
-        indicator = [("Low ({} - {})".format(low, medium - 1), low, medium - 1, "cyan"),
-                     ("Medium ({} - {})".format(medium, high - 1), medium, high - 1, "orange"),
-                     ("High (>={})".format(high), high, 9999999, "red")]
+        const = ["BRGY_HH_ID", "BARANGAY", "HOUSEHOLD", "STREET", "RESPONDENT", "TOTAL", "RISK"]
+        indices_constant = [layer.fieldNameIndex(code) for code in const]
 
-        ranges = []
+        for c in indices_constant:
+            fields.remove(c)
 
-        for label, lower, upper, color in indicator:
+        res = layer.dataProvider().deleteAttributes(fields)
+        layer.updateFields()
 
-            sym = QgsSymbolV2.defaultSymbol(hh.geometryType())
+        # Add symbology
+        risks = [("LOW", "cyan", "LOW"),
+                 ("MEDIUM", "orange", "MEDIUM"),
+                 ("HIGH", "red", "HIGH")]
+
+        categories = []
+        for risk, color, label in risks:
+            sym = QgsSymbolV2.defaultSymbol(layer.geometryType())
             sym.setColor(QColor(color))
-            rng = QgsRendererRangeV2(lower, upper, sym, "{}".format(label))
-            ranges.append(rng)
+            cat = QgsRendererCategoryV2(risk, sym, label)
+            categories.append(cat)
 
-        renderer = QgsGraduatedSymbolRendererV2(result_name, ranges)
+        renderer = QgsCategorizedSymbolRendererV2("RISK", categories)
+        layer.setRendererV2(renderer)
+        layer.triggerRepaint()
 
-        hh.setRendererV2(renderer)
 
-        hh.triggerRepaint()
 
-        msg = "{} added to  {}".format(result_name, self.selectHHComboBox.currentText())
-        QMessageBox.information(self.iface.mainWindow(), "SUCCESS", msg)
+    # def run(self):
+    #
+    #     hh = QgsMapLayerRegistry.instance().mapLayersByName(self.selectHHComboBox.currentText())[0]
+    #     to_add_codes = self.get_indicators_to_add()
+    #     selected_indicators = self.get_selected_indicators()
+    #     exp_codes = selected_indicators['Exposure']
+    #     vul_codes = selected_indicators['Vulnerability']
+    #     cap_codes = selected_indicators['Capacity']
+    #     oth_codes = selected_indicators['Others']
+    #
+    #     result_name = self.resultFieldNameLineEdit.text()
+    #
+    #     exp_name = "{}_EXP".format(result_name)
+    #     res = hh.dataProvider().addAttributes([QgsField(exp_name, QVariant.Double, 'double', 4, 2)])
+    #     hh.updateFields()
+    #     exp_index = hh.fieldNameIndex(exp_name)
+    #
+    #     vul_name = "{}_VUL".format(result_name)
+    #     res = hh.dataProvider().addAttributes([QgsField(vul_name, QVariant.Double, 'double', 4, 2)])
+    #     hh.updateFields()
+    #     vul_index = hh.fieldNameIndex(vul_name)
+    #
+    #     cap_name = "{}_CAP".format(result_name)
+    #     res = hh.dataProvider().addAttributes([QgsField(cap_name, QVariant.Double, 'double', 4, 2)])
+    #     hh.updateFields()
+    #     cap_index = hh.fieldNameIndex(cap_name)
+    #
+    #     oth_name = "{}_OTH".format(result_name)
+    #     res = hh.dataProvider().addAttributes([QgsField(oth_name, QVariant.Double, 'double', 4, 2)])
+    #     hh.updateFields()
+    #     oth_index = hh.fieldNameIndex(oth_name)
+    #
+    #     res = hh.dataProvider().addAttributes([QgsField(result_name, QVariant.Double, 'double', 4, 2)])
+    #     hh.updateFields()
+    #     result_index = hh.fieldNameIndex(result_name)
+    #
+    #     features = hh.getFeatures()
+    #     indices = [hh.fieldNameIndex(code) for code in to_add_codes]
+    #     indices_exp = [hh.fieldNameIndex(code) for code in exp_codes]
+    #     indices_vul = [hh.fieldNameIndex(code) for code in vul_codes]
+    #     indices_cap = [hh.fieldNameIndex(code) for code in cap_codes]
+    #     indices_oth = [hh.fieldNameIndex(code) for code in oth_codes]
+    #
+    #     for f in features:
+    #         hh.startEditing()
+    #         attr = f.attributes()
+    #
+    #         s = 0
+    #         s_exp = 0
+    #         s_vul = 0
+    #         s_cap = 0
+    #         s_oth = 0
+    #
+    #         for i in indices:
+    #
+    #             try:
+    #                 s += float(attr[i])
+    #             except ValueError:
+    #                 s += 0
+    #
+    #             if i in indices_exp:
+    #                 try:
+    #                     s_exp += float(attr[i])
+    #                 except ValueError:
+    #                     s_exp += 0
+    #
+    #             if i in indices_vul:
+    #                 try:
+    #                     s_vul += float(attr[i])
+    #                 except ValueError:
+    #                     s_vul += 0
+    #
+    #             if i in indices_cap:
+    #                 try:
+    #                     s_cap += float(attr[i])
+    #                 except ValueError:
+    #                     s_cap += 0
+    #
+    #             if i in indices_oth:
+    #                 try:
+    #                     s_oth += float(attr[i])
+    #                 except ValueError:
+    #                     s_oth += 0
+    #
+    #         f[result_index] = s
+    #         f[exp_index] = s_exp
+    #         f[vul_index] = s_vul
+    #         f[cap_index] = s_cap
+    #         f[oth_index] = s_oth
+    #         # f[result_index] = sum(float(attr[i]) for i in indices)
+    #         hh.updateFeature(f)
+    #
+    #     hh.commitChanges()
+    #
+    #     # Add Symbology
+    #     high = len(to_add_codes)
+    #     low = 0
+    #     medium = high/2
+    #
+    #     indicator = [("Low ({} - {})".format(low, medium - 1), low, medium - 1, "cyan"),
+    #                  ("Medium ({} - {})".format(medium, high - 1), medium, high - 1, "orange"),
+    #                  ("High (>={})".format(high), high, 9999999, "red")]
+    #
+    #     ranges = []
+    #
+    #     for label, lower, upper, color in indicator:
+    #
+    #         sym = QgsSymbolV2.defaultSymbol(hh.geometryType())
+    #         sym.setColor(QColor(color))
+    #         rng = QgsRendererRangeV2(lower, upper, sym, "{}".format(label))
+    #         ranges.append(rng)
+    #
+    #     renderer = QgsGraduatedSymbolRendererV2(result_name, ranges)
+    #
+    #     hh.setRendererV2(renderer)
+    #
+    #     hh.triggerRepaint()
+    #
+    #     msg = "{} added to  {}".format(result_name, self.selectHHComboBox.currentText())
+    #     QMessageBox.information(self.iface.mainWindow(), "SUCCESS", msg)

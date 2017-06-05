@@ -234,10 +234,10 @@ def remove_other_fields_summary(layer, adminField):
     layer.updateFields()
 
 
-def copy_vector_layer(layer, outputname):
+def copy_vector_layer(layer, outputname, vectortype):
     features = [f for f in layer.getFeatures()]
 
-    copylayer = QgsVectorLayer("Polygon?crs={}".format(layer.crs().authid().lower()), outputname, "memory")
+    copylayer = QgsVectorLayer("{}?crs={}".format(vectortype, layer.crs().authid().lower()), outputname, "memory")
 
     data = copylayer.dataProvider()
     attr = layer.dataProvider().fields().toList()

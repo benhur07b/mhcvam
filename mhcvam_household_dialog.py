@@ -347,7 +347,7 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         QgsMapLayerRegistry.instance().removeMapLayers([hhbrgy.id()])
 
-        copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName))
+        copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName), "Polygon")
         out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statFieldName))[0]
 
         res = out1.dataProvider().addAttributes([QgsField(stat, statField0.type())])
