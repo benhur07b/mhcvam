@@ -88,6 +88,10 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         QObject.connect(self.summHHComboBox,
                         SIGNAL("currentIndexChanged(QString)"),
+                        self.change_HH_summ)
+
+        QObject.connect(self.summHHBrgyComboBox,
+                        SIGNAL("currentIndexChanged(QString)"),
                         self.set_brgy)
 
         QObject.connect(self.agencyComboBox,
@@ -110,6 +114,9 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         self.set_hazard()
         self.set_brgy()
 
+    def change_HH_summ(self):
+        self.set_brgy()
+        self.set_fields_from_agency()
 
     def set_hazard(self):
 
@@ -347,88 +354,330 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         QgsMapLayerRegistry.instance().removeMapLayers([hhbrgy.id()])
 
-        copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName), "Polygon")
-        out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statFieldName))[0]
+        # copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName), "Polygon")
+        # out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statFieldName))[0]
+        #
+        # res = out1.dataProvider().addAttributes([QgsField(stat, QVariant.Double, "double", 18, 2)])
+        # out1.updateFields()
+        #
+        # statIndex = out1.fieldNameIndex(stat)
+        # brgyIndex = out1.fieldNameIndex(brgyField)
 
-        res = out1.dataProvider().addAttributes([QgsField(stat, statField0.type())])
-        out1.updateFields()
+        '''NEW'''
 
-        statIndex = out1.fieldNameIndex(stat)
-        brgyIndex = out1.fieldNameIndex(brgyField)
+        if statFieldName == "RISK":
+            if stat in ["COUNT [LOW]", "COUNT [MEDIUM]", "COUNT [HIGH]"]:
 
-        if stat == "SUM":
-            features = out1.getFeatures()
-            for f in features:
-                try:
-                    out1.startEditing()
-                    attr = f.attributes()
-                    f[statIndex] = sum(brgyDict[attr[brgyIndex]])
-                    out1.updateFeature(f)
-                except KeyError:
+                copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName), "Polygon")
+                out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statFieldName))[0]
+
+                res = out1.dataProvider().addAttributes([QgsField(stat, QVariant.Double, "double", 18, 2)])
+                out1.updateFields()
+
+                statIndex = out1.fieldNameIndex(stat)
+                brgyIndex = out1.fieldNameIndex(brgyField)
+
+                features = out1.getFeatures()
+                for f in features:
+                    try:
+                        out1.startEditing()
+                        attr = f.attributes()
+                        f[statIndex] = brgyDict[attr[brgyIndex]].count(stat[7:-1])
+                        out1.updateFeature(f)
+                    except KeyError:
+                        pass
+
+                out1.commitChanges()
+
+                if self.labelCheckBox.isChecked():
+                    add_labels(out1, stat)
+
+                if self.symCheckBox.isChecked():
                     pass
 
-        if stat == "MEAN":
-            features = out1.getFeatures()
-            for f in features:
-                try:
-                    out1.startEditing()
-                    attr = f.attributes()
-                    f[statIndex] = round(1.0*sum(brgyDict[attr[brgyIndex]])/len(brgyDict[attr[brgyIndex]]), 2)
-                    out1.updateFeature(f)
-                except KeyError:
+                remove_other_fields_summary(out1, brgyField)
+
+            else:
+                QMessageBox.warning(self.iface.mainWindow(), "WARNING", "ONLY COUNT CAN BE USED FOR RISKS")
+
+        else:
+            if stat in ["SUM", "MEAN", "MIN", "MAX", "PERCENTAGE"]:
+
+                copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName), "Polygon")
+                out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statFieldName))[0]
+
+                res = out1.dataProvider().addAttributes([QgsField(stat, QVariant.Double, "double", 18, 2)])
+                out1.updateFields()
+
+                statIndex = out1.fieldNameIndex(stat)
+                brgyIndex = out1.fieldNameIndex(brgyField)
+
+                if stat == "SUM":
+                    features = out1.getFeatures()
+                    for f in features:
+                        try:
+                            out1.startEditing()
+                            attr = f.attributes()
+                            f[statIndex] = sum(brgyDict[attr[brgyIndex]])
+                            out1.updateFeature(f)
+                        except KeyError:
+                            pass
+
+                if stat == "MEAN":
+                    features = out1.getFeatures()
+                    for f in features:
+                        try:
+                            out1.startEditing()
+                            attr = f.attributes()
+                            f[statIndex] = round(1.0*sum(brgyDict[attr[brgyIndex]])/len(brgyDict[attr[brgyIndex]]), 2)
+                            out1.updateFeature(f)
+                        except KeyError:
+                            pass
+
+                if stat == "MIN":
+                    features = out1.getFeatures()
+                    for f in features:
+                        try:
+                            out1.startEditing()
+                            attr = f.attributes()
+                            f[statIndex] = min(brgyDict[attr[brgyIndex]])
+                            out1.updateFeature(f)
+                        except KeyError:
+                            pass
+
+                if stat == "MAX":
+                    features = out1.getFeatures()
+                    for f in features:
+                        try:
+                            out1.startEditing()
+                            attr = f.attributes()
+                            f[statIndex] = max(brgyDict[attr[brgyIndex]])
+                            out1.updateFeature(f)
+                        except KeyError:
+                            pass
+
+                if stat == "PERCENTAGE":
+                    sumDict = {}
+                    total = 0
+                    features = out1.getFeatures()
+                    for f in features:
+                        try:
+                            attr = f.attributes()
+                            sumDict[attr[brgyIndex]] = sum(brgyDict[attr[brgyIndex]])
+                            total += sum(brgyDict[attr[brgyIndex]])
+                        except KeyError:
+                            pass
+
+                    features2 = out1.getFeatures()
+                    for f in features2:
+                        try:
+                            out1.startEditing()
+                            attr = f.attributes()
+                            f[statIndex] = round(100.0*sumDict[attr[brgyIndex]]/total, 2)
+                            out1.updateFeature(f)
+                        except KeyError:
+                            pass
+
+
+                out1.commitChanges()
+
+                if self.labelCheckBox.isChecked():
+                    add_labels(out1, stat)
+
+                if self.symCheckBox.isChecked():
                     pass
 
-        if stat == "MIN":
-            features = out1.getFeatures()
-            for f in features:
-                try:
-                    out1.startEditing()
-                    attr = f.attributes()
-                    f[statIndex] = min(brgyDict[attr[brgyIndex]])
-                    out1.updateFeature(f)
-                except KeyError:
-                    pass
 
-        if stat == "MAX":
-            features = out1.getFeatures()
-            for f in features:
-                try:
-                    out1.startEditing()
-                    attr = f.attributes()
-                    f[statIndex] = max(brgyDict[attr[brgyIndex]])
-                    out1.updateFeature(f)
-                except KeyError:
-                    pass
+                remove_other_fields_summary(out1, brgyField)
 
-        if stat == "PERCENTAGE":
-            sumDict = {}
-            total = 0
-            features = out1.getFeatures()
-            for f in features:
-                try:
-                    attr = f.attributes()
-                    sumDict[attr[brgyIndex]] = sum(brgyDict[attr[brgyIndex]])
-                    total += sum(brgyDict[attr[brgyIndex]])
-                except KeyError:
-                    pass
-
-            features2 = out1.getFeatures()
-            for f in features2:
-                try:
-                    out1.startEditing()
-                    attr = f.attributes()
-                    f[statIndex] = round(100.0*sumDict[attr[brgyIndex]]/total, 2)
-                    out1.updateFeature(f)
-                except KeyError:
-                    pass
-
-        out1.commitChanges()
-
-        if self.labelCheckBox.isChecked():
-            add_labels(out1, stat)
-
-        if self.symCheckBox.isChecked():
-            pass
+            else:
+                QMessageBox.warning(self.iface.mainWindow(), "WARNING", "COUNT CAN ONLY BE USED FOR RISKS")
 
 
-        remove_other_fields_summary(out1, brgyField)
+
+
+        '''NEW'''
+
+        # if stat == "COUNT [LOW]":
+        #     # res = out1.dataProvider().addAttributes([QgsField(stat, statField0.type())])
+        #     # out1.updateFields()
+        #
+        #     if statFieldName == "RISK":
+        #         # res = out1.dataProvider().addAttributes([QgsField("LOW", QVariant.Double, "double", 10, 2),
+        #         #                                          QgsField("MEDIUM", QVariant.Double, "double", 10, 2),
+        #         #                                          QgsField("HIGH", QVariant.Double, "double", 10, 2)])
+        #         # out1.updateFields()
+        #
+        #         # res = out1.dataProvider().addAttributes([QgsField("MEDIUM", QVariant.Double, "double", 10, 2)])
+        #         # out1.updateFields()
+        #         #
+        #         # res = out1.dataProvider().addAttributes([QgsField("HIGH", QVariant.Double, "double", 10, 2)])
+        #         # out1.updateFields()
+        #
+        #         # lowIndex = out1.fieldNameIndex("LOW")
+        #         # medIndex = out1.fieldNameIndex("MEDIUM")
+        #         # highIndex = out1.fieldNameIndex("HIGH")
+        #
+        #         features = out1.getFeatures()
+        #         for f in features:
+        #             try:
+        #                 out1.startEditing()
+        #                 attr = f.attributes()
+        #                 # f[statIndex] = len(brgyDict[attr[brgyIndex]])
+        #                 f[statIndex] = brgyDict[attr[brgyIndex]].count("LOW")
+        #                 # f[medIndex] = brgyDict[attr[brgyIndex]].count("MEDIUM")
+        #                 # f[highIndex] = brgyDict[attr[brgyIndex]].count("HIGH")
+        #                 out1.updateFeature(f)
+        #             except KeyError:
+        #                 pass
+        #
+        # if stat == "COUNT [MEDIUM]":
+        #     # res = out1.dataProvider().addAttributes([QgsField(stat, statField0.type())])
+        #     # out1.updateFields()
+        #
+        #     if statFieldName == "RISK":
+        #
+        #         features = out1.getFeatures()
+        #         for f in features:
+        #             try:
+        #                 out1.startEditing()
+        #                 attr = f.attributes()
+        #                 # f[statIndex] = len(brgyDict[attr[brgyIndex]])
+        #                 f[statIndex] = brgyDict[attr[brgyIndex]].count("MEDIUM")
+        #                 # f[medIndex] = brgyDict[attr[brgyIndex]].count("MEDIUM")
+        #                 # f[highIndex] = brgyDict[attr[brgyIndex]].count("HIGH")
+        #                 out1.updateFeature(f)
+        #             except KeyError:
+        #                 pass
+        #
+        # if stat == "COUNT [HIGH]":
+        #     # res = out1.dataProvider().addAttributes([QgsField(stat, statField0.type())])
+        #     # out1.updateFields()
+        #
+        #     if statFieldName == "RISK":
+        #
+        #         features = out1.getFeatures()
+        #         for f in features:
+        #             try:
+        #                 out1.startEditing()
+        #                 attr = f.attributes()
+        #                 # f[statIndex] = len(brgyDict[attr[brgyIndex]])
+        #                 f[statIndex] = brgyDict[attr[brgyIndex]].count("HIGH")
+        #                 # f[medIndex] = brgyDict[attr[brgyIndex]].count("MEDIUM")
+        #                 # f[highIndex] = brgyDict[attr[brgyIndex]].count("HIGH")
+        #                 out1.updateFeature(f)
+        #             except KeyError:
+        #                 pass
+        #
+        #
+        # if stat == "SUM":
+        #     # res = out1.dataProvider().addAttributes([QgsField(stat, QVariant.Double, "double", 10, 2)])
+        #     # out1.updateFields()
+        #     if statFieldName == "RISK":
+        #         QMessageBox.warning(self.iface.mainWindow(), "WARNING", "SUM CAN'T BE USED ON RISK")
+        #         pass
+        #
+        #     else:
+        #         features = out1.getFeatures()
+        #         for f in features:
+        #             try:
+        #                 out1.startEditing()
+        #                 attr = f.attributes()
+        #                 f[statIndex] = sum(brgyDict[attr[brgyIndex]])
+        #                 out1.updateFeature(f)
+        #             except KeyError:
+        #                 pass
+        #
+        # if stat == "MEAN":
+        #     # res = out1.dataProvider().addAttributes([QgsField(stat, QVariant.Double, "double", 10, 2)])
+        #     # out1.updateFields()
+        #
+        #     if statFieldName == "RISK":
+        #         pass
+        #
+        #     else:
+        #         features = out1.getFeatures()
+        #         for f in features:
+        #             try:
+        #                 out1.startEditing()
+        #                 attr = f.attributes()
+        #                 f[statIndex] = round(1.0*sum(brgyDict[attr[brgyIndex]])/len(brgyDict[attr[brgyIndex]]), 2)
+        #                 out1.updateFeature(f)
+        #             except KeyError:
+        #                 pass
+        #
+        # if stat == "MIN":
+        #     # res = out1.dataProvider().addAttributes([QgsField(stat, QVariant.Double, "double", 10, 2)])
+        #     # out1.updateFields()
+        #
+        #     if statFieldName == "RISK":
+        #         pass
+        #
+        #     else:
+        #         features = out1.getFeatures()
+        #         for f in features:
+        #             try:
+        #                 out1.startEditing()
+        #                 attr = f.attributes()
+        #                 f[statIndex] = min(brgyDict[attr[brgyIndex]])
+        #                 out1.updateFeature(f)
+        #             except KeyError:
+        #                 pass
+        #
+        # if stat == "MAX":
+        #     # res = out1.dataProvider().addAttributes([QgsField(stat, QVariant.Double, "double", 10, 2)])
+        #     # out1.updateFields()
+        #
+        #     if statFieldName == "RISK":
+        #         pass
+        #
+        #     else:
+        #         features = out1.getFeatures()
+        #         for f in features:
+        #             try:
+        #                 out1.startEditing()
+        #                 attr = f.attributes()
+        #                 f[statIndex] = max(brgyDict[attr[brgyIndex]])
+        #                 out1.updateFeature(f)
+        #             except KeyError:
+        #                 pass
+        #
+        # if stat == "PERCENTAGE":
+        #     # res = out1.dataProvider().addAttributes([QgsField(stat, QVariant.Double, "double", 10, 2)])
+        #     # out1.updateFields()
+        #
+        #     if statFieldName == "RISK":
+        #         pass
+        #
+        #     else:
+        #         sumDict = {}
+        #         total = 0
+        #         features = out1.getFeatures()
+        #         for f in features:
+        #             try:
+        #                 attr = f.attributes()
+        #                 sumDict[attr[brgyIndex]] = sum(brgyDict[attr[brgyIndex]])
+        #                 total += sum(brgyDict[attr[brgyIndex]])
+        #             except KeyError:
+        #                 pass
+        #
+        #         features2 = out1.getFeatures()
+        #         for f in features2:
+        #             try:
+        #                 out1.startEditing()
+        #                 attr = f.attributes()
+        #                 f[statIndex] = round(100.0*sumDict[attr[brgyIndex]]/total, 2)
+        #                 out1.updateFeature(f)
+        #             except KeyError:
+        #                 pass
+        #
+        # out1.commitChanges()
+        #
+        # if self.labelCheckBox.isChecked():
+        #     add_labels(out1, stat)
+        #
+        # if self.symCheckBox.isChecked():
+        #     pass
+        #
+        #
+        # remove_other_fields_summary(out1, brgyField)

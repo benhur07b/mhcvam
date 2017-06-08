@@ -893,6 +893,21 @@
        <string>PERCENTAGE</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>COUNT [LOW]</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>COUNT [MEDIUM]</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>COUNT [HIGH]</string>
+      </property>
+     </item>
     </widget>
     <widget class="QLabel" name="summHHBrgyLabel">
      <property name="geometry">

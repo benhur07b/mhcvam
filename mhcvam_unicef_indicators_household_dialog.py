@@ -174,13 +174,19 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
             for i in indices:
 
                 try:
-                    s += float(attr[i])
+                    # s += float(attr[i])
+                    if float(attr[i]) >= 1:
+                        s += 1
+                    else:
+                        pass
+
                 except ValueError:
                     s += 0
 
             f[totfield] = s
 
-            s_perc = 100.0 * (s/len(indices))
+            s_perc = 100.0 * (float(s)/len(indices))
+
             if s_perc < 33.33:
                 f[riskfield] = "LOW"
 

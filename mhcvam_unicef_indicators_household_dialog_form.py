@@ -185,7 +185,7 @@ class Ui_MHCVAMUnicefIndicatorsHouseholdDialog(object):
         self.selectIndicatorLabel.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Select Indicators to Add", None))
         self.selectAllBtn_exp.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Select All", None))
         self.deselectAllBtn_exp.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Deselect All", None))
-        self.resultFieldNameLabel.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Resulting Field Name (max 6 chars)", None))
+        self.resultFieldNameLabel.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Base Name for Resulting Layers", None))
         self.label_exp.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Exposure", None))
         self.label_vul.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Vulnerability", None))
         self.label_cap.setText(_translate("MHCVAMUnicefIndicatorsHouseholdDialog", "Capacity", None))
