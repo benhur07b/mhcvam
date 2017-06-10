@@ -104,20 +104,31 @@ class MHCVAMInfrastructuresDialog(QDialog, Ui_MHCVAMInfrastructuresDialog):
         outputname = self.outputNameLineEdit.text()
         summary = self.summaryCheckBox.isChecked()
 
-        processing.runandload("qgis:joinattributesbylocation", infra, hazard, u"intersects", 0.00000, 0, "mean", 0, "memory:")
-        outlayer = QgsMapLayerRegistry.instance().mapLayersByName("Joined layer")[0]
+        outlayer = ""
 
-        outlayer.setLayerName(outputname)
+        if infra.geometryType() == 1:
+            processing.runandload("qgis:multiparttosingleparts", infra, "memory:")
+            outlayer0 = QgsMapLayerRegistry.instance().mapLayersByName("Single parts")[0]
+            processing.runandload("qgis:intersection", outlayer0, hazard, False, "memory:")
+            outlayer = QgsMapLayerRegistry.instance().mapLayersByName("Intersection")[0]
+            outlayer.setLayerName(outputname)
+
+            QgsMapLayerRegistry.instance().removeMapLayers([outlayer0.id()])
+
+        else:
+            processing.runandload("qgis:joinattributesbylocation", infra, hazard, u"intersects", 0.00000, 0, "mean", 0, "memory:")
+            outlayer = QgsMapLayerRegistry.instance().mapLayersByName("Joined layer")[0]
+            outlayer.setLayerName(outputname)
 
         hazardLevels = []
 
-        if hazardlevel.capitalize() == "Low":
+        if hazardLevel.capitalize() == "Low":
             hazardLevels = [("Low", "Low", "cyan")]
 
-        elif hazardlevel.capitalize() == "Medium":
+        elif hazardLevel.capitalize() == "Medium":
             hazardLevels = [("Medium", "Medium", "orange")]
 
-        elif hazardlevel.capitalize() == "High":
+        elif hazardLevel.capitalize() == "High":
             hazardLevels = [("High", "High", "red")]
 
         else:
