@@ -222,7 +222,7 @@ class MHCVAMInfrastructuresDialog(QDialog, Ui_MHCVAMInfrastructuresDialog):
         names0 = []
         brgyDict = {}
 
-        processing.runandload("qgis:joinattributesbylocation", infraWithHazard, brgy, u"intersects", 0.00000, 0, "max", 1, "memory:")
+        processing.runandload("qgis:joinattributesbylocation", infraWithHazard, brgy, u"intersects", 0.00000, 0, "mean", 1, "memory:")
         out1 = QgsMapLayerRegistry.instance().mapLayersByName("Joined layer")[0]
 
         brgyNameIndex = out1.fieldNameIndex(brgyNames)
@@ -249,13 +249,13 @@ class MHCVAMInfrastructuresDialog(QDialog, Ui_MHCVAMInfrastructuresDialog):
                 brgyName = str(attr[brgyNameIndex])
                 hazardLevel = str(attr[hazardTypeIndex])
 
-                if hazardlevel.capitalize() == "Low":
+                if hazardLevel.capitalize() == "Low":
                     brgyDict[brgyName][0] += 1
 
-                elif hazardlevel.capitalize() == "Medium":
+                elif hazardLevel.capitalize() == "Medium":
                     brgyDict[brgyName][1] += 1
 
-                elif hazardlevel.capitalize() == "High":
+                elif hazardLevel.capitalize() == "High":
                     brgyDict[brgyName][2] += 1
 
             except IndexError:

@@ -365,7 +365,7 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
 
         '''NEW'''
 
-        if statFieldName == "RISK":
+        if statFieldName in ["RISK", "Hazard Level"]:
             if stat in ["COUNT [LOW]", "COUNT [MEDIUM]", "COUNT [HIGH]"]:
 
                 copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName), "Polygon")
