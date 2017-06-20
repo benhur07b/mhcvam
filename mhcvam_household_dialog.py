@@ -349,8 +349,11 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         for b in brgys:
             brgyDict[b] = []
 
+        # for f in fieldList:
+        #     brgyDict[f[0]].append(f[1])
+
         for f in fieldList:
-            brgyDict[f[0]].append(f[1])
+            brgyDict[f[0]].append(f[1].capitalize())
 
         QgsMapLayerRegistry.instance().removeMapLayers([hhbrgy.id()])
 
@@ -382,7 +385,7 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
                     try:
                         out1.startEditing()
                         attr = f.attributes()
-                        f[statIndex] = brgyDict[attr[brgyIndex]].count(stat[7:-1])
+                        f[statIndex] = brgyDict[attr[brgyIndex]].count(stat[7:-1].capitalize())
                         out1.updateFeature(f)
                     except KeyError:
                         pass
