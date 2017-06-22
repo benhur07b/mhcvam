@@ -3,7 +3,7 @@ BRGY_HH_ID,Barangay and Household ID,UNICEF,Others
 BARANGAY,Barangay Number,UNICEF,Others
 HOUSEHOLD,Household Control Number,UNICEF,Others
 STREET,Street Name,UNICEF,Others
-RESPONDENT,Name of Respondent,UNICEF,Others
+HH_HEAD,Name of Household Head (Respondent),UNICEF,Others
 LONGITUDE,Longitude of household,UNICEF,Others
 LATITUDE,Latitude of househol,UNICEF,Others
 HH_E_1_1,Household with 0 to 6 months old,UNICEF,Exposure

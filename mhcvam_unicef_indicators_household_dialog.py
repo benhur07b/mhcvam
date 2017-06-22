@@ -204,7 +204,7 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         f = layer.fields().toList()
         fields = range(len(f))
 
-        const = ["BRGY_HH_ID", "BARANGAY", "HOUSEHOLD", "STREET", "RESPONDENT", "TOTAL", "RISK"]
+        const = ["BRGY_HH_ID", "BARANGAY", "HOUSEHOLD", "STREET", "HH_HEAD", "TOTAL", "RISK"]
         indices_constant = [layer.fieldNameIndex(code) for code in const]
 
         for c in indices_constant:
