@@ -183,8 +183,7 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
             for i in indices:
 
                 try:
-                    print type(attr[i])
-                    print attr[i]
+
                     # s += float(attr[i])
                     if float(attr[i]) >= 1:
                         s += 1
