@@ -3,41 +3,42 @@ BRGY_HH_ID,Barangay and Household ID,UNICEF,Others
 BARANGAY,Barangay Number,UNICEF,Others
 HOUSEHOLD,Household Control Number,UNICEF,Others
 STREET,Street Name,UNICEF,Others
-HH_HEAD,Name of Household Head (Respondent),UNICEF,Others
+HH_HEAD,Name of Household head,UNICEF,Others
 LONGITUDE,Longitude of household,UNICEF,Others
 LATITUDE,Latitude of househol,UNICEF,Others
-HH_E_1_1,Household with 0 to 6 months old,UNICEF,Exposure
-HH_E_1_2,Household with 0 to 12 months old,UNICEF,Exposure
-HH_E_1_3,Household with under 5 years old,UNICEF,Exposure
-HH_E_1_4,Household with 3 to 4 years old,UNICEF,Exposure
-HH_E_1_5,Household with 5 years old,UNICEF,Exposure
-HH_E_1_6,Household with 6 to 11 years old,UNICEF,Exposure
-HH_E_1_7,Household with 12 to 17 years old,UNICEF,Exposure
-HH_E_2,Household type of construction materials used on the outer walls of the house,UNICEF,Exposure
-HH_E_3,Household who are 4Ps (Conditional Cash Transfer) recipients,UNICEF,Exposure
-HH_E_4,Household who are Indigenous Peoples (ethnicity),UNICEF,Exposure
-HH_V_1,Household with 12 month old not fully immunized,UNICEF,Vulnerability
-HH_V_3,Household with 0 to 59 months old,UNICEF,Vulnerability
-HH_V_2,Household with under 2 years old who have not received at least one dose of measles immunisation,UNICEF,Vulnerability
-HH_V_4,Household with pregnant women,UNICEF,Vulnerability
-HH_V_5,Household with lactating women,UNICEF,Vulnerability
-HH_V_6,Household by access to source of safe water supply,UNICEF,Vulnerability
-HH_V_7,Household by type of toilet facility,UNICEF,Vulnerability
-HH_V_8,Household with 3 to 4 years old not enrolled in pre-school education,UNICEF,Vulnerability
-HH_V_9,Household with 5 years old not enrolled in kinder education,UNICEF,Vulnerability
-HH_V_10,Household with 6 to 11 years old not in school,UNICEF,Vulnerability
-HH_V_11,Household with 12 to 17 years old not in school,UNICEF,Vulnerability
-HH_V_12,Household with no member who reached high school level,UNICEF,Vulnerability
-HH_V_13,Household with child/children whose birth has not been registered with the civil registry office,UNICEF,Vulnerability
-HH_V_14_1,Household with PWD (children - under 18 years old),UNICEF,Vulnerability
-HH_V_14_2,Household with PWD (adult - 18 to 59 years old),UNICEF,Vulnerability
-HH_V_14_3,Household with PWD (senior - 60 years old and above),UNICEF,Vulnerability
-HH_V_15,Single-headed (solo parent) household by sex of head of the family,UNICEF,Vulnerability
-HH_V_16,Household who have experienced hunger or had nothing to eat during reporting period,UNICEF,Vulnerability
-HH_V_17,Household whose family income fall below the poverty threshold,UNICEF,Vulnerability
-HH_V_18,Household with no access to electricity,UNICEF,Vulnerability
-HH_C_1,At least 1 household member with PhilHealth Insurance,UNICEF,Capacity
-HH_C_2,Household with at least 1 member who has participated in a learning session on emergency preparedness,UNICEF,Capacity
-HH_C_3,Household with at least 1 adult who has participated in a community DRR activity,UNICEF,Capacity
-HH_C_4,Household with disaster preparedness kit,UNICEF,Capacity
+HE_1_1,Household with 0 to 6 months old,UNICEF,Exposure
+HE_1_2,Household with 0 to 12 months old,UNICEF,Exposure
+HE_1_3,Household with under 5 years old,UNICEF,Exposure
+HE_1_4,Household with 3 to 4 years old,UNICEF,Exposure
+HE_1_5,Household with 5 years old,UNICEF,Exposure
+HE_1_6,Household with 6 to 11 years old,UNICEF,Exposure
+HE_1_7,Household with 12 to 17 years old,UNICEF,Exposure
+HE_2,Household type of construction materials used on the outer walls of the house,UNICEF,Exposure
+HE_3,Household who are 4Ps (Conditional Cash Transfer) recipients,UNICEF,Exposure
+HE_4,Household who are Indigenous Peoples (ethnicity),UNICEF,Exposure
+HV_1,Household with 12 month old not fully immunized,UNICEF,Vulnerability
+HV_2,Household with 0 to 59 months old,UNICEF,Vulnerability
+HV_3,Household with under 2 years old who have not received at least one dose of measles immunisation,UNICEF,Vulnerability
+HV_4,Household with pregnant women,UNICEF,Vulnerability
+HV_5,Household with lactating women,UNICEF,Vulnerability
+HV_6,Household by access to source of safe water supply,UNICEF,Vulnerability
+HV_7,Household by type of toilet facility,UNICEF,Vulnerability
+HV_8,Household with 3 to 4 years old not enrolled in pre-school education,UNICEF,Vulnerability
+HV_9,Household with 5 years old not enrolled in kinder education,UNICEF,Vulnerability
+HV_10,Household with 6 to 11 years old not in school,UNICEF,Vulnerability
+HV_11,Household with 12 to 17 years old not in school,UNICEF,Vulnerability
+HV_12,Household with no member who reached high school level,UNICEF,Vulnerability
+HV_13,Household with child/children whose birth has not been registered with the civil registry office,UNICEF,Vulnerability
+HV_14_1,Household with PWD (children - under 18 years old),UNICEF,Vulnerability
+HV_14_2,Household with PWD (adult - 18 to 59 years old),UNICEF,Vulnerability
+HV_14_3,Household with PWD (senior - 60 years old and above),UNICEF,Vulnerability
+HV_15,Single-headed (solo parent) household by sex of head of the family,UNICEF,Vulnerability
+HV_16,Household who have experienced hunger or had nothing to eat during reporting period,UNICEF,Vulnerability
+HV_17,Household whose family income fall below the poverty threshold,UNICEF,Vulnerability
+HV_18,Household with no access to electricity,UNICEF,Vulnerability
+HC_1,At least 1 household member with PhilHealth Insurance,UNICEF,Capacity
+HC_2,Household with at least 1 member who has participated in a learning session on emergency preparedness,UNICEF,Capacity
+HC_3,Household with at least 1 adult who has participated in a community DRR activity,UNICEF,Capacity
+HC_4,Household with disaster preparedness kit,UNICEF,Capacity
 RISK,RISK,Others,Others
+Haz_Level,Hazard Level,Others,Others

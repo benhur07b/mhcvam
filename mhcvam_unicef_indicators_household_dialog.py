@@ -109,15 +109,19 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         sel_cap_names = [str(x.data()) for x in sel_cap]
         sel_cap_codes = [indicators.get_indicator_code_from_name(x) for x in sel_cap_names]
 
-        sel_oth = self.listWidget_oth.selectedIndexes()
-        sel_oth_names = [str(x.data()) for x in sel_oth]
-        sel_oth_codes = [indicators.get_indicator_code_from_name(x) for x in sel_oth_names]
-
         return {'Exposure': sel_exp_codes,
                 'Vulnerability': sel_vul_codes,
-                'Capacity': sel_cap_codes,
-                'Others': sel_oth_codes}
+                'Capacity': sel_cap_codes
+                }
 
+        # sel_oth = self.listWidget_oth.selectedIndexes()
+        # sel_oth_names = [str(x.data()) for x in sel_oth]
+        # sel_oth_codes = [indicators.get_indicator_code_from_name(x) for x in sel_oth_names]
+
+        # return {'Exposure': sel_exp_codes,
+        #         'Vulnerability': sel_vul_codes,
+        #         'Capacity': sel_cap_codes,
+        #         'Others': sel_oth_codes}
 
     def run(self):
 
@@ -128,22 +132,27 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         exp_codes = selected_indicators['Exposure']
         vul_codes = selected_indicators['Vulnerability']
         cap_codes = selected_indicators['Capacity']
-        oth_codes = selected_indicators['Others']
+        # oth_codes = selected_indicators['Others']
 
         result_name = self.resultFieldNameLineEdit.text()
         exp_name = "{}_EXP".format(result_name)
         vul_name = "{}_VUL".format(result_name)
         cap_name = "{}_CAP".format(result_name)
-        oth_name = "{}_OTH".format(result_name)
+        # oth_name = "{}_OTH".format(result_name)
 
         indices_exp = [hh.fieldNameIndex(code) for code in exp_codes]
         indices_vul = [hh.fieldNameIndex(code) for code in vul_codes]
         indices_cap = [hh.fieldNameIndex(code) for code in cap_codes]
-        indices_oth = [hh.fieldNameIndex(code) for code in oth_codes]
+        # indices_oth = [hh.fieldNameIndex(code) for code in oth_codes]
 
-        self.compute_risk(hh, exp_name, indices_exp)
-        self.compute_risk(hh, vul_name, indices_vul)
-        self.compute_risk(hh, cap_name, indices_cap)
+        if len(indices_exp) > 0:
+            self.compute_risk(hh, exp_name, indices_exp)
+
+        if len(indices_vul) > 0:
+            self.compute_risk(hh, vul_name, indices_vul)
+
+        if len(indices_cap) > 0:
+            self.compute_risk(hh, cap_name, indices_cap)
 
 
     def compute_risk(self, hh, name, indices):
@@ -174,6 +183,8 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
             for i in indices:
 
                 try:
+                    print type(attr[i])
+                    print attr[i]
                     # s += float(attr[i])
                     if float(attr[i]) >= 1:
                         s += 1
