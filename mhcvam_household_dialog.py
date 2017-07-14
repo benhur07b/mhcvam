@@ -349,11 +349,15 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         for b in brgys:
             brgyDict[b] = []
 
-        # for f in fieldList:
-        #     brgyDict[f[0]].append(f[1])
+        print brgyDict
 
         for f in fieldList:
-            brgyDict[f[0]].append(f[1].capitalize())
+            # print f
+            brgyDict[f[0]].append(f[1])
+
+        # for f in fieldList:
+        #     print f
+        #     brgyDict[f[0]].append(f[1].capitalize())
 
         QgsMapLayerRegistry.instance().removeMapLayers([hhbrgy.id()])
 
