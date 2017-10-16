@@ -15,7 +15,7 @@
 /***************************************************************************
  mhcvam_unicef_indicators_household_dialog.py
 
- Contains the logic for the MHCVAM using UNICEF Indicators (HOUSEHOLD)
+ Contains the logic for the MHCVAM using Child-centered Indicators (HOUSEHOLD)
 ***************************************************************************/
 
 /***************************************************************************
@@ -58,10 +58,10 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         QDialog.__init__(self, parent)
         self.parent = parent
         self.setupUi(self)
-        self.setWindowTitle(self.tr('MHCVAM using UNICEF Indicators (HOUSEHOLD)'))
+        self.setWindowTitle(self.tr('MHCVAM using Child-centered Indicators (HOUSEHOLD)'))
         self.iface = iface
 
-        self.listWidget_cats = [self.listWidget_exp, self.listWidget_vul, self.listWidget_cap, self.listWidget_oth]
+        self.listWidget_cats = [self.listWidget_exp, self.listWidget_vul, self.listWidget_cap]
 
         # Set the response of the buttons
         QObject.connect(self.buttonBox, SIGNAL("accepted()"), self.run)
@@ -72,14 +72,14 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         QObject.connect(self.deselectAllBtn_vul, SIGNAL("clicked()"), self.listWidget_vul.clearSelection)
         QObject.connect(self.selectAllBtn_cap, SIGNAL("clicked()"), self.listWidget_cap.selectAll)
         QObject.connect(self.deselectAllBtn_cap, SIGNAL("clicked()"), self.listWidget_cap.clearSelection)
-        QObject.connect(self.selectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.selectAll)
-        QObject.connect(self.deselectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.clearSelection)
+        # QObject.connect(self.selectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.selectAll)
+        # QObject.connect(self.deselectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.clearSelection)
 
         self.indicators_per_cats = indicators.get_indicators_per_catergory_dict()
         self.listWidget_exp.addItems(self.indicators_per_cats['Exposure'])
         self.listWidget_vul.addItems(self.indicators_per_cats['Vulnerability'])
         self.listWidget_cap.addItems(self.indicators_per_cats['Capacity'])
-        self.listWidget_oth.addItems(self.indicators_per_cats['Others'])
+        # self.listWidget_oth.addItems(self.indicators_per_cats['Others'])
 
 
     def get_indicators_to_add(self):
@@ -201,7 +201,7 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
                 f[riskfield] = "LOW"
 
             elif s_perc >= 33.33 and s_perc < 66.66:
-                f[riskfield] = "MEDIUM"
+                f[riskfield] = "MODERATE"
 
             else:
                 f[riskfield] = "HIGH"
@@ -225,7 +225,7 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
 
         # Add symbology
         risks = [("LOW", "cyan", "LOW"),
-                 ("MEDIUM", "orange", "MEDIUM"),
+                 ("MODERATE", "orange", "MODERATE"),
                  ("HIGH", "red", "HIGH")]
 
         categories = []
