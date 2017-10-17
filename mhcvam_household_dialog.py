@@ -378,7 +378,7 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         '''NEW'''
 
         if statFieldName in ["RISK", "Hazard Level"]:
-            if stat in ["COUNT [LOW]", "COUNT [MEDIUM]", "COUNT [HIGH]"]:
+            if stat in ["COUNT [LOW]", "COUNT [MEDIUM]", "COUNT [HIGH]", "COUNT [VERY HIGH]"]:
 
                 copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName), "Polygon")
                 out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statFieldName))[0]
