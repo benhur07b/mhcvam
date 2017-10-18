@@ -146,16 +146,16 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         # indices_oth = [hh.fieldNameIndex(code) for code in oth_codes]
 
         if len(indices_exp) > 0:
-            self.compute_risk(hh, exp_name, indices_exp, exp_codes)
+            self.compute_risk(hh, exp_name, indices_exp, exp_codes, "exp")
 
         if len(indices_vul) > 0:
-            self.compute_risk(hh, vul_name, indices_vul, vul_codes)
+            self.compute_risk(hh, vul_name, indices_vul, vul_codes, "vul")
 
         if len(indices_cap) > 0:
-            self.compute_risk(hh, cap_name, indices_cap, cap_codes)
+            self.compute_risk(hh, cap_name, indices_cap, cap_codes, "cap")
 
 
-    def compute_risk(self, hh, name, indices, codes):
+    def compute_risk(self, hh, name, indices, codes, ind_type):
 
         # copy vector to new layer
         copy_vector_layer(hh, name, "Point")
@@ -191,23 +191,19 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
             for i in indices:
 
                 try:
-
                     # new (only include if main field by counting # of "_". main means less than 2 "_")
                     if layer_fields[i].name().count("_") < 2:
                         if float(attr[i]) >= 1:
-                            mx += 1
+                            if ind_type == "exp":
+                                mx += float(attr[i])
+                            else:
+                                mx += 1
 
                         else:
                             pass
 
                     else:
                         pass
-
-                    # if float(attr[i]) >= 1:
-                    #     mx += 1
-                    #
-                    # else:
-                    #     pass
 
                 except ValueError:
                     mx += 0
@@ -229,32 +225,26 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
             for i in indices:
 
                 try:
-
                     # new (only include if main field by counting # of "_". main means less than 2 "_")
                     if layer_fields[i].name().count("_") < 2:
                         # s += float(attr[i])
                         if float(attr[i]) >= 1:
-                            s += 1
-                            # s += float(attr[i])
+                            if ind_type == "exp":
+                                s += float(attr[i])
+                            else:
+                                s += 1
+
                         else:
                             pass
 
                     else:
                         pass
 
-                    # # s += float(attr[i])
-                    # if float(attr[i]) >= 1:
-                    #     s += 1
-                    #     # s += float(attr[i])
-                    # else:
-                    #     pass
-
                 except ValueError:
                     s += 0
 
             f[totfield] = s
 
-            # s_perc = 100.0 * (float(s)/len(indices))
             s_perc = 100.0 * (float(s)/mx_i)
 
             if s_perc < 33.33:
