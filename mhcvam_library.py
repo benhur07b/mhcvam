@@ -186,7 +186,7 @@ class UNICEFBrgyIndicators(Indicators):
         color_dict = {}
         for i in indicators:
             color_dict[i[0]] = (("Low", get_value(i[4]), get_value(i[5]),"cyan"),
-                                ("Medium", get_value(i[6]), get_value(i[7]),"orange"),
+                                ("Moderate", get_value(i[6]), get_value(i[7]),"orange"),
                                 ("High", get_value(i[8]), get_value(i[9]),"red"))
 
         return color_dict

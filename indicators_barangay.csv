@@ -13,7 +13,7 @@ BE_2_8,Total population (12-17 years old) per barangay,UNICEF,Exposure,,,,,,
 BE_3,Percentage of barangay population that are indigenous people,UNICEF,Exposure,,,,,,
 BV_1,Measles immunisation coverage rate per barangay,UNICEF,Vulnerability,95,100,81,94.99,0,80.99
 BV_2,Fully immunised child coverage rate,UNICEF,Vulnerability,95,100,81,94.99,0,80.99
-BV_3,Combined prevalence of moderate and severe wasting in children 0-59 years old,UNICEF,Vulnerability,0,9.99,10,15,15.01,100
+BV_3,Combined prevalence of moderate and severe wasting in children 0-59 months old,UNICEF,Vulnerability,0,9.99,10,15,15.01,100
 BV_4,"Percentage of households in the barangay with unimproved main source of water supple (dug well, unprotected spring, lakes, rivers, rain)",UNICEF,Vulnerability,0,18,18.01,49.99,50,100
 BV_5,"Percentage of households in the barangay using unsanitary toilet facilities and practices (closed/open pit, open defacation)",UNICEF,Vulnerability,0,15,15.01,59.99,60,100
 BV_6,Percentage of 3-4 years old who are not in school per barangay,UNICEF,Vulnerability,0,19.99,20,58,58.01,100
@@ -27,30 +27,16 @@ BV_13_1,Percentage of children under 18 years old with disabilities per barangay
 BV_13_2,Percentage of adults aged 18-59 years old with disabilities per barangay,UNICEF,Vulnerability,0,10,10.01,15,15.01,100
 BV_13_3,Percentage of senior citizens aged 60 years old and above with disabilities per barangay,UNICEF,Vulnerability,0,10,10.01,15,15.01,100
 BV_14,Percentage of households in barangay with incomes below poverty threshold,UNICEF,Vulnerability,0,15,15.01,25,25.01,100
-BC_1,Barangays with organized and trained DRRM teams,UNICEF,Capacity,3,3,2,2,1,1
+BC_1,Barangays with organized and trained DRRM teams,UNICEF,Capacity,1,1,2,2,3,3
 BC_2,Barangays with a community-managed Early Warning System in place,UNICEF,Capacity,0,0,,,1,1
 BC_3,Barangays that have done risk assessment and drafter their DRRM Plans,UNICEF,Capacity,0,0,,,1,1
-BC_4,Barangays that have evacuation plans and done emergency drills as part of preparedness,UNICEF,Capacity,3,3,2,2,1,1
+BC_4,Barangays that have evacuation plans and done emergency drills as part of preparedness,UNICEF,Capacity,1,1,2,2,3,3
 BC_5,"Barangays that have Civil Society Organizations (CSO), Non-Government Organizations (NGO), People's Organization and Community-Based Organizations (CBO) involved in DRR Work",UNICEF,Capacity,0,0,,,1,1
-BC_6,Schools with updated preparedness plans as part of School Improvement Plan (SIP),UNICEF,Capacity,3,3,2,2,1,1
-BC_7,Schools that have evacuation plans and done emergency drills during the year,UNICEF,Capacity,3,3,2,2,1,1
-BC_8,Barangays with organised and trained Infant and Young Feeding (IYCF) counsellors,UNICEF,Capacity,3,3,2,2,1,1
+BC_6,Schools with updated preparedness plans as part of School Improvement Plan (SIP),UNICEF,Capacity,1,1,2,2,3,3
+BC_7,Schools that have evacuation plans and done emergency drills during the year,UNICEF,Capacity,1,1,2,2,3,3
+BC_8,Barangays with organised and trained Infant and Young Feeding (IYCF) counsellors,UNICEF,Capacity,1,1,2,2,3,3
 BC_9,Barangays with functional out-patient therapeutic centers for MAM (wasted) and SAM (severely wasted),UNICEF,Capacity,0,0,,,1,1
-BC_10,Barangays with functional Community Health Teams (CHT),UNICEF,Capacity,3,3,2,2,1,1
-BC_11,Barangays with organised WASH committees and contingency plans,UNICEF,Capacity,3,3,2,2,1,1
+BC_10,Barangays with functional Community Health Teams (CHT),UNICEF,Capacity,1,1,2,2,3,3
+BC_11,Barangays with organised WASH committees and contingency plans,UNICEF,Capacity,1,1,2,2,3,3
 BC_12,Barangays with functional Barangay Council for the Protection of Children (BCPC),UNICEF,Capacity,0,0,,,1,1
 BC_13,Barangays with operational referral system for incidence of child abuse,UNICEF,Capacity,0,0,,,1,1
-BV_14,Percentage of households in barangay with incomes below poverty threshold,UNICEF,Vulnerability,0,0.15,0.1501,0.25,0.2501,1
-BC_1,Barangays with organized and trained DRRM teams,UNICEF,Capacity,0,0,1,1,2,2
-BC_2,Barangays with a community-managed Early Warning System in place,UNICEF,Capacity,,,,,,
-BC_3,Barangays that have done risk assessment and drafter their DRRM Plans,UNICEF,Capacity,,,,,,
-BC_4,Barangays that have evacuation plans and done emergency drills as part of preparedness,UNICEF,Capacity,,,,,,
-BC_5,"Barangays that have Civil Society Organizations (CSO), Non-Government Organizations (NGO), People's Organization and Community-Based Organizations (CBO) involved in DRR Work",UNICEF,Capacity,,,,,,
-BC_6,Schools with updated preparedness plans as part of School Improvement Plan (SIP),UNICEF,Capacity,,,,,,
-BC_7,Schools that have evacuation plans and done emergency drills during the year,UNICEF,Capacity,,,,,,
-BC_8,Barangays with organised and trained Infant and Young Feeding (IYCF) counsellors,UNICEF,Capacity,,,,,,
-BC_9,Barangays with functional out-patient therapeutic centers for MAM (wasted) and SAM (severely wasted),UNICEF,Capacity,,,,,,
-BC_10,Barangays with functional Community Health Teams (CHT),UNICEF,Capacity,,,,,,
-BC_11,Barangays with organised WASH committees and contingency plans,UNICEF,Capacity,,,,,,
-BC_12,Barangays with functional Barangay Council for the Protection of Children (BCPC),UNICEF,Capacity,,,,,,
-BC_13,Barangays with operational referral system for incidence of child abuse,UNICEF,Capacity,,,,,,
