@@ -180,6 +180,7 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         layer_fields = layer.fields()
 
         # get max indicators
+        mxs = []
         mx = 0
 
         features_max = layer.getFeatures()
@@ -210,6 +211,11 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
 
                 except ValueError:
                     mx += 0
+
+                mxs.append(mx)  # get list of number of indicators
+            mx = 0  # reset number of indicators to zero for a new feature
+
+        mx_i = max(mxs) # get max number of indicators in 1 feature
 
         # count values
         features = layer.getFeatures()
@@ -249,7 +255,7 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
             f[totfield] = s
 
             # s_perc = 100.0 * (float(s)/len(indices))
-            s_perc = 100.0 * (float(s)/mx)
+            s_perc = 100.0 * (float(s)/mx_i)
 
             if s_perc < 33.33:
                 f[riskfield] = "LOW"
