@@ -170,7 +170,7 @@ class Ui_MHCVAMUnicefIndicatorsDialog(object):
 
     def retranslateUi(self, MHCVAMUnicefIndicatorsDialog):
         MHCVAMUnicefIndicatorsDialog.setWindowTitle(_translate("MHCVAMUnicefIndicatorsDialog", "MHCVAM using Child-centered Indicators (BARANGAY)", None))
-        self.layerLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "Barangay Layer with UNICEF Indicators", None))
+        self.layerLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "Barangay Layer with Child-centered Indicators", None))
         self.fieldLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "Child-centered Indicator", None))
         self.agencyLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "Limit By Agency", None))
         self.orLabel.setText(_translate("MHCVAMUnicefIndicatorsDialog", "or", None))
