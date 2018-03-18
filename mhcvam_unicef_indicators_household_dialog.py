@@ -15,7 +15,7 @@
 /***************************************************************************
  mhcvam_unicef_indicators_household_dialog.py
 
- Contains the logic for the MHCVAM using UNICEF Indicators (HOUSEHOLD)
+ Contains the logic for the MHCVAM using Child-centered Indicators (HOUSEHOLD)
 ***************************************************************************/
 
 /***************************************************************************
@@ -58,10 +58,10 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         QDialog.__init__(self, parent)
         self.parent = parent
         self.setupUi(self)
-        self.setWindowTitle(self.tr('MHCVAM using UNICEF Indicators (HOUSEHOLD)'))
+        self.setWindowTitle(self.tr('MHCVAM using Child-centered Indicators (HOUSEHOLD)'))
         self.iface = iface
 
-        self.listWidget_cats = [self.listWidget_exp, self.listWidget_vul, self.listWidget_cap, self.listWidget_oth]
+        self.listWidget_cats = [self.listWidget_exp, self.listWidget_vul, self.listWidget_cap]
 
         # Set the response of the buttons
         QObject.connect(self.buttonBox, SIGNAL("accepted()"), self.run)
@@ -72,14 +72,14 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         QObject.connect(self.deselectAllBtn_vul, SIGNAL("clicked()"), self.listWidget_vul.clearSelection)
         QObject.connect(self.selectAllBtn_cap, SIGNAL("clicked()"), self.listWidget_cap.selectAll)
         QObject.connect(self.deselectAllBtn_cap, SIGNAL("clicked()"), self.listWidget_cap.clearSelection)
-        QObject.connect(self.selectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.selectAll)
-        QObject.connect(self.deselectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.clearSelection)
+        # QObject.connect(self.selectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.selectAll)
+        # QObject.connect(self.deselectAllBtn_oth, SIGNAL("clicked()"), self.listWidget_oth.clearSelection)
 
         self.indicators_per_cats = indicators.get_indicators_per_catergory_dict()
         self.listWidget_exp.addItems(self.indicators_per_cats['Exposure'])
         self.listWidget_vul.addItems(self.indicators_per_cats['Vulnerability'])
         self.listWidget_cap.addItems(self.indicators_per_cats['Capacity'])
-        self.listWidget_oth.addItems(self.indicators_per_cats['Others'])
+        # self.listWidget_oth.addItems(self.indicators_per_cats['Others'])
 
 
     def get_indicators_to_add(self):
@@ -146,20 +146,21 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         # indices_oth = [hh.fieldNameIndex(code) for code in oth_codes]
 
         if len(indices_exp) > 0:
-            self.compute_risk(hh, exp_name, indices_exp)
+            self.compute_risk(hh, exp_name, indices_exp, exp_codes, "exp")
 
         if len(indices_vul) > 0:
-            self.compute_risk(hh, vul_name, indices_vul)
+            self.compute_risk(hh, vul_name, indices_vul, vul_codes, "vul")
 
         if len(indices_cap) > 0:
-            self.compute_risk(hh, cap_name, indices_cap)
+            self.compute_risk(hh, cap_name, indices_cap, cap_codes, "cap")
 
 
-    def compute_risk(self, hh, name, indices):
+    def compute_risk(self, hh, name, indices, codes, ind_type):
 
         # copy vector to new layer
         copy_vector_layer(hh, name, "Point")
         layer = QgsMapLayerRegistry.instance().mapLayersByName(name)[0]
+
 
         # add other fields
         res = layer.dataProvider().addAttributes([QgsField("TOTAL", QVariant.Double, 'double', 4, 2)])
@@ -168,8 +169,49 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         res = layer.dataProvider().addAttributes([QgsField("RISK", QVariant.String)])
         layer.updateFields()
 
+        # add field to hold selected fields
+        res = layer.dataProvider().addAttributes([QgsField("SELECTED", QVariant.String)])
+        layer.updateFields()
+
         totfield = layer.fieldNameIndex("TOTAL")
         riskfield = layer.fieldNameIndex("RISK")
+        selfield = layer.fieldNameIndex("SELECTED")
+
+        layer_fields = layer.fields()
+
+        # get max indicators
+        mxs = []
+        mx = 0
+
+        features_max = layer.getFeatures()
+        for f in features_max:
+
+            attr = f.attributes()
+
+            for i in indices:
+
+                try:
+                    # new (only include if main field by counting # of "_". main means less than 2 "_")
+                    if layer_fields[i].name().count("_") < 2:
+                        if float(attr[i]) >= 1:
+                            if ind_type == "exp":
+                                mx += float(attr[i])
+                            else:
+                                mx += 1
+
+                        else:
+                            pass
+
+                    else:
+                        pass
+
+                except ValueError:
+                    mx += 0
+
+                mxs.append(mx)  # get list of number of indicators
+            mx = 0  # reset number of indicators to zero for a new feature
+
+        mx_i = max(mxs) # get max number of indicators in 1 feature
 
         # count values
         features = layer.getFeatures()
@@ -183,10 +225,18 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
             for i in indices:
 
                 try:
+                    # new (only include if main field by counting # of "_". main means less than 2 "_")
+                    if layer_fields[i].name().count("_") < 2:
+                        # s += float(attr[i])
+                        if float(attr[i]) >= 1:
+                            if ind_type == "exp":
+                                s += float(attr[i])
+                            else:
+                                s += 1
 
-                    # s += float(attr[i])
-                    if float(attr[i]) >= 1:
-                        s += 1
+                        else:
+                            pass
+
                     else:
                         pass
 
@@ -195,16 +245,19 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
 
             f[totfield] = s
 
-            s_perc = 100.0 * (float(s)/len(indices))
+            s_perc = 100.0 * (float(s)/mx_i)
 
             if s_perc < 33.33:
                 f[riskfield] = "LOW"
 
             elif s_perc >= 33.33 and s_perc < 66.66:
-                f[riskfield] = "MEDIUM"
+                f[riskfield] = "MODERATE"
 
             else:
                 f[riskfield] = "HIGH"
+
+            # add selected fields
+            f[selfield] = ", ".join(codes)
 
             layer.updateFeature(f)
         layer.commitChanges()
@@ -214,7 +267,7 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
         f = layer.fields().toList()
         fields = range(len(f))
 
-        const = ["BRGY_HH_ID", "BARANGAY", "HOUSEHOLD", "STREET", "HH_HEAD", "TOTAL", "RISK"]
+        const = ["BRGY_HH_ID", "BARANGAY", "HOUSEHOLD", "STREET", "HH_HEAD", "TOTAL", "RISK", "SELECTED"]
         indices_constant = [layer.fieldNameIndex(code) for code in const]
 
         for c in indices_constant:
@@ -225,7 +278,7 @@ class MHCVAMUnicefIndicatorsHouseholdDialog(QDialog, Ui_MHCVAMUnicefIndicatorsHo
 
         # Add symbology
         risks = [("LOW", "cyan", "LOW"),
-                 ("MEDIUM", "orange", "MEDIUM"),
+                 ("MODERATE", "orange", "MODERATE"),
                  ("HIGH", "red", "HIGH")]
 
         categories = []

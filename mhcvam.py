@@ -153,19 +153,19 @@ class MHCVAM:
         self.iface.mainWindow().removeToolBar(self.toolbar)
 
 
-    '''UNICEF Indicators Methods'''
+    '''Child-centered Indicators Methods'''
     def _create_mhcvam_unicef_indicators_action(self):
-        """Create action for MHCVAM using UNICEF Indicators"""
+        """Create action for MHCVAM using Child-centered Indicators"""
 
         icon = os.path.dirname(__file__) + '/img/icons/icon-unicef-indicators.png'
         self.action_mhcvam_unicef_indicators = QAction(
             QIcon(icon),
-            self.tr('MHCVAM using UNICEF Indicators (BARANGAY)'),
+            self.tr('MHCVAM using Child-centered Indicators (BARANGAY)'),
             self.iface.mainWindow())
         self.action_mhcvam_unicef_indicators.setStatusTip(
-            self.tr('MHCVAM using UNICEF Indicators (BARANGAY)'))
+            self.tr('MHCVAM using Child-centered Indicators (BARANGAY)'))
         self.action_mhcvam_unicef_indicators.setWhatsThis(
-            self.tr('Perform MHCVAM using UNICEF Indicators (BARANGAY)'))
+            self.tr('Perform MHCVAM using Child-centered Indicators (BARANGAY)'))
         self.action_mhcvam_unicef_indicators.triggered.connect(
             self.mhcvam_unicef_indicators)
         self.add_action(
@@ -173,17 +173,17 @@ class MHCVAM:
 
 
     def _create_mhcvam_unicef_indicators_household_action(self):
-        """Create action for MHCVAM using UNICEF Indicators (Household)"""
+        """Create action for MHCVAM using Child-centered Indicators (Household)"""
 
         icon = os.path.dirname(__file__) + '/img/icons/icon-unicef-indicators-household.png'
         self.action_mhcvam_unicef_indicators_household = QAction(
             QIcon(icon),
-            self.tr('MHCVAM using UNICEF Indicators (HOUSEHOLD)'),
+            self.tr('MHCVAM using Child-centered Indicators (HOUSEHOLD)'),
             self.iface.mainWindow())
         self.action_mhcvam_unicef_indicators_household.setStatusTip(
-            self.tr('MHCVAM using UNICEF Indicators (HOUSEHOLD)'))
+            self.tr('MHCVAM using Child-centered Indicators (HOUSEHOLD)'))
         self.action_mhcvam_unicef_indicators_household.setWhatsThis(
-            self.tr('Perform MHCVAM using UNICEF Indicators (HOUSEHOLD)'))
+            self.tr('Perform MHCVAM using Child-centered Indicators (HOUSEHOLD)'))
         self.action_mhcvam_unicef_indicators_household.triggered.connect(
             self.mhcvam_unicef_indicators_household)
         self.add_action(
@@ -191,7 +191,7 @@ class MHCVAM:
 
 
     def mhcvam_unicef_indicators(self):
-        """Show dialog for MHCVAM using UNICEF Indicators"""
+        """Show dialog for MHCVAM using Child-centered Indicators"""
 
         from mhcvam_unicef_indicators_dialog import MHCVAMUnicefIndicatorsDialog
 
@@ -208,7 +208,7 @@ class MHCVAM:
 
 
     def mhcvam_unicef_indicators_household(self):
-        """Show dialog for MHCVAM using UNICEF Indicators (Household)"""
+        """Show dialog for MHCVAM using Child-centered Indicators (Household)"""
 
         # from mhcvam_unicef_indicators_household_dialog import MHCVAMUnicefIndicatorsHouseholdDialog
         from mhcvam_unicef_indicators_household_dialog import MHCVAMUnicefIndicatorsHouseholdDialog

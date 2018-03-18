@@ -15,7 +15,7 @@
 /***************************************************************************
  mhcvam_unicef_indicators_dialog.py
 
- Contains the logic for the MHCVAM using UNICEF Indicators (BARANGAY)
+ Contains the logic for the MHCVAM using Child-centered Indicators (BARANGAY)
 ***************************************************************************/
 
 /***************************************************************************
@@ -58,7 +58,7 @@ class MHCVAMUnicefIndicatorsDialog(QDialog, Ui_MHCVAMUnicefIndicatorsDialog):
         QDialog.__init__(self, parent)
         self.parent = parent
         self.setupUi(self)
-        self.setWindowTitle(self.tr('MHCVAM using UNICEF Indicators (BARANGAY)'))
+        self.setWindowTitle(self.tr('MHCVAM using Child-centered Indicators (BARANGAY)'))
         self.iface = iface
 
         # Set the response of the OK and Apply buttons

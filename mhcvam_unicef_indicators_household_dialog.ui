@@ -46,7 +46,7 @@
     <rect>
      <x>160</x>
      <y>20</y>
-     <width>311</width>
+     <width>361</width>
      <height>27</height>
     </rect>
    </property>
@@ -89,7 +89,7 @@
     <rect>
      <x>10</x>
      <y>170</y>
-     <width>231</width>
+     <width>301</width>
      <height>271</height>
     </rect>
    </property>
@@ -143,7 +143,7 @@
   <widget class="QPushButton" name="deselectAllBtn_exp">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>210</x>
      <y>450</y>
      <width>101</width>
      <height>27</height>
@@ -188,7 +188,7 @@
     <rect>
      <x>160</x>
      <y>60</y>
-     <width>311</width>
+     <width>361</width>
      <height>27</height>
     </rect>
    </property>
@@ -196,9 +196,9 @@
   <widget class="QListWidget" name="listWidget_vul">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>350</x>
      <y>170</y>
-     <width>231</width>
+     <width>301</width>
      <height>271</height>
     </rect>
    </property>
@@ -209,22 +209,9 @@
   <widget class="QListWidget" name="listWidget_cap">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>690</x>
      <y>170</y>
-     <width>231</width>
-     <height>271</height>
-    </rect>
-   </property>
-   <property name="selectionMode">
-    <enum>QAbstractItemView::ExtendedSelection</enum>
-   </property>
-  </widget>
-  <widget class="QListWidget" name="listWidget_oth">
-   <property name="geometry">
-    <rect>
-     <x>760</x>
-     <y>170</y>
-     <width>231</width>
+     <width>301</width>
      <height>271</height>
     </rect>
    </property>
@@ -265,7 +252,7 @@
   <widget class="QLabel" name="label_vul">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>350</x>
      <y>140</y>
      <width>211</width>
      <height>31</height>
@@ -295,7 +282,7 @@
   <widget class="QLabel" name="label_cap">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>690</x>
      <y>140</y>
      <width>211</width>
      <height>31</height>
@@ -322,40 +309,10 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_oth">
-   <property name="geometry">
-    <rect>
-     <x>780</x>
-     <y>140</y>
-     <width>211</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
-   </property>
-   <property name="text">
-    <string>Others</string>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QPushButton" name="selectAllBtn_vul">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>350</x>
      <y>450</y>
      <width>101</width>
      <height>27</height>
@@ -368,7 +325,7 @@
   <widget class="QPushButton" name="deselectAllBtn_vul">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>550</x>
      <y>450</y>
      <width>101</width>
      <height>27</height>
@@ -381,7 +338,7 @@
   <widget class="QPushButton" name="selectAllBtn_cap">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>690</x>
      <y>450</y>
      <width>101</width>
      <height>27</height>
@@ -392,32 +349,6 @@
    </property>
   </widget>
   <widget class="QPushButton" name="deselectAllBtn_cap">
-   <property name="geometry">
-    <rect>
-     <x>640</x>
-     <y>450</y>
-     <width>101</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Deselect All</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="selectAllBtn_oth">
-   <property name="geometry">
-    <rect>
-     <x>760</x>
-     <y>450</y>
-     <width>101</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Select All</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="deselectAllBtn_oth">
    <property name="geometry">
     <rect>
      <x>890</x>
@@ -433,7 +364,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>790</x>
+     <x>10</x>
      <y>530</y>
      <width>201</width>
      <height>51</height>
@@ -469,7 +400,7 @@
   <widget class="QLabel" name="logopgs">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>730</x>
      <y>530</y>
      <width>51</width>
      <height>51</height>
@@ -485,7 +416,7 @@
   <widget class="QLabel" name="logounicef">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>790</x>
      <y>530</y>
      <width>201</width>
      <height>51</height>

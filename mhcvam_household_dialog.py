@@ -213,10 +213,14 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         elif hazardLevel.capitalize() == "High":
             hazardLevels = [("High", "High", "red")]
 
+        elif hazardLevel.capitalize() == "Very high":
+            hazardLevels = [("Very High", "Very High", "violet")]
+
         else:
             hazardLevels = [("Low", "Low", "cyan"),
                             ("Medium", "Medium", "orange"),
-                            ("High", "High", "red")]
+                            ("High", "High", "red"),
+                            ("Very High", "Very High", "violet")]
 
         categories = []
 
@@ -238,13 +242,14 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
             features = outlayer.getFeatures()
             for f in features:
                 attr = f.attributes()
-                hazardLevelCount.append(attr[outlayer.fieldNameIndex(hazardType)].capitalize()) #set to Low, Medium, and High only
+                hazardLevelCount.append(attr[outlayer.fieldNameIndex(hazardType)].capitalize()) #set to Low, Medium, and Very high only
 
             numlows = hazardLevelCount.count("Low")
             nummeds = hazardLevelCount.count("Medium")
             numhigh = hazardLevelCount.count("High")
+            numvhigh = hazardLevelCount.count("Very high")
 
-            hh_per_hazard = "Households in Hazard Level\nLow: {}\nMedium: {}\nHigh: {}".format(numlows, nummeds, numhigh)
+            hh_per_hazard = "Households in Hazard Level\nLow: {}\nMedium: {}\nHigh: {}\nVery High: {}".format(numlows, nummeds, numhigh, numvhigh)
             msg = hh_per_hazard
             QMessageBox.information(self.iface.mainWindow(), "SUMMARY REPORT", msg)
 
@@ -373,7 +378,7 @@ class MHCVAMHouseholdDialog(QDialog, Ui_MHCVAMHouseholdDialog):
         '''NEW'''
 
         if statFieldName in ["RISK", "Hazard Level"]:
-            if stat in ["COUNT [LOW]", "COUNT [MEDIUM]", "COUNT [HIGH]"]:
+            if stat in ["COUNT [LOW]", "COUNT [MEDIUM]", "COUNT [HIGH]", "COUNT [VERY HIGH]"]:
 
                 copy_vector_layer(brgy, "{} ({})".format(stat, statFieldName), "Polygon")
                 out1 = QgsMapLayerRegistry.instance().mapLayersByName("{} ({})".format(stat, statFieldName))[0]
